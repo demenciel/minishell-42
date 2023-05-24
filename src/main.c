@@ -6,12 +6,13 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 16:57:16 by acouture          #+#    #+#             */
-/*   Updated: 2023/05/24 16:57:44 by acouture         ###   ########.fr       */
+/*   Updated: 2023/05/24 17:04:20 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
+// PARSING
 int main(char **av, int ac)
 {
     return (0);
