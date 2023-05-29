@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: acouture <acouture@student.42.fr>          +#+  +:+       +#+         #
+#    By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/05/24 16:55:29 by acouture          #+#    #+#              #
-#    Updated: 2023/05/24 16:56:31 by acouture         ###   ########.fr        #
+#    Created: 2023/05/29 13:48:07 by rofontai          #+#    #+#              #
+#    Updated: 2023/05/29 14:03:43 by rofontai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,12 @@ NAME	:= minishell
 CFLAGS	:= -g -Wextra -Wall -Werror
 
 SRC_PATH = src/
+
 OBJ_PATH = obj/
+
+READ_PATH	= libs/readline
+RLINE		= $(READ_PATH)/libreadline.a
+LIBRLINE	= readline-8.2
 
 HEADERS	:= -I ./include
 SRC		:= main.c \
@@ -27,27 +32,40 @@ GREEN = \033[0;92m
 RED = \033[0;91m
 RESET = \033[0m
 
-all: makelibft $(NAME)
+all: readline $(NAME)
 	@exec 2>/dev/null
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@ $(HEADERS)
 
+readline	:
+	@if [ ! -f ./libs/readline/libreadline.a ]; then \
+    	curl -O https://ftp.gnu.org/gnu/readline/$(LIBRLINE).tar.gz; \
+		mkdir -p $(READ_PATH); \
+    	tar -xf $(LIBRLINE).tar.gz; \
+        rm -rf $(LIBRLINE).tar.gz; \
+        cd $(LIBRLINE) && bash configure && make; \
+        mv ./libreadline.a ../libs/readline; \
+        rm -rf ../$(LIBRLINE); \
+        echo "\n----- $(GREEN)Readline $(RESET) succesfully configured ✅ -----\n"; \
+    fi
+
 $(NAME): $(OBJS)
-	@$(CC) $(OBJS) $(HEADERS) -o $(NAME)
+
+	@$(CC) $(CFLAGS) $(OBJS) $(RLINE) -lncurses $(HEADERS) -o $(NAME)
 	@printf "$(GREEN)minishell compiling: done$(RESET)\n"
 
 debug: $(NAME)
 	@$(CC) -g $(OBJS) $(HEADERS) -o $(NAME)
 
 clean:
-	@$(MAKE) clean -C 
+#	@$(MAKE) clean -C
 	@rm -rf $(OBJ_PATH)
 	@printf "$(RED)minishell clean: done$(RESET)\n"
 
 fclean: clean
-	@$(MAKE) fclean -C 
+#	@$(MAKE) fclean -C
 	@rm -f $(NAME)
 
 re: fclean all
