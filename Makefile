@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+         #
+#    By: acouture <acouture@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/29 13:48:07 by rofontai          #+#    #+#              #
-#    Updated: 2023/05/29 14:03:43 by rofontai         ###   ########.fr        #
+#    Updated: 2023/05/30 12:52:55 by acouture         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	:= minishell
 CFLAGS	:= -g -Wextra -Wall -Werror
-
+#
 SRC_PATH = src/
 
 OBJ_PATH = obj/
@@ -21,8 +21,15 @@ READ_PATH	= libs/readline
 RLINE		= $(READ_PATH)/libreadline.a
 LIBRLINE	= readline-8.2
 
-HEADERS	:= -I ./include
-SRC		:= main.c \
+LIBFT_A = 	libft.a
+LIBF_DIR = 	inc/libft/
+LIBFT  = 	$(addprefix $(LIBF_DIR), $(LIBFT_A))
+
+HEADERS	:= -I ./include -I $(LIBMLX)/include 
+SRC		:=  main.c \
+			pipex/pipex.c \
+			pipex/pipex_utils.c \
+			utils/errors.c \
 
 SRCS	= $(addprefix $(SRC_PATH), $(SRC))
 OBJ		= $(SRC:%.c=%.o)
@@ -32,12 +39,15 @@ GREEN = \033[0;92m
 RED = \033[0;91m
 RESET = \033[0m
 
-all: readline $(NAME)
+all: makelibft readline $(NAME)
 	@exec 2>/dev/null
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@ $(HEADERS)
+
+makelibft:
+	@$(MAKE) -C $(LIBF_DIR)
 
 readline	:
 	@if [ ! -f ./libs/readline/libreadline.a ]; then \
@@ -53,19 +63,21 @@ readline	:
 
 $(NAME): $(OBJS)
 
-	@$(CC) $(CFLAGS) $(OBJS) $(RLINE) -lncurses $(HEADERS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(RLINE) $(LIBFT) -lncurses $(HEADERS) -o $(NAME)
 	@printf "$(GREEN)minishell compiling: done$(RESET)\n"
 
 debug: $(NAME)
-	@$(CC) -g $(OBJS) $(HEADERS) -o $(NAME)
+	@$(CC) -g $(OBJS) $(HEADERS) $(LIBFT) -o $(NAME)
 
 clean:
 #	@$(MAKE) clean -C
+	@$(MAKE) clean -C $(LIBF_DIR)
 	@rm -rf $(OBJ_PATH)
 	@printf "$(RED)minishell clean: done$(RESET)\n"
 
 fclean: clean
 #	@$(MAKE) fclean -C
+	@$(MAKE) fclean -C $(LIBF_DIR)
 	@rm -f $(NAME)
 
 re: fclean all
