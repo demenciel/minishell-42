@@ -6,7 +6,7 @@
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 16:57:03 by acouture          #+#    #+#             */
-/*   Updated: 2023/06/05 10:11:06 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/06/05 15:21:39 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,13 @@ void	f_print_lst(t_pars *lst);
 
 // PARSING---------------------------------------------------------------------
 
-void f_check_arg(int ac, char ** av);
+void	f_check_arg(int ac, char ** av);
+char	*f_place_space(char *line);
+void	f_split_line(t_meta *ms);
 
 // UTILS-----------------------------------------------------------------------
 
-void	f_split_line(t_meta *ms);
+// void	f_split_line(char *line, t_meta *ms);
 void	f_zero_list(t_meta *ms);
 
 #endif
