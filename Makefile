@@ -6,7 +6,7 @@
 #    By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/29 13:48:07 by rofontai          #+#    #+#              #
-#    Updated: 2023/05/29 14:03:43 by rofontai         ###   ########.fr        #
+#    Updated: 2023/06/05 09:05:43 by rofontai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,12 +17,19 @@ SRC_PATH = src/
 
 OBJ_PATH = obj/
 
+LIBFT_DIR	= ./libs/libft
+LIBFT	= $(LIBFT_DIR)/libft.a
+
 READ_PATH	= libs/readline
 RLINE		= $(READ_PATH)/libreadline.a
 LIBRLINE	= readline-8.2
 
 HEADERS	:= -I ./include
+
 SRC		:= main.c \
+			link_list.c \
+			parsing.c \
+			utils.c \
 
 SRCS	= $(addprefix $(SRC_PATH), $(SRC))
 OBJ		= $(SRC:%.c=%.o)
@@ -51,10 +58,13 @@ readline	:
         echo "\n----- $(GREEN)Readline $(RESET) succesfully configured ✅ -----\n"; \
     fi
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) $(LIBFT)
 
-	@$(CC) $(CFLAGS) $(OBJS) $(RLINE) -lncurses $(HEADERS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(RLINE) -lncurses $(HEADERS) -o $(NAME)
 	@printf "$(GREEN)minishell compiling: done$(RESET)\n"
+
+ $(LIBFT)	:
+	@make -C $(LIBFT_DIR)
 
 debug: $(NAME)
 	@$(CC) -g $(OBJS) $(HEADERS) -o $(NAME)
@@ -66,6 +76,7 @@ clean:
 
 fclean: clean
 #	@$(MAKE) fclean -C
+	@rm -rf $(READ_PATH)
 	@rm -f $(NAME)
 
 re: fclean all
