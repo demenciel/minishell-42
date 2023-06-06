@@ -38,22 +38,6 @@ void	f_addback_node(t_pars **cmd, t_pars *new)
 	last->next = new;
 }
 
-t_meta	*f_init_meta(void)
-{
-	static t_meta	*new;
-
-	if (!new)
-	{
-		new = ft_calloc(sizeof(t_meta), 1);
-		if (!new)
-			return (NULL);
-		new->lst_size = 0;
-		new->list = NULL;
-		new->line = NULL;
-	}
-	return (new);
-}
-
 void	f_print_lst(t_pars *lst)
 {
 	t_pars *temp;
