@@ -6,7 +6,7 @@
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 16:57:16 by acouture          #+#    #+#             */
-/*   Updated: 2023/06/06 13:08:38 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/06/07 10:09:21 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 // PARSING
 int main(int ac, char **av)
 {
-    (void)ac;
-    (void)av;
+    (void) ac;
+    (void) av;
     t_meta  *ms;
 
     f_check_arg(ac, av);
@@ -33,6 +33,6 @@ int main(int ac, char **av)
         if ( ft_strncmp(ms->line, "exit", 4) == 0)
             break ;
     }
-    f_zero_list(ms);
+    f_all_clean(ms);
     return (0);
 }

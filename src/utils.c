@@ -25,3 +25,13 @@ t_meta	*f_init_meta(void)
 	}
 	return (new);
 }
+
+void f_all_clean(t_meta *ms)
+{
+	if (ms->line)
+		free(ms->line);
+	if (ms->list)
+		f_free_list(&ms->list);
+	f_free_meta(&ms);
+	exit(EXIT_SUCCESS);
+}

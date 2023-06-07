@@ -15,7 +15,7 @@ void	f_check_line(t_meta *ms)
 {
 	while (ms->line[ms->i])
 	{
-		if (ms->line[ms->i] <= 32)
+		while (ms->line[ms->i] <= 32)
 			ms->i++;
 		if (ms->line[ms->i] == 124)
 			f_check_pipes(ms);
@@ -27,6 +27,8 @@ void	f_check_line(t_meta *ms)
 			f_check_single_quote(ms);
 		else if (ms->line[ms->i] == 34)
 			f_check_double_quote(ms);
+		else if (ms->line[ms->i] == 36)
+			f_check_dollar(ms);
 		else
 			f_check_word(ms);
 	}
@@ -46,7 +48,6 @@ void	f_check_pipes(t_meta *ms)
 	end = ms->i;
 	f_addback_node(&ms->list, f_new_node(ft_substr(ms->line, start, (end - start))));
 	printf (""RED"---f_check_pipes out---\n"WHT""); //TODO Supprimer
-
 }
 
 void	f_check_redir_right(t_meta *ms)
@@ -98,11 +99,9 @@ void	f_check_double_quote(t_meta *ms)
 	int end;
 
 	start = ms->i++;
-	printf ("i start = %d\n", ms->i);
 	while (ms->line[ms->i] != 34 && ms->line[ms->i])
 		ms->i++;
 	end = ms->i++;
-	printf ("i end = %d\n", ms->i);
 	f_addback_node(&ms->list, f_new_node(ft_substr(ms->line, start, (end - start) + 1)));
 	printf (""RED"---f_check_double_quote out---\n"WHT""); //TODO Supprimer
 }
@@ -114,13 +113,31 @@ void	f_check_word(t_meta *ms)
 	int end;
 
 	start = ms->i;
-	while (ms->line[ms->i] && ms->line[ms->i] > 32)
+	while (ms->line[ms->i] && ms->line[ms->i] > 32 &&
+	(ms->line[ms->i] != 124 && ms->line[ms->i] != 62 && ms->line[ms->i] != 36 &&
+	ms->line[ms->i] != 60 && ms->line[ms->i] != 39 && ms->line[ms->i] != 34))
 		ms->i++;
 	end = ms->i;
 	f_addback_node(&ms->list, f_new_node(ft_substr(ms->line, start, (end - start))));
-	printf (""RED"---f_check_word out---\n"WHT""); //TODO Supprimer
+	printf (""RED"---f_check_word_ out---\n"WHT""); //TODO Supprimer
 }
 
+void	f_check_dollar(t_meta *ms)
+{
+	printf (""GRE"---f_check_dollar in---\n"WHT""); //TODO Supprimer
+	int start;
+	int end;
 
-// checker l'ordre des fonctions
-
+	start = ms->i;
+	printf ("i start = %d\n", ms->i);
+	while (ms->line[ms->i] && ms->line[ms->i] > 32 &&
+	ms->line[ms->i] != 124 && ms->line[ms->i] != 62 &&ms->line[ms->i + 1] != 36 &&
+	ms->line[ms->i] != 60 && ms->line[ms->i] != 39 && ms->line[ms->i] != 34)
+		ms->i++;
+	if (ms->line[ms->i + 1] == 36)
+		end = ms->i++;
+	end = ms->i;
+	printf ("i end = %d\n", ms->i);
+	f_addback_node(&ms->list, f_new_node(ft_substr(ms->line, start, (end - start))));
+	printf (""RED"---f_check_dollar out---\n"WHT""); //TODO Supprimer
+}
