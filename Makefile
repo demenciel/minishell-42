@@ -6,12 +6,12 @@
 #    By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/29 13:48:07 by rofontai          #+#    #+#              #
-#    Updated: 2023/06/05 14:32:42 by rofontai         ###   ########.fr        #
+#    Updated: 2023/06/08 15:04:08 by rofontai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	:= minishell
-CFLAGS	:= -g -Wextra -Wall -Werror
+CFLAGS	:= -g -Wextra -Wall -Werror #-fsanitize=address
 
 SRC_PATH = src/
 
@@ -30,6 +30,7 @@ SRC		:= main.c \
 			link_list.c \
 			parsing.c \
 			utils.c \
+			check_node.c \
 
 SRCS	= $(addprefix $(SRC_PATH), $(SRC))
 OBJ		= $(SRC:%.c=%.o)
@@ -76,7 +77,7 @@ clean:
 
 fclean: clean
 #	@$(MAKE) fclean -C
-	@rm -rf $(READ_PATH)
+#	@rm -rf $(READ_PATH)
 	@rm -f $(NAME)
 
 re: fclean all

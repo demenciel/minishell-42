@@ -6,7 +6,7 @@
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 16:57:03 by acouture          #+#    #+#             */
-/*   Updated: 2023/06/07 10:14:36 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/06/08 16:09:22 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,11 @@ void	f_check_dollar(t_meta *ms);
 
 void	f_zero_list(t_meta *ms);
 t_meta	*f_init_meta(void);
-void	f_all_clean(t_meta *ms);
+void	f_all_clean(t_meta *ms, char *msg);
+
+// CHECK_NODE------------------------------------------------------------------
+
+char	*f_pars_dollar(char *txt);
+void	f_pars_list(t_meta *ms);
 
 #endif

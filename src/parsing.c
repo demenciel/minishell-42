@@ -129,15 +129,17 @@ void	f_check_dollar(t_meta *ms)
 	int end;
 
 	start = ms->i;
-	printf ("i start = %d\n", ms->i);
+	// printf ("i start = %d\n", ms->i); //TODO Supprimer
 	while (ms->line[ms->i] && ms->line[ms->i] > 32 &&
 	ms->line[ms->i] != 124 && ms->line[ms->i] != 62 &&ms->line[ms->i + 1] != 36 &&
 	ms->line[ms->i] != 60 && ms->line[ms->i] != 39 && ms->line[ms->i] != 34)
 		ms->i++;
-	if (ms->line[ms->i + 1] == 36)
+	if (ms->line[ms->i + 1] == 36 && ms->line[ms->i] && ms->line[ms->i] > 32 &&
+	ms->line[ms->i] != 124 && ms->line[ms->i] != 62 &&
+	ms->line[ms->i] != 60 && ms->line[ms->i] != 39 && ms->line[ms->i] != 34)
 		end = ms->i++;
 	end = ms->i;
-	printf ("i end = %d\n", ms->i);
+	// printf ("i end = %d\n", ms->i); //TODO Supprimer
 	f_addback_node(&ms->list, f_new_node(ft_substr(ms->line, start, (end - start))));
 	printf (""RED"---f_check_dollar out---\n"WHT""); //TODO Supprimer
 }

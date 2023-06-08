@@ -6,7 +6,7 @@
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 16:57:16 by acouture          #+#    #+#             */
-/*   Updated: 2023/06/07 10:09:21 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/06/08 16:00:13 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ int main(int ac, char **av)
         ms->line = readline("minishel > ");
         printf ("\n%s\n\n", ms->line);
         f_check_line(ms);
+        printf("\n");
+        f_print_lst(ms->list);
+        printf("\n");
+        f_pars_list(ms);
+         printf("\n");
         f_print_lst(ms->list);
         printf("\n");
         f_zero_list(ms);
@@ -33,6 +38,6 @@ int main(int ac, char **av)
         if ( ft_strncmp(ms->line, "exit", 4) == 0)
             break ;
     }
-    f_all_clean(ms);
+    f_all_clean(ms, NULL);
     return (0);
 }
