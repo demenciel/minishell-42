@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: acouture <acouture@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/05/29 13:48:07 by rofontai          #+#    #+#              #
-#    Updated: 2023/05/30 12:52:55 by acouture         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME	:= minishell
 CFLAGS	:= -g -Wextra -Wall -Werror
 #
@@ -27,9 +15,11 @@ LIBFT  = 	$(addprefix $(LIBF_DIR), $(LIBFT_A))
 
 HEADERS	:= -I ./include -I $(LIBMLX)/include 
 SRC		:=  main.c \
-			pipex/pipex.c \
-			pipex/pipex_utils.c \
-			utils/errors.c \
+			pipex.c \
+			redirect.c \
+			error_utils.c \
+			builtin.c \
+			builtin2.c \
 
 SRCS	= $(addprefix $(SRC_PATH), $(SRC))
 OBJ		= $(SRC:%.c=%.o)
