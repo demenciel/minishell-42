@@ -20,6 +20,10 @@ SRC		:=  main.c \
 			error_utils.c \
 			builtin.c \
 			builtin2.c \
+			link_list.c \
+			parsing.c \
+			utils.c \
+			check_node.c \
 
 SRCS	= $(addprefix $(SRC_PATH), $(SRC))
 OBJ		= $(SRC:%.c=%.o)
