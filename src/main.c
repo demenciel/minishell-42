@@ -3,16 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 16:57:16 by acouture          #+#    #+#             */
-/*   Updated: 2023/06/08 16:00:13 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/06/15 16:34:54 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
 // PARSING
+
+t_pipex	*call_struct(void)
+{
+	static t_pipex	data;
+
+	return (&data);
+}
+
+void	init_pipex(void)
+{
+	t_pipex	*p;
+
+	p = call_struct();
+	p->in_fd = 0;
+	p->out_fd = 0;
+	p->exec_flag = 0;
+	p->env_list = NULL;
+	p->export_list = NULL;
+}
+
 int main(int ac, char **av)
 {
     (void) ac;
