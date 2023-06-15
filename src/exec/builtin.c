@@ -1,5 +1,5 @@
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 /**
  * @brief Reproduce the env builtin command (env)

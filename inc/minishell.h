@@ -7,6 +7,8 @@
 # include <fcntl.h>
 # include <readline/history.h>
 // # include <readline.h>
+# include "libft/libft.h"
+# include <limits.h>
 # include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -18,7 +20,6 @@
 // COLOR-----------------------------------------------------------------------
 
 # define BCK "\x1B[30m"
-# define RED "\x1B[31m"
 # define GRE "\x1B[32m"
 # define YEL "\x1B[33m"
 # define BLE "\x1B[34m"

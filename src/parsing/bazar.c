@@ -1,3 +1,4 @@
+#include "../../inc/minishell.h"
 
 printf ("i start = %d\n", ms->i);
 

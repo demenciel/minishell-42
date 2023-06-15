@@ -15,15 +15,15 @@ LIBFT  = 	$(addprefix $(LIBF_DIR), $(LIBFT_A))
 
 HEADERS	:= -I ./include -I $(LIBMLX)/include 
 SRC		:=  main.c \
-			pipex.c \
-			redirect.c \
-			error_utils.c \
-			builtin.c \
-			builtin2.c \
-			link_list.c \
-			parsing.c \
-			utils.c \
-			check_node.c \
+			exec/pipex.c \
+			exec/redirect.c \
+			exec/error_utils.c \
+			exec/builtin.c \
+			exec/builtin2.c \
+			parsing/link_list.c \
+			parsing/parsing.c \
+			parsing/utils.c \
+			parsing/check_node.c \
 
 SRCS	= $(addprefix $(SRC_PATH), $(SRC))
 OBJ		= $(SRC:%.c=%.o)

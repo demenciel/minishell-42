@@ -1,6 +1,6 @@
 
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 /**
  * @brief By parsing the path, checks if the command exists, if yes, executes it
