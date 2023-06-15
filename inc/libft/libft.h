@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 12:31:12 by acouture          #+#    #+#             */
-/*   Updated: 2023/03/13 14:17:42 by acouture         ###   ########.fr       */
+/*   Updated: 2023/06/10 08:32:02 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void				ft_putstr_fd(char *s, int fd);
 void				ft_putendl_fd(char *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
 void				ft_error(char *s);
-void				*ft_realloc(void *ptr, size_t size);
+void				*ft_realloc(void *ptr, size_t original_size,
+						size_t new_size);
 void				ft_swap(int *a, int *b);
 
 char				*ft_strchr(const char *str, int c);
@@ -79,5 +80,5 @@ char				**ft_split(const char *s, char c);
 char				*ft_itoa(int n);
 char				*ft_substr(const char *str, unsigned int start, size_t len);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
-
+void				ft_free2darr(char **tab);
 #endif

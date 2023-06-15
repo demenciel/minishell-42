@@ -6,7 +6,7 @@
 #    By: acouture <acouture@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/06 14:08:40 by acouture          #+#    #+#              #
-#    Updated: 2023/04/01 08:23:12 by acouture         ###   ########.fr        #
+#    Updated: 2023/06/08 16:40:40 by acouture         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,8 @@ SRC :=	ft_atoi.c \
 		ft_error.c \
 		ft_realloc.c \
 		ft_swap.c \
+		ft_free2darr.c \
+		ft_print2darr.c \
 		\
 		ft_printf_n/ft_itoa_to_hexa.c \
 		ft_printf_n/ft_printf.c \
