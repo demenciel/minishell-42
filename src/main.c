@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: romain <romain@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 16:57:16 by acouture          #+#    #+#             */
-/*   Updated: 2023/06/08 16:00:13 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/06/08 22:29:09 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int main(int ac, char **av)
     ms = f_init_meta();
     while (1)
     {
-        ms->line = readline("minishel > ");
+        ms->line = readline("minishell > ");
         printf ("\n%s\n\n", ms->line);
         f_check_line(ms);
         printf("\n");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: romain <romain@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 16:57:03 by acouture          #+#    #+#             */
-/*   Updated: 2023/06/08 16:09:22 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/06/16 18:59:05 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,17 @@ void	f_check_dollar(t_meta *ms);
 void	f_zero_list(t_meta *ms);
 t_meta	*f_init_meta(void);
 void	f_all_clean(t_meta *ms, char *msg);
+char	*f_trimstr(char *s1, char c);
 
 // CHECK_NODE------------------------------------------------------------------
 
 char	*f_pars_dollar(char *txt);
 void	f_pars_list(t_meta *ms);
+void	f_pars_redir_right(t_meta *ms);
+void	f_pars_redir_left(t_meta *ms);
+void	f_pars_simple_quote(t_meta *ms);
+void	f_pars_double_quote(t_meta *ms);
+int		f_som_quote_double(char *txt);
+int		f_som_quote_simple(char *txt);
 
 #endif
