@@ -46,7 +46,7 @@ void	f_print_lst(t_pars *lst)
 	i = 0;
 	while (temp)
 	{
-		printf ("com %d =%s=\n", i, temp->txt);
+		printf("com %d =%s=\n", i, temp->txt);
 		i++;
 		temp = temp->next;
 	}

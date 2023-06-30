@@ -6,7 +6,7 @@
 #    By: romain <romain@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/29 13:48:07 by rofontai          #+#    #+#              #
-#    Updated: 2023/06/16 17:18:11 by romain           ###   ########.fr        #
+#    Updated: 2023/06/17 12:00:53 by romain           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,7 +77,7 @@ clean:
 
 fclean: clean
 #	@$(MAKE) fclean -C
-#	@rm -rf $(READ_PATH)
+	@rm -rf $(READ_PATH)
 	@rm -f $(NAME)
 
 re: fclean all

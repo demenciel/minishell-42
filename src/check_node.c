@@ -3,14 +3,12 @@
 
 void	f_pars_list(t_meta *ms)
 {
-	printf (""GRE"---f_pars_list in---\n"WHT""); //TODO Supprimer
+	t_pars	*temp;
 
-	t_pars *temp;
-
+	printf("" GRE "---f_pars_list in---\n" WHT ""); // TODO Supprimer
 	temp = ms->list;
 	while (ms->list)
 	{
-		// printf("you\n");
 		if (ms->list->txt[0] == 36)
 			ms->list->txt = f_pars_dollar(ms->list->txt);
 		else if (ms->list->txt[0] == 124 && ft_strlen(ms->list->txt) > 1)
@@ -27,30 +25,27 @@ void	f_pars_list(t_meta *ms)
 			ms->list = ms->list->next;
 	}
 	ms->list = temp;
-	printf (""RED"---f_pars_list out---\n"WHT""); //TODO Supprimer
+	printf("" RED "---f_pars_list out---\n" WHT ""); // TODO Supprimer
 }
 
 char	*f_pars_dollar(char *txt)
 {
-	printf (""GRE"---f_pars_dollar in---\n"WHT""); //TODO Supprimer
-	char *temp;
+	char	*temp;
 
-
+	printf("" GRE "---f_pars_dollar in---\n" WHT ""); // TODO Supprimer
 	txt = ft_strtrim(txt, "$");
 	temp = getenv(txt);
-	// printf (" in %s\n", temp); //TODO Supprimer
-	if(temp == NULL)
+	if (temp == NULL)
 		txt = "env doesn't";
 	else
 		txt = ft_strdup(temp);
-	printf (""RED"---f_pars_dollar out---\n"WHT""); //TODO Supprimer
+	printf("" RED "---f_pars_dollar out---\n" WHT ""); // TODO Supprimer
 	return (txt);
 }
 
 void	f_pars_redir_right(t_meta *ms)
 {
-	printf (""GRE"---f_pars_redir_right in---\n"WHT""); //TODO Supprimer
-
+	printf("" GRE "---f_pars_redir_right in---\n" WHT ""); // TODO Supprimer
 	if (ft_strlen(ms->list->txt) == 1)
 	{
 		printf("1 redir right\n");
@@ -63,14 +58,12 @@ void	f_pars_redir_right(t_meta *ms)
 	}
 	else if (ft_strlen(ms->list->txt) > 2)
 		f_all_clean(ms, "Erreur de >\n");
-
-	printf (""RED"---f_pars_redir_right out---\n"WHT""); //TODO Supprimer
+	printf("" RED "---f_pars_redir_right out---\n" WHT ""); // TODO Supprimer
 }
 
 void	f_pars_redir_left(t_meta *ms)
 {
-	printf (""GRE"---f_pars_redir_left in---\n"WHT""); //TODO Supprimer
-
+	printf("" GRE "---f_pars_redir_left in---\n" WHT ""); // TODO Supprimer
 	if (ft_strlen(ms->list->txt) == 1)
 	{
 		printf("1 redir left\n");
@@ -83,31 +76,27 @@ void	f_pars_redir_left(t_meta *ms)
 	}
 	else if (ft_strlen(ms->list->txt) > 2)
 		f_all_clean(ms, "Erreur de <\n");
-
-	printf (""RED"---f_pars_redir_left out---\n"WHT""); //TODO Supprimer
+	printf("" RED "---f_pars_redir_left out---\n" WHT ""); // TODO Supprimer
 }
 
 void	f_pars_simple_quote(t_meta *ms)
 {
-	printf (""GRE"---f_pars_simple_quote in---\n"WHT""); //TODO Supprimer
-
+	printf("" GRE "---f_pars_simple_quote in---\n" WHT ""); // TODO Supprimer
 	if (f_som_quote_simple(ms->list->txt) != 2)
 		f_all_clean(ms, "erreur de quotes double");
 	ms->list->txt = f_trimstr(ms->list->txt, 39);
 	ms->list = ms->list->next;
-
-	printf (""RED"---f_pars_simple_quote out---\n"WHT""); //TODO Supprimer
+	printf("" RED "---f_pars_simple_quote out---\n" WHT ""); // TODO Supprimer
 }
 
 void	f_pars_double_quote(t_meta *ms)
 {
-	printf (""GRE"---f_pars_double_quote in---\n"WHT""); //TODO Supprimer
+	int		i;
+	char	*temp;
+	char	*env;
+	int		start;
 
-	int i;
-	char *temp;
-	char *env;
-	int start;
-
+	printf("" GRE "---f_pars_double_quote in---\n" WHT ""); // TODO Supprimer
 	i = 0;
 	temp = NULL;
 	if (f_som_quote_double(ms->list->txt) != 2)
@@ -125,24 +114,24 @@ void	f_pars_double_quote(t_meta *ms)
 		start = i;
 		if (ms->list->txt[i] == 36)
 		{
-			while (ms->list->txt[i] > 32 && ms->list->txt[i] != 39 && ms->list->txt[i])
+			while (ms->list->txt[i] > 32 && ms->list->txt[i] != 39
+				&& ms->list->txt[i])
 				i++;
 			env = ft_substr(ms->list->txt, start, i - start);
 			env = f_pars_dollar(env);
-			printf ("env =%s=\n", env);
+			printf("env =%s=\n", env);
 			temp = ft_strjoin(temp, env);
 		}
 	}
 	ms->list->txt = ft_strdup(temp);
 	ms->list = ms->list->next;
-
-	printf (""RED"---f_pars_double_quote out---\n"WHT""); //TODO Supprimer
+	printf("" RED "---f_pars_double_quote out---\n" WHT ""); // TODO Supprimer
 }
 
 int	f_som_quote_double(char *txt)
 {
-	int i;
-	int flag;
+	int	i;
+	int	flag;
 
 	i = 0;
 	flag = 0;

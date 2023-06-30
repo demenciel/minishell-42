@@ -1,7 +1,7 @@
 
 #include "../inc/minishell.h"
 
-void f_zero_list(t_meta *ms)
+void	f_zero_list(t_meta *ms)
 {
 	if (ms->list)
 	{
@@ -26,7 +26,7 @@ t_meta	*f_init_meta(void)
 	return (new);
 }
 
-void f_all_clean(t_meta *ms, char *msg)
+void	f_all_clean(t_meta *ms, char *msg)
 {
 	if (ms->line)
 		free(ms->line);
@@ -36,7 +36,7 @@ void f_all_clean(t_meta *ms, char *msg)
 	if (msg)
 	{
 		printf("🚨 %s\n", msg);
-		exit (EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	}
 	exit(EXIT_SUCCESS);
 }
