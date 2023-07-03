@@ -95,6 +95,7 @@ void	f_pars_double_quote(t_meta *ms)
 	char	*temp;
 	char	*env;
 	int		start;
+	int		end;
 
 	printf("" GRE "---f_pars_double_quote in---\n" WHT ""); // TODO Supprimer
 	i = 0;
@@ -111,15 +112,24 @@ void	f_pars_double_quote(t_meta *ms)
 			temp = ft_substr(ms->list->txt, start, i - start);
 		else
 			temp = ft_strjoin(temp, ft_substr(ms->list->txt, start, i - start));
-		start = i;
-		if (ms->list->txt[i] == 36)
+		if (ms->list->txt[i] == 36 && (ms->list->txt[i + 1] == 0 || ms->list->txt[i + 1] < 33 || ms->list->txt[i + 1] == 39))
 		{
-			while (ms->list->txt[i] > 32 && ms->list->txt[i] != 39
-				&& ms->list->txt[i])
+			temp = ft_strjoin(temp, ft_substr(ms->list->txt, i, 1));
+			i++;
+		}
+		else if (ms->list->txt[i] == 36 && (ms->list->txt[i + 1] != 0 || ms->list->txt[i + 1] > 32))
+		{
+			start = i;
+			while (ms->list->txt[i] > 32 && ms->list->txt[i + 1] != 36 && ms->list->txt[i] && ms->list->txt[i] != 39)
 				i++;
-			env = ft_substr(ms->list->txt, start, i - start);
+			if (ms->list->txt[i + 1] == 36 && ms->list->txt[i] && ms->list->txt[i] > 32
+				&& ms->list->txt[i] != 124 && ms->list->txt[i] != 62 && ms->list->txt[i] != 60
+				&& ms->list->txt[i] != 34 && ms->list->txt[i] != 39)
+				end = i++;
+			end = i;
+			env = ft_substr(ms->list->txt, start, end - start);
 			env = f_pars_dollar(env);
-			printf("env =%s=\n", env);
+			printf("env =%s=\n", env); //TODO Supprimer
 			temp = ft_strjoin(temp, env);
 		}
 	}

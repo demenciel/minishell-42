@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: romain <romain@student.42.fr>              +#+  +:+       +#+         #
+#    By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/29 13:48:07 by rofontai          #+#    #+#              #
-#    Updated: 2023/06/17 12:00:53 by romain           ###   ########.fr        #
+#    Updated: 2023/06/30 11:03:08 by rofontai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,12 +71,12 @@ debug: $(NAME)
 	@$(CC) -g $(OBJS) $(HEADERS) -o $(NAME)
 
 clean:
-#	@$(MAKE) clean -C
+#	@make clean -C
 	@rm -rf $(OBJ_PATH)
 	@printf "$(RED)minishell clean: done$(RESET)\n"
 
 fclean: clean
-#	@$(MAKE) fclean -C
+#	@make fclean -C $(LIBFT_DIR)
 	@rm -rf $(READ_PATH)
 	@rm -f $(NAME)
 
