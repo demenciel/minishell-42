@@ -59,6 +59,7 @@ void add_var_to_export(char **new_var, int i, int *list_size)
     (*list_size)++;
 	call_struct()->export_list = ft_realloc(call_struct()->export_list, og_size * sizeof(char *), *list_size * sizeof(char *));
     call_struct()->export_list[i] = NULL;
+	ft_2darr_free(new_var);
 }
 
 /**
@@ -71,6 +72,11 @@ void	ft_export(char *new_var)
 	int list_size;
 	char **new_var_tab;
 
+	if (!new_var || *new_var == '\0')
+    {
+    	ft_2darr_print(call_struct()->export_list);
+        return ;
+    }
 	list_size = 0;
 	while (call_struct()->env_list[list_size])
 		list_size++;
@@ -84,16 +90,15 @@ void	ft_export(char *new_var)
 		i++;
 	}
 	call_struct()->export_list[i] = NULL;
-	if (!new_var || *new_var == '\0')
-    {
-    	print_tab2d(call_struct()->export_list);
-        return ;
-    }
 	new_var_tab = ft_split(new_var, ' ');
 	add_var_to_export(new_var_tab, i, &list_size);
-	ft_free2darr(new_var_tab);
+	ft_2darr_free(new_var_tab);
 }
 
+/**
+ * @brief Mimics the unset builtin in bash. Finds a variable in the environment and deletes it from the environment
+ * @param var The variable to delete
+*/
 void	ft_unset(char *var)
 {
 	int i;

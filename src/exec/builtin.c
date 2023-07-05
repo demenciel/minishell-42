@@ -9,11 +9,10 @@ void    ft_env(void)
     int i;
 
     i = 0;
-    while (call_struct()->env_list[i])
-    {
-        printf("%s\n", call_struct()->env_list[i]);
-        i++;
-    }
+    if (call_struct()->export_list == NULL)
+        ft_2darr_print(call_struct()->env_list);
+    else if (call_struct()->export_list)
+        ft_2darr_print(call_struct()->export_list);
 }
 
 /**
