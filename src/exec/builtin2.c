@@ -5,6 +5,7 @@
 /**
  * @brief If the new element is assigning a VAR, puts the content of VAR in ("")
  * @param var The new element to check
+ * @return The newly form var
 */
 char *detect_var_export(char *var)
 {
@@ -30,6 +31,7 @@ char *detect_var_export(char *var)
 	}
 	new_var[j] = 34;
 	new_var[j + 1] = '\0';
+	free(var);
 	return (new_var);
 }
 
@@ -92,7 +94,6 @@ void	ft_export(char *new_var)
 	call_struct()->export_list[i] = NULL;
 	new_var_tab = ft_split(new_var, ' ');
 	add_var_to_export(new_var_tab, i, &list_size);
-	ft_2darr_free(new_var_tab);
 }
 
 /**
@@ -119,8 +120,10 @@ void	ft_unset(char *var)
 				j++;
 			}
 			call_struct()->export_list = ft_realloc(call_struct()->export_list, j * sizeof(char *), (j - 1) * sizeof(char *));
+			free(trimmed);
 			break ;
 		}
+		free(trimmed);
 		i++;
 	}
 }
