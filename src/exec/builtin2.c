@@ -119,7 +119,7 @@ void	ft_unset(char *var)
 				call_struct()->export_list[j] = call_struct()->export_list[j + 1];
 				j++;
 			}
-			call_struct()->export_list = ft_realloc(call_struct()->export_list, j * sizeof(char *), (j - 1) * sizeof(char *));
+			call_struct()->export_list = ft_realloc(call_struct()->export_list, j * sizeof(char *), (j + 1) * sizeof(char *));
 			free(trimmed);
 			break ;
 		}
