@@ -6,7 +6,7 @@
 /*   By: romain <romain@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 13:56:50 by rofontai          #+#    #+#             */
-/*   Updated: 2023/04/21 21:23:17 by romain           ###   ########.fr       */
+/*   Updated: 2023/07/10 21:38:51 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,4 +135,3 @@ char	*crop_save(char *save, char c)
 	save = NULL;
 	return (dest);
 }
-

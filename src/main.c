@@ -1,35 +1,17 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/24 16:57:16 by acouture          #+#    #+#             */
-/*   Updated: 2023/07/03 10:35:48 by rofontai         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-// PARSING
 int	main(int ac, char **av)
 {
-	t_meta	*ms;
+	t_meta *ms;
 
-	(void)ac;
-	(void)av;
 	f_check_arg(ac, av);
 	ms = f_init_meta();
-	while (1)
+	while (42)
 	{
 		ms->line = readline("minishell > ");
-		printf("\n%s\n\n", ms->line);
+		printf("\n=%s=\n\n", ms->line);
 		f_check_line(ms);
-		printf("\n");
-		f_print_lst(ms->list);
-		printf("\n");
-		f_pars_list(ms);
 		printf("\n");
 		f_print_lst(ms->list);
 		printf("\n");

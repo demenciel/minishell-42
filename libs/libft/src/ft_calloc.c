@@ -6,7 +6,7 @@
 /*   By: romain <romain@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 13:39:18 by romainfonta       #+#    #+#             */
-/*   Updated: 2023/03/24 11:28:53 by romain           ###   ########.fr       */
+/*   Updated: 2023/07/10 08:24:14 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*FT_CALLOC function shall allocate unused space for an array of
        count elements each of whose size in bytes is size.  The space
        shall be initialized to all bits 0.*/
-void	*ft_calloc(size_t count, size_t size)
+void	*ft_calloc(size_t size, size_t count)
 {
 	void	*ptr;
 

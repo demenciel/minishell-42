@@ -1,15 +1,6 @@
 
 #include "../inc/minishell.h"
 
-void	f_zero_list(t_meta *ms)
-{
-	if (ms->list)
-	{
-		free(ms->list);
-		ms->list = NULL;
-	}
-}
-
 t_meta	*f_init_meta(void)
 {
 	static t_meta	*new;
@@ -18,10 +9,11 @@ t_meta	*f_init_meta(void)
 	{
 		new = ft_calloc(sizeof(t_meta), 1);
 		if (!new)
-			return (NULL);
+			exit(EXIT_FAILURE);
 		new->list = NULL;
 		new->i = 0;
 		new->line = NULL;
+		new->com = NULL;
 	}
 	return (new);
 }
@@ -32,7 +24,7 @@ void	f_all_clean(t_meta *ms, char *msg)
 		free(ms->line);
 	if (ms->list)
 		f_free_list(&ms->list);
-	f_free_meta(&ms);
+	free(ms);
 	if (msg)
 	{
 		printf("🚨 %s\n", msg);
@@ -41,11 +33,20 @@ void	f_all_clean(t_meta *ms, char *msg)
 	exit(EXIT_SUCCESS);
 }
 
+void	f_zero_list(t_meta *ms)
+{
+	if (ms->list)
+	{
+		f_free_list(&ms->list);
+		ms->list = NULL;
+	}
+}
+
 char	*f_trimstr(char *s1, char c)
 {
-	size_t i;
-	size_t len_s1;
-	char *dest;
+	size_t	i;
+	size_t	len_s1;
+	char	*dest;
 
 	i = 0;
 	len_s1 = ft_strlen(s1);

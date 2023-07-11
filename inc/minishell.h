@@ -6,7 +6,7 @@
 /*   By: romain <romain@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 16:57:03 by acouture          #+#    #+#             */
-/*   Updated: 2023/06/17 12:17:09 by romain           ###   ########.fr       */
+/*   Updated: 2023/07/10 21:33:23 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,14 @@
 
 // STRUCTURE-------------------------------------------------------------------
 
+typedef struct s_comand
+{
+	char				**com;
+	char				*stin;
+	char				*stout;
+	struct s_comand		*next;
+}						t_comand;
+
 typedef struct s_parsing
 {
 	char				*txt;
@@ -52,45 +60,48 @@ typedef struct s_meta
 	char				*line;
 	int					i;
 	t_pars				*list;
+	t_comand			*com;
 }						t_meta;
-
-// LINK_LIST-----------------------------------------------------------------
-
-t_pars					*f_new_node(char *str);
-t_pars					*f_last_node(t_pars *list);
-void					f_addback_node(t_pars **cmd, t_pars *new);
-void					f_print_lst(t_pars *lst);
-void					f_free_list(t_pars **list);
-void					f_free_meta(t_meta **ms);
 
 // PARSING---------------------------------------------------------------------
 
 void					f_check_arg(int ac, char **av);
 void					f_check_line(t_meta *ms);
+void					f_check_word(t_meta *ms);
+void					f_check_dollar(t_meta *ms);
+
+// CHECK-----------------------------------------------------------------------
+
 void					f_check_pipes(t_meta *ms);
 void					f_check_redir_right(t_meta *ms);
 void					f_check_redir_left(t_meta *ms);
 void					f_check_single_quote(t_meta *ms);
 void					f_check_double_quote(t_meta *ms);
-void					f_check_word(t_meta *ms);
-void					f_check_dollar(t_meta *ms);
 
 // UTILS-----------------------------------------------------------------------
 
-void					f_zero_list(t_meta *ms);
 t_meta					*f_init_meta(void);
 void					f_all_clean(t_meta *ms, char *msg);
+void					f_zero_list(t_meta *ms);
 char					*f_trimstr(char *s1, char c);
 
-// CHECK_NODE------------------------------------------------------------------
+// PARS------------------------------------------------------------------------
 
-char					*f_pars_dollar(char *txt);
-void					f_pars_list(t_meta *ms);
-void					f_pars_redir_right(t_meta *ms);
-void					f_pars_redir_left(t_meta *ms);
-void					f_pars_simple_quote(t_meta *ms);
-void					f_pars_double_quote(t_meta *ms);
-int						f_som_quote_double(char *txt);
 int						f_som_quote_simple(char *txt);
+char					*f_pars_simple_quote(t_meta *ms, char *txt);
+char					*f_pars_dollar(char *txt);
+char					*f_pars_double_quote(t_meta *ms, char *txt);
+int						f_som_quote_double(char *txt);
+
+// LINKS_LIST------------------------------------------------------------------
+
+void					f_free_list(t_pars **list);
+t_pars					*f_new_node(char *str);
+t_pars					*f_last_node(t_pars *list);
+void					f_addback_node(t_pars **cmd, t_pars *new);
+
+// A_SUPP----------------------------------------------------------------------
+
+void					f_print_lst(t_pars *lst);
 
 #endif

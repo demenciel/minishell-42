@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+         #
+#    By: romain <romain@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/29 13:48:07 by rofontai          #+#    #+#              #
-#    Updated: 2023/06/30 11:03:08 by rofontai         ###   ########.fr        #
+#    Updated: 2023/07/10 21:21:42 by romain           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,10 +27,14 @@ LIBRLINE	= readline-8.2
 HEADERS	:= -I ./include
 
 SRC		:= main.c \
-			link_list.c \
 			parsing.c \
 			utils.c \
-			check_node.c \
+			link_list.c \
+			pars.c \
+			check.c \
+			a_sup.c \
+
+
 
 SRCS	= $(addprefix $(SRC_PATH), $(SRC))
 OBJ		= $(SRC:%.c=%.o)
@@ -71,15 +75,23 @@ debug: $(NAME)
 	@$(CC) -g $(OBJS) $(HEADERS) -o $(NAME)
 
 clean:
-#	@make clean -C
+	@make clean -C $(LIBFT_DIR)
 	@rm -rf $(OBJ_PATH)
 	@printf "$(RED)minishell clean: done$(RESET)\n"
 
 fclean: clean
-#	@make fclean -C $(LIBFT_DIR)
+	@make fclean -C $(LIBFT_DIR)
 	@rm -rf $(READ_PATH)
 	@rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: all, clean, fclean, re
+
+# Debug leaks
+leak : all
+	@leaks --atExit --list -- ./minishell
+
+leaks : all
+	@valgrind --track-fds=yes --trace-children=yes --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=supp.txt ./minishell
+
+.PHONY: all, clean, fclean, re, leak, leaks
