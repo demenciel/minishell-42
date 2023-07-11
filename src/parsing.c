@@ -68,7 +68,7 @@ void	f_check_dollar(t_meta *ms)
 		&& ms->line[ms->i] != 60 && ms->line[ms->i] != 39
 		&& ms->line[ms->i] != 34)
 		ms->i++;
-	if (ms->line[ms->i + 1] == 36 && ms->line[ms->i] && ms->line[ms->i] > 32
+	if (ms->line[ms->i] && ms->line[ms->i + 1] == 36 && ms->line[ms->i] > 32
 		&& ms->line[ms->i] != 124 && ms->line[ms->i] != 62
 		&& ms->line[ms->i] != 60 && ms->line[ms->i] != 39
 		&& ms->line[ms->i] != 34)

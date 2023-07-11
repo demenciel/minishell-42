@@ -13,7 +13,7 @@ t_meta	*f_init_meta(void)
 		new->list = NULL;
 		new->i = 0;
 		new->line = NULL;
-		new->com = NULL;
+		new->comand = NULL;
 	}
 	return (new);
 }
@@ -56,7 +56,7 @@ char	*f_trimstr(char *s1, char c)
 		i++;
 	while (s1[len_s1 - 1] && ft_strchr(&c, s1[len_s1 - 1]) && len_s1 > i)
 		len_s1--;
-	dest = ft_calloc(sizeof(char), (len_s1 - i));
+	dest = ft_calloc(sizeof(char), (len_s1 - i) + 1);
 	if (!dest)
 		return (0);
 	ft_strlcpy(dest, &s1[i], (len_s1 - i) + 1);

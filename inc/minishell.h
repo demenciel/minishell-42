@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: romain <romain@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 16:57:03 by acouture          #+#    #+#             */
-/*   Updated: 2023/07/10 21:33:23 by romain           ###   ########.fr       */
+/*   Updated: 2023/07/11 16:28:56 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_meta
 	char				*line;
 	int					i;
 	t_pars				*list;
-	t_comand			*com;
+	t_comand			*comand;
 }						t_meta;
 
 // PARSING---------------------------------------------------------------------
@@ -100,8 +100,18 @@ t_pars					*f_new_node(char *str);
 t_pars					*f_last_node(t_pars *list);
 void					f_addback_node(t_pars **cmd, t_pars *new);
 
+// COM_LIST--------------------------------------------------------------------
+
+t_comand	*f_new_com(void);
+t_comand	*f_last_com(t_comand *list);
+void		f_addback_com(t_comand **cmd, t_comand *new);
+void		f_split_pipes(t_meta *ms);
+
+
 // A_SUPP----------------------------------------------------------------------
 
 void					f_print_lst(t_pars *lst);
+void					f_print_lst_final(t_comand *lst);
+void					f_print(char **cou);
 
 #endif

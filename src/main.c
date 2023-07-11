@@ -15,6 +15,9 @@ int	main(int ac, char **av)
 		printf("\n");
 		f_print_lst(ms->list);
 		printf("\n");
+		f_split_pipes(ms);
+		printf("\n");
+		f_print_lst_final(ms->com);
 		f_zero_list(ms);
 		add_history(ms->line);
 		if (ft_strncmp(ms->line, "exit", 4) == 0)
