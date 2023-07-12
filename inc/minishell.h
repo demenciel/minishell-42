@@ -33,9 +33,9 @@ typedef struct s_pipex
 
 // REDIRECT
 
-void					redir_out(char *cmd, char *in, char *out);
-void					redir_in(char *cmd, char *infile);
-void					append_out(char *cmd, char *infile, char *output);
+void					redir_out(char **cmd, char *in, char *out);
+void					redir_in(char **cmd, char *infile);
+void					append_out(char **cmd, char *infile, char *output);
 void					heredocs(char *limiter);
 
 // PIPEX

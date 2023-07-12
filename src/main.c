@@ -78,17 +78,17 @@ int	main(int ac, char **av, char **env)
 	while (42)
 	{
 		ms->line = readline("minishell > ");
+		if (ft_strncmp(ms->line, "exit", 4) == 0)
+			break ;
 		f_check_line(ms);
 		f_split_pipes(ms);
 		if (ms->comand)
 		{
-			// pipex(ms->comand->com, ms->,  0);
+			pipex(ms->comand, 1,  0);
 		}
 		// ft_print_details(ms);
 		f_zero_list(ms);
 		add_history(ms->line);
-		if (ft_strncmp(ms->line, "exit", 4) == 0)
-			break ;
 	}
 	if (g()->export_list)
         ft_2darr_free(g()->export_list);

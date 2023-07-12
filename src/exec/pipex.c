@@ -93,3 +93,5 @@ void	pipex(char **cmd, int n, char *infile)
 	else
 		wait(NULL);
 }
+
+// itérer dans les nodes pour executer les commandes multiples

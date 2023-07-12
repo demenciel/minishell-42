@@ -25,7 +25,7 @@ void	heredocs(char *limiter)
  * @param cmd Command to be executed
  * @param infile The infile to become the STDIN
 */
-void	redir_in(char *cmd, char *infile)
+void	redir_in(char **cmd, char *infile)
 {
 	int	fd;
 	int	stdin_backup;
@@ -48,7 +48,7 @@ void	redir_in(char *cmd, char *infile)
  * @param infile If there is a fd, redirects it as the input of the command
  * @param outfile The result of the appended file
 */
-void	append_out(char *cmd, char *infile, char *outfile)
+void	append_out(char **cmd, char *infile, char *outfile)
 {
 	int	fd[2];
 	int	stdout_backup;
@@ -75,7 +75,7 @@ void	append_out(char *cmd, char *infile, char *outfile)
  * @param infile If there is a fd, redirects it as the input of the command
  * @param outfile The new file created as the output of the executed command
 */
-void	redir_out(char *cmd, char *infile, char *outfile)
+void	redir_out(char **cmd, char *infile, char *outfile)
 {
 	int	fd[2];
 	int	stdout_backup;

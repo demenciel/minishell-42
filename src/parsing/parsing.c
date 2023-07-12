@@ -61,7 +61,7 @@ void	f_check_dollar(t_meta *ms)
 	int		end;
 	char	*temp;
 
-	printf("" GRE "---f_check_dollar in---\n" WHT ""); // TODO Supprimer
+	// printf("" GRE "---f_check_dollar in---\n" WHT ""); // TODO Supprimer
 	start = ms->i;
 	while (ms->line[ms->i] && ms->line[ms->i] > 32 && ms->line[ms->i] != 124
 		&& ms->line[ms->i] != 62 && ms->line[ms->i + 1] != 36
@@ -77,5 +77,5 @@ void	f_check_dollar(t_meta *ms)
 	temp = ft_substr(ms->line, start, (end - start));
 	temp = f_pars_dollar(temp);
 	f_addback_node(&ms->list, f_new_node(temp));
-	printf("" RED "---f_check_dollar out---\n" WHT ""); // TODO Supprimer
+	// printf("" RED "---f_check_dollar out---\n" WHT ""); // TODO Supprimer
 }
