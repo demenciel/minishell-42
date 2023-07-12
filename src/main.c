@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/24 16:57:16 by acouture          #+#    #+#             */
-/*   Updated: 2023/07/11 15:04:19 by acouture         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../inc/minishell.h"
 
 // PARSING
@@ -58,21 +46,34 @@ void    init_env(char **env)
     exec->env_list[size] = NULL;
 }
 
-int main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)
 {
-    (void) ac;
-    (void) av;
+	t_meta *ms;
 
-    // readline("> ");
-    init_env(env);
-    ft_export("HO$?LA=bonjour");
-    // printf("------ EXPORT ------\n");
-    // ft_export("");
-    printf("------ ENV ------\n");
-    ft_env();
-
-    if (g()->export_list)
+	init_env(env);
+	f_check_arg(ac, av);
+	ms = f_init_meta();
+	while (42)
+	{
+		ms->line = readline("minishell > ");
+		printf("\n=%s=\n\n", ms->line);
+		f_check_line(ms);
+		printf("\n");
+		f_print_lst(ms->list);
+		printf("\n");
+		f_split_pipes(ms);
+		printf("\n");
+		f_print_lst_final(ms->comand);
+		// printf("com_temp =%s=", ms->com_temp);
+		printf("\n");
+		f_zero_list(ms);
+		add_history(ms->line);
+		if (ft_strncmp(ms->line, "exit", 4) == 0)
+			break ;
+	}
+	if (g()->export_list)
         ft_2darr_free(g()->export_list);
     ft_2darr_free(g()->env_list);
-    return (0);
+	f_all_clean(ms, NULL);
+	return (0);
 }

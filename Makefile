@@ -1,9 +1,13 @@
+
 NAME	:= minishell
-CFLAGS	:= -g -Wextra -Wall -Werror
+CFLAGS	:= -g -Wextra -Wall -Werror #-fsanitize=address
 #
 SRC_PATH = src/
 
 OBJ_PATH = obj/
+
+LIBFT_DIR	= ./libs/libft
+LIBFT	= $(LIBFT_DIR)/libft.a
 
 READ_PATH	= libs/readline
 RLINE		= $(READ_PATH)/libreadline.a
@@ -12,8 +16,9 @@ LIBRLINE	= readline-8.2
 LIBFT_A = 	libft.a
 LIBF_DIR = 	inc/libft/
 LIBFT  = 	$(addprefix $(LIBF_DIR), $(LIBFT_A))
+HEADERS	:= -I ./include
 
-HEADERS	:= -I ./include -I $(LIBMLX)/include 
+
 SRC		:=  main.c \
 			exec/pipex.c \
 			exec/redirect.c \
@@ -22,10 +27,14 @@ SRC		:=  main.c \
 			exec/export.c \
 			exec/export2.c \
 			exec/exit.c \
-			parsing/link_list.c \
 			parsing/parsing.c \
 			parsing/utils.c \
-			parsing/check_node.c \
+			parsing/link_list.c \
+			parsing/pars.c \
+			parsing/check.c \
+			parsing/a_sup.c \
+			parsing/com_list.c \
+			parsing/utils_com.c \
 
 SRCS	= $(addprefix $(SRC_PATH), $(SRC))
 OBJ		= $(SRC:%.c=%.o)
@@ -57,25 +66,33 @@ readline	:
         echo "\n----- $(GREEN)Readline $(RESET) succesfully configured ✅ -----\n"; \
     fi
 
-$(NAME): $(OBJS)
-
-	@$(CC) $(CFLAGS) $(OBJS) $(RLINE) $(LIBFT) -lncurses $(HEADERS) -o $(NAME)
+$(NAME): $(OBJS) $(LIBFT)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(RLINE) -lncurses $(HEADERS) -o $(NAME)
 	@printf "$(GREEN)minishell compiling: done$(RESET)\n"
+
+ $(LIBFT)	:
+	@make -C $(LIBFT_DIR)
 
 debug: $(NAME)
 	@$(CC) -g $(OBJS) $(HEADERS) $(LIBFT) -o $(NAME)
 
 clean:
-#	@$(MAKE) clean -C
-	@$(MAKE) clean -C $(LIBF_DIR)
+	@make clean -C $(LIBFT_DIR)
 	@rm -rf $(OBJ_PATH)
 	@printf "$(RED)minishell clean: done$(RESET)\n"
 
 fclean: clean
-#	@$(MAKE) fclean -C
-	@$(MAKE) fclean -C $(LIBF_DIR)
+	@make fclean -C $(LIBFT_DIR)
+#	@rm -rf $(READ_PATH)
 	@rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: all, clean, fclean, re
+# Debug leaks
+leak : all
+	@leaks --atExit --list -- ./minishell
+
+leaks : all
+	@valgrind --track-fds=yes --trace-children=yes --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=supp.txt ./minishell
+
+.PHONY: all, clean, fclean, re, leak, leaks
