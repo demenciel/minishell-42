@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 12:31:12 by acouture          #+#    #+#             */
-/*   Updated: 2023/07/05 09:13:13 by acouture         ###   ########.fr       */
+/*   Updated: 2023/07/12 16:12:50 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,6 @@ char				*ft_substr(const char *str, unsigned int start, size_t len);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void				ft_2darr_free(char **tab);
 void				ft_2darr_print(char **tb);
+void				**ft_free_tab_char(char **tabl);
 
 #endif
