@@ -9,6 +9,14 @@ t_pipex	*g(void)
 	return (&data);
 }
 
+t_meta	*mt(void)
+{
+	static t_meta	data;
+
+	return (&data);
+}
+
+
 void	init_pipex(void)
 {
 	t_pipex	*p;
@@ -46,17 +54,9 @@ void    init_env(char **env)
     exec->env_list[size] = NULL;
 }
 
-int	main(int ac, char **av, char **env)
+void ft_print_details(t_meta *ms)
 {
-	t_meta *ms;
-
-	init_env(env);
-	f_check_arg(ac, av);
-	ms = f_init_meta();
-	while (42)
-	{
-		ms->line = readline("minishell > ");
-		printf("\n=%s=\n\n", ms->line);
+	printf("\n=%s=\n\n", ms->line);
 		f_check_line(ms);
 		printf("\n");
 		f_print_lst(ms->list);
@@ -66,6 +66,25 @@ int	main(int ac, char **av, char **env)
 		f_print_lst_final(ms->comand);
 		// printf("com_temp =%s=", ms->com_temp);
 		printf("\n");
+}
+
+int	main(int ac, char **av, char **env)
+{
+	t_meta *ms;
+
+	f_check_arg(ac, av);
+	ms = f_init_meta();
+	init_env(env);
+	while (42)
+	{
+		ms->line = readline("minishell > ");
+		f_check_line(ms);
+		f_split_pipes(ms);
+		if (ms->comand)
+		{
+			// pipex(ms->comand->com, ms->,  0);
+		}
+		// ft_print_details(ms);
 		f_zero_list(ms);
 		add_history(ms->line);
 		if (ft_strncmp(ms->line, "exit", 4) == 0)
@@ -77,3 +96,7 @@ int	main(int ac, char **av, char **env)
 	f_all_clean(ms, NULL);
 	return (0);
 }
+
+// struct ms->comand
+
+

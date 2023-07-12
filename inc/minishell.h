@@ -17,7 +17,6 @@
 # include <term.h>
 # include <unistd.h>
 
-
 // STRUCTURE-------------------------------------------------------------------
 
 typedef struct s_pipex
@@ -66,8 +65,9 @@ void					ft_exit(char *msg, char *builtin, int error);
 // UTILS-----------------------------------------------------------------------
 
 t_pipex					*g(void);
+
 void					init_pipex(void);
-void					exec_cmd(char *cmd);
+void					exec_cmd(char **cmd);
 
 // ERROR UTILS
 void					print_error(char *cmd);
@@ -77,7 +77,7 @@ void					cd_error(char *input);
 // COLOR-----------------------------------------------------------------------
 
 # define BCK "\x1B[30m"
-# define RED "\x1B[31m"
+// # define RED "\x1B[31m"
 # define GRE "\x1B[32m"
 # define YEL "\x1B[33m"
 # define BLE "\x1B[34m"
@@ -111,6 +111,8 @@ typedef struct s_meta
 	t_pars				*list;
 	t_comand			*comand;
 }						t_meta;
+
+t_meta					*mt(void);
 
 // PARSING---------------------------------------------------------------------
 
@@ -152,17 +154,17 @@ void					f_addback_node(t_pars **cmd, t_pars *new);
 
 // COM_LIST--------------------------------------------------------------------
 
-t_comand	*f_new_com(char *com, char *in, char *out);
-t_comand	*f_last_com(t_comand *list);
-void		f_addback_com(t_comand **cmd, t_comand *new);
-void		f_split_pipes(t_meta *ms);
-void		f_zero_new_com(t_meta *ms);
+t_comand				*f_new_com(char *com, char *in, char *out);
+t_comand				*f_last_com(t_comand *list);
+void					f_addback_com(t_comand **cmd, t_comand *new);
+void					f_split_pipes(t_meta *ms);
+void					f_zero_new_com(t_meta *ms);
 
 // UTILS_COM-------------------------------------------------------------------
 
-void	f_add_com(t_meta *ms, char *add);
-void	f_add_in(t_meta *ms, char *add);
-void	f_add_out(t_meta *ms, char *add);
+void					f_add_com(t_meta *ms, char *add);
+void					f_add_in(t_meta *ms, char *add);
+void					f_add_out(t_meta *ms, char *add);
 
 // A_SUPP----------------------------------------------------------------------
 

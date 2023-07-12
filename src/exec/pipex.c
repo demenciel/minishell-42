@@ -6,31 +6,29 @@
  * @brief By parsing the path, checks if the command exists, if yes, executes it
  * @param cmd The command to be executed
 */
-void	exec_cmd(char *cmd)
+void	exec_cmd(char **cmd)
 {
 	t_pipex	*p;
 	int		i;
 	char	*search_cmd;
 	char	**paths;
-	char	**my_cmd;
 
 	i = -1;
 	p = g();
 	paths = ft_split(getenv("PATH"), ':');
 	while (paths[++i])
 		paths[i] = ft_strjoin(paths[i], "/");
-	my_cmd = ft_split(cmd, ' ');
 	i = -1;
 	while (paths[++i])
 	{
-		search_cmd = ft_strjoin(paths[i], my_cmd[0]);
+		search_cmd = ft_strjoin(paths[i], cmd[0]);
 		if (access(search_cmd, 0) == 0)
 		{
-			execve(search_cmd, my_cmd, p->env_list);
+			execve(search_cmd, cmd, p->env_list);
 			free(search_cmd);
 		}
 		else
-			print_error(cmd);
+			print_error(cmd[0]);
 	}
 }
 
@@ -76,7 +74,7 @@ void	pipex(char **cmd, int n, char *infile)
 			close(input);
 			dup2(pipe_end[1], STDOUT_FILENO);
 			close(pipe_end[1]);
-			exec_cmd(cmd[i]);
+			exec_cmd(cmd);
 		}
 		else
 		{
@@ -89,7 +87,7 @@ void	pipex(char **cmd, int n, char *infile)
 	if (fork() == 0)
 	{
 		dup2(input, STDIN_FILENO);
-		exec_cmd(cmd[i]);
+		exec_cmd(cmd);
 		close(input);
 	}
 	else
