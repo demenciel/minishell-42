@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: romain <romain@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 16:57:03 by acouture          #+#    #+#             */
-/*   Updated: 2023/07/11 23:15:05 by romain           ###   ########.fr       */
+/*   Updated: 2023/07/12 10:57:20 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 
 typedef struct s_comand
 {
-	char				*com;
+	char				**com;
 	char				*stin;
 	char				*stout;
 	struct s_comand		*next;
@@ -87,6 +87,7 @@ t_meta					*f_init_meta(void);
 void					f_all_clean(t_meta *ms, char *msg);
 void					f_zero_list(t_meta *ms);
 char					*f_trimstr(char *s1, char c);
+void					f_free_comand(t_comand **list);
 
 // PARS------------------------------------------------------------------------
 
@@ -105,10 +106,11 @@ void					f_addback_node(t_pars **cmd, t_pars *new);
 
 // COM_LIST--------------------------------------------------------------------
 
-t_comand	*f_new_com(void);
+t_comand	*f_new_com(char *com, char *in, char *out);
 t_comand	*f_last_com(t_comand *list);
 void		f_addback_com(t_comand **cmd, t_comand *new);
 void		f_split_pipes(t_meta *ms);
+void		f_zero_new_com(t_meta *ms);
 
 // UTILS_COM-------------------------------------------------------------------
 

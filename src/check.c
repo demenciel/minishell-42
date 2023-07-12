@@ -48,6 +48,7 @@ void	f_check_redir_left(t_meta *ms)
 	end = ms->i;
 	if (end - start > 2)
 		f_all_clean(ms, "Erreur de redir left");
+	
 	f_addback_node(&ms->list, f_new_node(ft_substr(ms->line, start, (end
 					- start))));
 	printf("" RED "---f_check_redir_left out---\n" WHT ""); // TODO Supprimer

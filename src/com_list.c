@@ -1,18 +1,37 @@
 
 #include "../inc/minishell.h"
 
-t_comand	*f_new_com(void)
+t_comand	*f_new_com(char *com, char *in, char *out)
 {
 	t_comand	*new;
 
 	new = ft_calloc(sizeof(t_comand), 1);
 	if (!new)
 		return (NULL);
-	new->com = NULL;
-	new->stin = NULL;
-	new->stout = NULL;
+	new->com = ft_split(com, 9);
+	new->stin = ft_strdup(in);
+	new->stout = ft_strdup(out);
 	return (new);
 }
+
+void	f_zero_new_com(t_meta *ms)
+{
+	if (ms->com_temp)
+	{
+		free(ms->com_temp);
+		ms->com_temp = NULL;
+	}
+	if (ms->in)
+	{
+		free(ms->in);
+		ms->in = NULL;
+	}if (ms->out)
+	{
+		free(ms->out);
+		ms->out = NULL;
+	}
+}
+
 
 t_comand	*f_last_com(t_comand *list)
 {
@@ -50,16 +69,16 @@ void	f_split_pipes(t_meta *ms)
 		{
 			if (temp && temp->txt[0] == 62)
 			{
-				f_add_in(ms, temp->txt);
+				f_add_out(ms, temp->txt);
 				temp = temp->next;
-				f_add_in(ms, temp->txt);
+				f_add_out(ms, temp->txt);
 				printf("in =%s=\n", ms->in);
 			}
 			else if (temp && temp->txt[0] == 60)
 			{
-				f_add_out(ms, temp->txt);
+				f_add_in(ms, temp->txt);
 				temp = temp->next;
-				f_add_out(ms, temp->txt);
+				f_add_in(ms, temp->txt);
 				printf("out =%s=\n", ms->out);
 			}
 			else
@@ -69,6 +88,8 @@ void	f_split_pipes(t_meta *ms)
 			}
 			temp = temp->next;
 		}
+		f_addback_com(&ms->comand, f_new_com(ms->com_temp, ms->in, ms->out));
+		f_zero_new_com(ms);
 		if (temp == NULL)
 			break ;
 		temp = temp->next;

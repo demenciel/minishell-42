@@ -31,6 +31,7 @@ void	f_print_lst_final(t_comand *lst)
 		printf("in %d =%s=\n", i, temp->stin);
 		printf("out %d =%s=\n", i, temp->stout);
 		i++;
+		printf("----------------------------------------\n");
 		temp = temp->next;
 	}
 	printf("" GRE "---f_print_lst_final out---\n" WHT ""); // TODO Supprimer

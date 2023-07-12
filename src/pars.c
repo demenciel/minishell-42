@@ -40,7 +40,7 @@ char	*f_pars_dollar(char *txt)
 	if (ft_strlen(txt) == 1)
 		return (txt);
 	else if (txt[1] == '?')
-		return (ft_itoa('1'));
+		return (ft_itoa(1));
 	temp = f_trimstr(txt, 36);
 	free(txt);
 	env = getenv(temp);
