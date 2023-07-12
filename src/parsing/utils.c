@@ -1,5 +1,5 @@
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 t_meta	*f_init_meta(void)
 {

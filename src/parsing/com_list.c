@@ -1,5 +1,5 @@
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 t_comand	*f_new_com(char *com, char *in, char *out)
 {

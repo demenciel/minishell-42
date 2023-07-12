@@ -1,5 +1,5 @@
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void	f_add_com(t_meta *ms, char *add)
 {
