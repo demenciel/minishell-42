@@ -41,25 +41,37 @@ void	f_split_pipes(t_meta *ms)
 {
 	printf("" GRE "---f_split_pipes in---\n" WHT ""); // TODO Supprimer
 
-	t_comand *temp;
-	char *com;
-	t_pars *ptr;
+	t_pars *temp;
 
-	ptr = ms->list;
-	while (ptr->next)
+	temp = ms->list;
+	while (temp)
 	{
-		temp = f_new_com();
-		while (ptr->next && ptr->txt[0] != '|')
+		while (temp && temp->txt[0] != 124)
 		{
-			com = ft_strjoin(com, ptr->txt);
-			ptr = ptr->next;
+			if (temp && temp->txt[0] == 62)
+			{
+				f_add_in(ms, temp->txt);
+				temp = temp->next;
+				f_add_in(ms, temp->txt);
+				printf("in =%s=\n", ms->in);
+			}
+			else if (temp && temp->txt[0] == 60)
+			{
+				f_add_out(ms, temp->txt);
+				temp = temp->next;
+				f_add_out(ms, temp->txt);
+				printf("out =%s=\n", ms->out);
+			}
+			else
+			{
+				f_add_com(ms, temp->txt);
+				printf("com_temp =%s=\n", ms->com_temp);
+			}
+			temp = temp->next;
 		}
-		temp->stin = ft_strdup(com);
-		free(com);
-		f_addback_com(&ms->comand, temp);
-		temp = NULL;
-		ptr = ptr->next;
+		if (temp == NULL)
+			break ;
+		temp = temp->next;
 	}
-	ms->list = ptr;
 	printf("" GRE "---f_split_pipes out---\n" WHT ""); // TODO Supprimer
 }

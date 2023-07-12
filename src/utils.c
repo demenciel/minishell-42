@@ -11,6 +11,9 @@ t_meta	*f_init_meta(void)
 		if (!new)
 			exit(EXIT_FAILURE);
 		new->list = NULL;
+		new->com_temp = NULL;
+		new->in = NULL;
+		new->out = NULL;
 		new->i = 0;
 		new->line = NULL;
 		new->comand = NULL;
@@ -22,6 +25,12 @@ void	f_all_clean(t_meta *ms, char *msg)
 {
 	if (ms->line)
 		free(ms->line);
+	if (ms->com_temp)
+		free(ms->com_temp);
+	if (ms->in)
+		free(ms->in);
+	if (ms->out)
+		free(ms->out);
 	if (ms->list)
 		f_free_list(&ms->list);
 	free(ms);
@@ -39,6 +48,20 @@ void	f_zero_list(t_meta *ms)
 	{
 		f_free_list(&ms->list);
 		ms->list = NULL;
+	}
+	if (ms->com_temp)
+	{
+		free(ms->com_temp);
+		ms->com_temp = NULL;
+	}
+	if (ms->in)
+	{
+		free(ms->in);
+		ms->in = NULL;
+	}if (ms->out)
+	{
+		free(ms->out);
+		ms->out = NULL;
 	}
 }
 

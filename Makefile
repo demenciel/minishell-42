@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+         #
+#    By: romain <romain@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/29 13:48:07 by rofontai          #+#    #+#              #
-#    Updated: 2023/07/11 15:57:07 by rofontai         ###   ########.fr        #
+#    Updated: 2023/07/11 22:57:20 by romain           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	:= minishell
-CFLAGS	:= -g -Wextra -Wall -Werror #-fsanitize=address
+CFLAGS	:= -g -Wextra -Wall -Werror -fsanitize=address
 
 SRC_PATH = src/
 
@@ -34,7 +34,7 @@ SRC		:= main.c \
 			check.c \
 			a_sup.c \
 			com_list.c \
-
+			utils_com.c \
 
 
 SRCS	= $(addprefix $(SRC_PATH), $(SRC))
@@ -82,7 +82,7 @@ clean:
 
 fclean: clean
 	@make fclean -C $(LIBFT_DIR)
-	@rm -rf $(READ_PATH)
+#	@rm -rf $(READ_PATH)
 	@rm -f $(NAME)
 
 re: fclean all

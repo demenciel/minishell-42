@@ -22,6 +22,7 @@ void	f_check_redir_right(t_meta *ms)
 {
 	int	start;
 	int	end;
+	char *temp;
 
 	printf("" GRE "---f_check_redir_right in---\n" WHT ""); // TODO Supprimer
 	start = ms->i;
@@ -30,8 +31,8 @@ void	f_check_redir_right(t_meta *ms)
 	end = ms->i;
 	if (end - start > 2)
 		f_all_clean(ms, "Erreur de redir right");
-	f_addback_node(&ms->list, f_new_node(ft_substr(ms->line, start, (end
-					- start))));
+	temp = ft_substr(ms->line, start, (end - start));
+	f_addback_node(&ms->list, f_new_node(temp));
 	printf("" RED "---f_check_redir_right out---\n" WHT ""); // TODO Supprimer
 }
 
