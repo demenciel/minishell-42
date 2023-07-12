@@ -75,13 +75,14 @@ int	main(int ac, char **av, char **env)
 	f_check_arg(ac, av);
 	ms = f_init_meta();
 	init_env(env);
-	while (42)
+	while (1)
 	{
 		ms->line = readline("minishell > ");
 		if (ft_strncmp(ms->line, "exit", 4) == 0)
 			break ;
 		f_check_line(ms);
 		f_split_pipes(ms);
+		ft_check_builtins(ms->comand);
 		if (ms->comand)
 		{
 			pipex(ms->comand, 1,  0);
