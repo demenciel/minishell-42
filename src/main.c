@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 16:57:16 by acouture          #+#    #+#             */
-/*   Updated: 2023/06/15 16:34:54 by acouture         ###   ########.fr       */
+/*   Updated: 2023/07/11 15:04:19 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // PARSING
 
-t_pipex	*call_struct(void)
+t_pipex	*g(void)
 {
 	static t_pipex	data;
 
@@ -25,7 +25,7 @@ void	init_pipex(void)
 {
 	t_pipex	*p;
 
-	p = call_struct();
+	p = g();
 	p->in_fd = 0;
 	p->out_fd = 0;
 	p->exec_flag = 0;
@@ -33,31 +33,46 @@ void	init_pipex(void)
 	p->export_list = NULL;
 }
 
-int main(int ac, char **av)
+/**
+ * @brief Inits the environment, assigns it to env_list
+ * @param env The computer environment
+*/
+void    init_env(char **env)
+{
+    int size;
+    t_pipex *exec;
+
+    size = 0;
+    exec = g();
+    while (env[size])
+        size++;
+    exec->env_list = malloc(sizeof(char *) * (size + 1));
+    if (!exec->env_list)
+        return ;
+    size = 0;
+    while (env[size])
+    {
+        exec->env_list[size] = ft_strdup(env[size]);
+        size++;
+    }
+    exec->env_list[size] = NULL;
+}
+
+int main(int ac, char **av, char **env)
 {
     (void) ac;
     (void) av;
-    t_meta  *ms;
 
-    f_check_arg(ac, av);
-    ms = f_init_meta();
-    while (1)
-    {
-        ms->line = readline("minishel > ");
-        printf ("\n%s\n\n", ms->line);
-        f_check_line(ms);
-        printf("\n");
-        f_print_lst(ms->list);
-        printf("\n");
-        f_pars_list(ms);
-         printf("\n");
-        f_print_lst(ms->list);
-        printf("\n");
-        f_zero_list(ms);
-        add_history(ms->line);
-        if ( ft_strncmp(ms->line, "exit", 4) == 0)
-            break ;
-    }
-    f_all_clean(ms, NULL);
+    // readline("> ");
+    init_env(env);
+    ft_export("HO$?LA=bonjour");
+    // printf("------ EXPORT ------\n");
+    // ft_export("");
+    printf("------ ENV ------\n");
+    ft_env();
+
+    if (g()->export_list)
+        ft_2darr_free(g()->export_list);
+    ft_2darr_free(g()->env_list);
     return (0);
 }

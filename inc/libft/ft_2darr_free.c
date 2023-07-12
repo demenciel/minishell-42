@@ -1,22 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free2darr.c                                     :+:      :+:    :+:   */
+/*   ft_2darr_free.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 14:41:10 by acouture          #+#    #+#             */
-/*   Updated: 2023/06/10 08:40:38 by acouture         ###   ########.fr       */
+/*   Updated: 2023/07/07 15:35:27 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void    ft_free2darr(char **tab)
+void    ft_2darr_free(char **tab)
 {
     int i;
 
     i = 0;
+    if (!tab)
+        return ;
     while (tab[i])
     {
         free(tab[i]);

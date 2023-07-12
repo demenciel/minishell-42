@@ -19,7 +19,9 @@ SRC		:=  main.c \
 			exec/redirect.c \
 			exec/error_utils.c \
 			exec/builtin.c \
-			exec/builtin2.c \
+			exec/export.c \
+			exec/export2.c \
+			exec/exit.c \
 			parsing/link_list.c \
 			parsing/parsing.c \
 			parsing/utils.c \

@@ -15,7 +15,7 @@ void	exec_cmd(char *cmd)
 	char	**my_cmd;
 
 	i = -1;
-	p = call_struct();
+	p = g();
 	paths = ft_split(getenv("PATH"), ':');
 	while (paths[++i])
 		paths[i] = ft_strjoin(paths[i], "/");

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print2darr.c                                    :+:      :+:    :+:   */
+/*   ft_2darr_print.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:40:18 by acouture          #+#    #+#             */
-/*   Updated: 2023/06/15 13:42:00 by acouture         ###   ########.fr       */
+/*   Updated: 2023/07/05 09:16:28 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
  * @brief Prints a 2d array
  * @param tb The 2d array to print
 */
-void	print_tab2d(char **tb)
+void	ft_2darr_print(char **tb)
 {
 	int	i;
 
@@ -25,5 +25,4 @@ void	print_tab2d(char **tb)
 		printf("%s\n", tb[i]);
 		i++;
 	}
-	printf("\n\n");
 }
