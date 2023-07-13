@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: acouture <acouture@student.42.fr>          +#+  +:+       +#+         #
+#    By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/06 14:08:40 by acouture          #+#    #+#              #
-#    Updated: 2023/07/13 13:35:57 by acouture         ###   ########.fr        #
+#    Updated: 2023/07/13 15:20:05 by rofontai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,8 +79,9 @@ SRC :=	ft_atoi.c \
 		lst/ft_lstclear.c \
 		lst/ft_lstiter.c \
 		lst/ft_lstmap.c \
-		
+
 GREEN = \033[0;92m
+RED = \033[0;91m
 
 SRCS 	= $(addprefix $(SRC_PATH), $(SRC))
 OBJ		= $(SRC:%.c=%.o)
@@ -99,13 +100,14 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 
 $(NAME): $(OBJS)
 	@ar rcs $(NAME) $(OBJS)
-	@printf "$(GREEN)Libft compiling: done\n"
+#	@printf "$(GREEN)Libft compiling: done\n"
 
 clean:
 	@rm -rf $(OBJ_PATH)
 
 fclean: clean
 	@rm -f $(NAME)
+#	@printf "$(RED)Libft clean: done\n"
 
 re: fclean all
 

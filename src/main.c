@@ -16,7 +16,6 @@ t_meta	*mt(void)
 	return (&data);
 }
 
-
 void	init_exec_struct(void)
 {
 	t_pipex	*p;
@@ -54,20 +53,6 @@ void    init_env(char **env)
     exec->env_list[size] = NULL;
 }
 
-void ft_print_details(t_meta *ms)
-{
-	printf("\n=%s=\n\n", ms->line);
-		f_check_line(ms);
-		printf("\n");
-		f_print_lst(ms->list);
-		printf("\n");
-		f_split_pipes(ms);
-		printf("\n");
-		f_print_lst_final(ms->comand);
-		// printf("com_temp =%s=", ms->com_temp);
-		printf("\n");
-}
-
 int	main(int ac, char **av, char **env)
 {
 	t_meta *ms;
@@ -89,7 +74,6 @@ int	main(int ac, char **av, char **env)
 		{
 			pipex(ms->comand->com, 1,  0);
 		}
-		// ft_print_details(ms);
 		f_zero_list(ms);
 		add_history(ms->line);
 	}

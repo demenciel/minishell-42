@@ -1,25 +1,21 @@
 
-NAME	:= minishell
-CFLAGS	:= -g -Wextra -Wall -Werror #-fsanitize=address
+NAME	= minishell
+CFLAGS	= -g -Wextra -Wall -Werror #-fsanitize=address
 #
 SRC_PATH = src/
 
 OBJ_PATH = obj/
 
-LIBFT_DIR	= ./libs/libft
-LIBFT	= $(LIBFT_DIR)/libft.a
-
 READ_PATH	= libs/readline
 RLINE		= $(READ_PATH)/libreadline.a
 LIBRLINE	= readline-8.2
 
-LIBFT_A = 	libft.a
-LIBF_DIR = 	inc/libft/
-LIBFT  = 	$(addprefix $(LIBF_DIR), $(LIBFT_A))
-HEADERS	:= -I ./include
+LIBFT_DIR = inc/libft/
+LIBFT	= 	$(LIBFT_DIR)/libft.a
+HEADERS	= -I ./include
 
 
-SRC		:=  main.c \
+SRC		=  main.c \
 			exec/pipex.c \
 			exec/redirect.c \
 			exec/error_utils.c \
@@ -33,7 +29,6 @@ SRC		:=  main.c \
 			parsing/link_list.c \
 			parsing/pars.c \
 			parsing/check.c \
-			parsing/a_sup.c \
 			parsing/com_list.c \
 			parsing/utils_com.c \
 
@@ -45,17 +40,14 @@ GREEN = \033[0;92m
 RED = \033[0;91m
 RESET = \033[0m
 
-all: makelibft readline $(NAME)
+all: readline $(NAME)
 	@exec 2>/dev/null
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@ $(HEADERS)
 
-makelibft:
-	@$(MAKE) -C $(LIBF_DIR)
-
-readline	:
+readline:
 	@if [ ! -f ./libs/readline/libreadline.a ]; then \
     	curl -O https://ftp.gnu.org/gnu/readline/$(LIBRLINE).tar.gz; \
 		mkdir -p $(READ_PATH); \
@@ -69,9 +61,9 @@ readline	:
 
 $(NAME): $(OBJS) $(LIBFT)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(RLINE) -lncurses $(HEADERS) -o $(NAME)
-	@printf "$(GREEN)minishell compiling: done$(RESET)\n"
+	@printf "$(GREEN)minishell and libft compiling: done$(RESET)\n"
 
- $(LIBFT)	:
+ $(LIBFT):
 	@make -C $(LIBFT_DIR)
 
 debug: $(NAME)
@@ -80,7 +72,7 @@ debug: $(NAME)
 clean:
 	@make clean -C $(LIBFT_DIR)
 	@rm -rf $(OBJ_PATH)
-	@printf "$(RED)minishell clean: done$(RESET)\n"
+	@printf "$(RED)minishell and libft clean: done$(RESET)\n"
 
 fclean: clean
 	@make fclean -C $(LIBFT_DIR)
@@ -90,10 +82,10 @@ fclean: clean
 re: fclean all
 
 # Debug leaks
-leak : all
+leak: all
 	@leaks --atExit --list -- ./minishell
 
-leaks : all
+leaks: all
 	@valgrind --track-fds=yes --trace-children=yes --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=supp.txt ./minishell
 
 .PHONY: all, clean, fclean, re, leak, leaks
