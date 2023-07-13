@@ -44,7 +44,7 @@ void	f_add_in(t_meta *ms, char *add)
 void	f_add_out(t_meta *ms, char *add)
 {
 	char *temp;
-	
+
 	temp = ft_strdup(add);
 	if (ms->out == NULL)
 	{
@@ -59,4 +59,12 @@ void	f_add_out(t_meta *ms, char *add)
 		free(temp);
 		temp = NULL;
 	}
+}
+
+int	f_check_env(char c)
+{
+	if (ft_isalnum(c) == 1 || c == '_' || c == '?')
+		return (1);
+	else
+		return (0);
 }
