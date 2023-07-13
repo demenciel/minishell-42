@@ -11,8 +11,8 @@
 # include <limits.h>
 # include <signal.h>
 # include <stdio.h>
-# include <stdlib.h>
 # include <strings.h>
+# include <stdlib.h>
 # include <sys/syscall.h>
 # include <sys/wait.h>
 # include <term.h>
@@ -95,7 +95,7 @@ void					add_var_to_list(char **new_var, int i, int *list_size);
 char					*detect_var_export(char *var);
 void					check_var(char *var);
 void					ft_swap_char(char **a, char **b);
-void					order_export(int *size);
+void					order_export(int size);
 
 // ERROR -----------------------------------------------------------------------
 void					ft_exit(char *msg, char *builtin, int error);
@@ -104,7 +104,7 @@ void					ft_exit(char *msg, char *builtin, int error);
 
 t_pipex					*g(void);
 
-void					init_exec_struct(void);
+void					init_pipex(void);
 void					exec_cmd(char **cmd);
 
 // ERROR UTILS
@@ -129,7 +129,6 @@ void					f_check_redir_right(t_meta *ms);
 void					f_check_redir_left(t_meta *ms);
 void					f_check_single_quote(t_meta *ms);
 void					f_check_double_quote(t_meta *ms);
-int						f_check_env(char c);
 
 // UTILS-----------------------------------------------------------------------
 

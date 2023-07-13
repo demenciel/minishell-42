@@ -27,6 +27,7 @@ SRC		:=  main.c \
 			exec/exec_builtins.c \
 			exec/export.c \
 			exec/export2.c \
+			exec/unset.c \
 			exec/exit.c \
 			parsing/parsing.c \
 			parsing/utils.c \
@@ -94,6 +95,6 @@ leak : all
 	@leaks --atExit --list -- ./minishell
 
 leaks : all
-	@valgrind --track-fds=yes --trace-children=yes --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=supp.txt ./minishell
+	@valgrind --track-fds=yes --trace-children=yes --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=supp.txt -s ./minishell
 
 .PHONY: all, clean, fclean, re, leak, leaks

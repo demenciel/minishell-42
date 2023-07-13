@@ -13,6 +13,8 @@ void	ft_unset(char *var)
 	char *trimmed;
 
 	i = 0;
+	if (*var == '\0')
+		return ;
 	while (g()->export_list[i])
 	{
 		trimmed = ft_strtrim(g()->export_list[i], "declare -x ");

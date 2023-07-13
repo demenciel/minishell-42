@@ -4,7 +4,7 @@
 
 void	print_error(char *cmd)
 {
-	printf("minishell: command not found: %s", cmd);
+	printf("minishell: command not found: %s\n", cmd);
 }
 
 void	cd_error(char *input)
