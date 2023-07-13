@@ -11,6 +11,7 @@
 # include <limits.h>
 # include <signal.h>
 # include <stdio.h>
+# include <strings.h>
 # include <stdlib.h>
 # include <sys/syscall.h>
 # include <sys/wait.h>

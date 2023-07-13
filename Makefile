@@ -24,6 +24,7 @@ SRC		:=  main.c \
 			exec/redirect.c \
 			exec/error_utils.c \
 			exec/builtin.c \
+			exec/exec_builtins.c \
 			exec/export.c \
 			exec/export2.c \
 			exec/exit.c \

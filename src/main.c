@@ -85,7 +85,7 @@ int	main(int ac, char **av, char **env)
 		ft_check_builtins(ms->comand);
 		if (ms->comand)
 		{
-			pipex(ms->comand, 1,  0);
+			pipex(ms->comand->com, 1,  0);
 		}
 		// ft_print_details(ms);
 		f_zero_list(ms);
