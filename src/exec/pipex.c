@@ -10,6 +10,7 @@ void	exec_cmd(char **cmd)
 {
 	t_pipex	*p;
 	int		i;
+	int 	flag;
 	char	*search_cmd;
 	char	**paths;
 
@@ -21,6 +22,7 @@ void	exec_cmd(char **cmd)
 	i = -1;
 	while (paths[++i])
 	{
+		flag = 0;
 		search_cmd = ft_strjoin(paths[i], cmd[0]);
 		if (access(search_cmd, 0) == 0)
 		{
@@ -28,7 +30,12 @@ void	exec_cmd(char **cmd)
 			free(search_cmd);
 		}
 		else
-			print_error(cmd[0]);
+			flag++;
+	}
+	if (flag > 0)
+	{
+		print_error(cmd[0]);
+		exit(1);
 	}
 }
 
