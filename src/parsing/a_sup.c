@@ -18,7 +18,7 @@ void	f_print_lst(t_pars *lst)
 
 void	f_print_lst_final(t_comand *lst)
 {
-	// printf("" GRE "---f_print_lst_final in---\n" WHT ""); // TODO Supprimer
+	printf("" GRE "---f_print_lst_final in---\n" WHT ""); // TODO Supprimer
 	t_comand	*temp;
 	int		i;
 
@@ -34,7 +34,7 @@ void	f_print_lst_final(t_comand *lst)
 		printf("----------------------------------------\n");
 		temp = temp->next;
 	}
-	// printf("" GRE "---f_print_lst_final out---\n" WHT ""); // TODO Supprimer
+	printf("" GRE "---f_print_lst_final out---\n" WHT ""); // TODO Supprimer
 }
 void	f_print(char **cou)
 {

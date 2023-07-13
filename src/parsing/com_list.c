@@ -58,7 +58,7 @@ void	f_addback_com(t_comand **cmd, t_comand *new)
 }
 void	f_split_pipes(t_meta *ms)
 {
-	// printf("" GRE "---f_split_pipes in---\n" WHT ""); // TODO Supprimer
+	printf("" GRE "---f_split_pipes in---\n" WHT ""); // TODO Supprimer
 
 	t_pars *temp;
 
@@ -84,7 +84,7 @@ void	f_split_pipes(t_meta *ms)
 			else
 			{
 				f_add_com(ms, temp->txt);
-				// printf("com_temp =%s=\n", ms->com_temp);
+				printf("com_temp =%s=\n", ms->com_temp);
 			}
 			temp = temp->next;
 		}
@@ -94,5 +94,5 @@ void	f_split_pipes(t_meta *ms)
 			break ;
 		temp = temp->next;
 	}
-	// printf("" GRE "---f_split_pipes out---\n" WHT ""); // TODO Supprimer
+	printf("" GRE "---f_split_pipes out---\n" WHT ""); // TODO Supprimer
 }

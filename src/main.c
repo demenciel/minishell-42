@@ -64,7 +64,6 @@ void ft_print_details(t_meta *ms)
 		f_split_pipes(ms);
 		printf("\n");
 		f_print_lst_final(ms->comand);
-		// printf("com_temp =%s=", ms->com_temp);
 		printf("\n");
 }
 
@@ -81,15 +80,15 @@ int	main(int ac, char **av, char **env)
 		ms->line = readline("minishell > ");
 		if (ft_strncmp(ms->line, "exit", 4) == 0)
 			break ;
-		f_check_line(ms);
-		f_split_pipes(ms);
+		// f_check_line(ms);
+		// f_split_pipes(ms);
 		// ft_check_builtins(ms->comand);
 		ft_export("");
 		if (ms->comand)
 		{
 			pipex(ms->comand->com, 1,  0);
 		}
-		// ft_print_details(ms);
+		ft_print_details(ms);
 		f_zero_list(ms);
 		add_history(ms->line);
 	}
