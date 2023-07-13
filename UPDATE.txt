@@ -1,2 +1,0 @@
-Rendu a gérer les leaks de ft_unset().
-Probleme avec export list, lernie der free dans le main. 

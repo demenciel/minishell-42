@@ -70,11 +70,11 @@ void ft_print_details(t_meta *ms)
 int	main(int ac, char **av, char **env)
 {
 	t_meta *ms;
-
+	(void)env;
 	f_check_arg(ac, av);
 	ms = f_init_meta();
-	init_exec_struct();
-	init_env(env);
+	// init_exec_struct();
+	// init_env(env);
 	while (1)
 	{
 		ms->line = readline("minishell > ");
@@ -83,18 +83,18 @@ int	main(int ac, char **av, char **env)
 		// f_check_line(ms);
 		// f_split_pipes(ms);
 		// ft_check_builtins(ms->comand);
-		ft_export("");
-		if (ms->comand)
-		{
-			pipex(ms->comand->com, 1,  0);
-		}
+		// ft_export("");
+		// if (ms->comand)
+		// {
+		// 	pipex(ms->comand->com, 1,  0);
+		// }
 		ft_print_details(ms);
 		f_zero_list(ms);
 		add_history(ms->line);
 	}
-	if (g()->export_list)
-        ft_2darr_free(g()->export_list);
-    ft_2darr_free(g()->env_list);
+	// if (g()->export_list)
+    //     ft_2darr_free(g()->export_list);
+    // ft_2darr_free(g()->env_list);
 	f_all_clean(ms, NULL);
 	return (0);
 }
