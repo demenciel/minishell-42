@@ -6,7 +6,7 @@
 #    By: acouture <acouture@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/06 14:08:40 by acouture          #+#    #+#              #
-#    Updated: 2023/07/12 16:12:38 by acouture         ###   ########.fr        #
+#    Updated: 2023/07/13 13:35:57 by acouture         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ SRC :=	ft_atoi.c \
 	 	ft_strlcpy.c \
 	 	ft_strlen.c \
 	 	ft_strmapi.c \
+		ft_strcmp.c \
 	 	ft_strncmp.c \
 	 	ft_strnstr.c \
 	 	ft_strrchr.c \

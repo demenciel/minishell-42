@@ -17,7 +17,7 @@ t_meta	*mt(void)
 }
 
 
-void	init_pipex(void)
+void	init_exec_struct(void)
 {
 	t_pipex	*p;
 
@@ -74,6 +74,7 @@ int	main(int ac, char **av, char **env)
 
 	f_check_arg(ac, av);
 	ms = f_init_meta();
+	init_exec_struct();
 	init_env(env);
 	while (1)
 	{
@@ -82,7 +83,8 @@ int	main(int ac, char **av, char **env)
 			break ;
 		f_check_line(ms);
 		f_split_pipes(ms);
-		ft_check_builtins(ms->comand);
+		// ft_check_builtins(ms->comand);
+		ft_export("");
 		if (ms->comand)
 		{
 			pipex(ms->comand->com, 1,  0);

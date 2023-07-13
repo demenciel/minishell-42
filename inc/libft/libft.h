@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 12:31:12 by acouture          #+#    #+#             */
-/*   Updated: 2023/07/12 16:12:50 by acouture         ###   ########.fr       */
+/*   Updated: 2023/07/13 13:35:37 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int					ft_isprint(int c);
 int					ft_toupper(int c);
 int					ft_tolower(int c);
 int					ft_strncmp(const char *str1, const char *str2, size_t n);
+int					ft_strcmp(char *s1, char *s2);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
 int					ft_atoi(const char *str);
 

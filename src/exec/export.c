@@ -96,6 +96,17 @@ void	add_var_to_env(char **new_var, int i)
 	g()->env_length = new_size;
 }
 
+void	ft_2darr_cpy(char **cpy, char **src)
+{
+	int i;
+
+	i = 0;
+	(void)cpy;
+	while (src[i])
+		i++;
+	printf("Valeur de i : %d\n", i);
+}
+
 /**
  * @brief Adds an element to the env list. Simulates what (export) cmd does
  * @param new_var New element to add to list
@@ -109,7 +120,7 @@ void	ft_export(char *new_var)
 	check_var(new_var);
 	if (!new_var || *new_var == '\0')
 	{
-		ft_2darr_print(g()->export_list);
+		// ft_2darr_print(g()->export_list);
 		return ;
 	}
 	list_size = 0;
