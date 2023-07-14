@@ -6,9 +6,9 @@
 */
 void    ft_env(void)
 {
-    int i;
+    // int i;
 
-    i = 0;
+    // i = 0;
     ft_2darr_print(g()->env_list);
 }
 

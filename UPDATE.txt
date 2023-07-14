@@ -1,0 +1,4 @@
+si node == null supprimer
+si $ == env doesnt exist == null == node supprimer
+les exit des fonctions
+les erreurs de parsing

@@ -80,8 +80,8 @@ char	*f_pars_double_quote(t_meta *ms, char *txt)
 		if (temp [i] && temp[i] == 36)
 		{
 			start = i++;
-			// while (f_check_env(temp[i]) == 1)
-			// 	i++;
+			while (f_check_env(temp[i]) == 1)
+				i++;
 			end = i;
 			env = ft_substr(temp, start, end - start);
 			env = f_pars_dollar(env);

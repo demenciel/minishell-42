@@ -63,8 +63,8 @@ void	f_check_dollar(t_meta *ms)
 
 	printf("" GRE "---f_check_dollar in---\n" WHT ""); // TODO Supprimer
 	start = ms->i++;
-	// while (f_check_env(ms->line[ms->i]) == 1)
-	// 	ms->i++;
+	while (f_check_env(ms->line[ms->i]) == 1)
+		ms->i++;
 	end = ms->i;
 	temp = ft_substr(ms->line, start, (end - start));
 	temp = f_pars_dollar(temp);
