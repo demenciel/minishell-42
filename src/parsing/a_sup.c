@@ -28,6 +28,8 @@ void	f_print_lst_final(t_comand *lst)
 	{
 		if (temp->com)
 			f_print(temp->com);
+		else
+			printf("(NULL)\n");
 		printf("in %d =%s=\n", i, temp->stin);
 		printf("out %d =%s=\n", i, temp->stout);
 		i++;

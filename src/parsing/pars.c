@@ -20,10 +20,12 @@ int	f_som_quote_simple(char *txt)
 char	*f_pars_simple_quote(t_meta *ms, char *txt)
 {
 	char	*temp;
+	(void)ms;
 
+	temp = NULL;
 	printf("" GRE "---f_pars_simple_quote in---\n" WHT ""); // TODO Supprimer
 	if (f_som_quote_simple(txt) != 2)
-		f_all_clean(ms, "erreur de quotes double");
+		return (0);
 	temp = f_trimstr(txt, 39);
 	free(txt);
 	txt = NULL;
@@ -46,7 +48,7 @@ char	*f_pars_dollar(char *txt)
 	env = getenv(temp);
 	free(temp);
 	if (env == NULL)
-		txt = ft_strdup("env doesn't");
+		return (0);
 	else
 		txt = ft_strdup(env);
 	printf("" RED "---f_pars_dollar out---\n" WHT ""); // TODO Supprimer
@@ -60,11 +62,12 @@ char	*f_pars_double_quote(t_meta *ms, char *txt)
 	int		end;
 	char	*temp;
 	char	*env;
+	(void)ms;
 
 	i = 0;
 	printf("" GRE "---f_pars_double_quote in---\n" WHT ""); // TODO Supprimer
 	if (f_som_quote_double(txt) != 2)
-		f_all_clean(ms, "erreur de quotes double");
+		return (0);
 	temp = f_trimstr(txt, 34);
 	free(txt);
 	txt = NULL;
@@ -91,6 +94,8 @@ char	*f_pars_double_quote(t_meta *ms, char *txt)
 		}
 	}
 	free(temp);
+	if (txt == NULL)
+		return (0);
 	return (txt);
 	printf("" RED "---f_pars_double_quote out---\n" WHT ""); // TODO Supprimer
 }

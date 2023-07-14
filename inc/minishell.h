@@ -21,7 +21,6 @@
 // COLOR-----------------------------------------------------------------------
 
 # define BCK "\x1B[30m"
-// # define RED "\x1B[31m"
 # define GRE "\x1B[32m"
 # define YEL "\x1B[33m"
 # define BLE "\x1B[34m"
@@ -31,6 +30,10 @@
 
 // STRUCTURE-------------------------------------------------------------------
 
+// enum e_error
+// {
+// 	REDIR_IN;
+// }
 typedef struct s_comand
 {
 	char				**com;
@@ -138,6 +141,7 @@ void					f_all_clean(t_meta *ms, char *msg);
 void					f_zero_list(t_meta *ms);
 char					*f_trimstr(char *s1, char c);
 void					f_free_comand(t_comand **list);
+char					*f_join_char(const char *s1, const char s2);
 
 // PARS------------------------------------------------------------------------
 

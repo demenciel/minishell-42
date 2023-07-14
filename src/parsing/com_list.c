@@ -8,9 +8,18 @@ t_comand	*f_new_com(char *com, char *in, char *out)
 	new = ft_calloc(sizeof(t_comand), 1);
 	if (!new)
 		return (NULL);
-	new->com = ft_split(com, 9);
-	new->stin = ft_strdup(in);
-	new->stout = ft_strdup(out);
+	if (com)
+		new->com = ft_split(com, 29);
+	else
+		new->com = NULL;
+	if (in)
+		new->stin = ft_strdup(in);
+	else
+		new->stin = NULL;
+	if (out)
+		new->stout = ft_strdup(out);
+	else
+		new->stout = NULL;
 	return (new);
 }
 
@@ -25,7 +34,8 @@ void	f_zero_new_com(t_meta *ms)
 	{
 		free(ms->in);
 		ms->in = NULL;
-	}if (ms->out)
+	}
+	if (ms->out)
 	{
 		free(ms->out);
 		ms->out = NULL;
@@ -70,29 +80,40 @@ void	f_split_pipes(t_meta *ms)
 			if (temp && temp->txt[0] == 62)
 			{
 				f_add_out(ms, temp->txt);
-				temp = temp->next;
-				f_add_out(ms, temp->txt);
-				printf("in =%s=\n", ms->in);
+				if (temp)
+				{
+					temp = temp->next;
+					if (temp->txt != NULL)
+						f_add_out(ms, temp->txt);
+				}
+				printf("out =%s=\n", ms->out);
 			}
 			else if (temp && temp->txt[0] == 60)
 			{
 				f_add_in(ms, temp->txt);
-				temp = temp->next;
-				f_add_in(ms, temp->txt);
-				printf("out =%s=\n", ms->out);
+				if (temp)
+				{
+					temp = temp->next;
+					if (temp->txt != NULL)
+						f_add_in(ms, temp->txt);
+				}
+				printf("in =%s=\n", ms->in);
 			}
 			else
 			{
-				f_add_com(ms, temp->txt);
+				if (temp->txt != NULL)
+					f_add_com(ms, temp->txt);
 				printf("com_temp =%s=\n", ms->com_temp);
 			}
 			temp = temp->next;
 		}
 		f_addback_com(&ms->comand, f_new_com(ms->com_temp, ms->in, ms->out));
 		f_zero_new_com(ms);
+		printf("-----------------------------split com-----------\n");
 		if (temp == NULL)
 			break ;
 		temp = temp->next;
 	}
 	printf("" GRE "---f_split_pipes out---\n" WHT ""); // TODO Supprimer
 }
+

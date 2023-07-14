@@ -12,7 +12,7 @@ void	f_check_pipes(t_meta *ms)
 		ms->i++;
 	end = ms->i;
 	if (end - start > 1)
-		f_all_clean(ms, "Erreur de pipes");
+		return ;
 	f_addback_node(&ms->list, f_new_node(ft_substr(ms->line, start, (end
 					- start))));
 	printf("" RED "---f_check_pipes out---\n" WHT ""); // TODO Supprimer
@@ -30,7 +30,7 @@ void	f_check_redir_right(t_meta *ms)
 		ms->i++;
 	end = ms->i;
 	if (end - start > 2)
-		f_all_clean(ms, "Erreur de redir right");
+		return ;
 	temp = ft_substr(ms->line, start, (end - start));
 	f_addback_node(&ms->list, f_new_node(temp));
 	printf("" RED "---f_check_redir_right out---\n" WHT ""); // TODO Supprimer
@@ -47,8 +47,7 @@ void	f_check_redir_left(t_meta *ms)
 		ms->i++;
 	end = ms->i;
 	if (end - start > 2)
-		f_all_clean(ms, "Erreur de redir left");
-
+		return ;
 	f_addback_node(&ms->list, f_new_node(ft_substr(ms->line, start, (end
 					- start))));
 	printf("" RED "---f_check_redir_left out---\n" WHT ""); // TODO Supprimer

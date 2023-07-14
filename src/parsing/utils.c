@@ -71,6 +71,7 @@ void	f_zero_list(t_meta *ms)
 		free(ms->out);
 		ms->out = NULL;
 	}
+	ms->i = 0;
 	printf("" GRE "---f_zero_list out---\n" WHT ""); // TODO Supprimer
 }
 
@@ -106,10 +107,31 @@ void	f_free_comand(t_comand **list)
 		temp = (*list)->next;
 		free((*list)->stin);
 		free((*list)->stout);
-		ft_free_tab_char((*list)->com);
+		if ((*list)->com)
+			ft_free_tab_char((*list)->com);
 		free(*list);
 		(*list) = temp;
 	}
 	*list = NULL;
 	printf("" GRE "---f_free_comand out---\n" WHT ""); // TODO Supprimer
+}
+
+char	*f_join_char(const char *s1, const char s2)
+{
+	char			*join_str;
+	unsigned int	i;
+
+	i = 0;
+	join_str = malloc(((ft_strlen(s1) + 1) + 1) * sizeof(char));
+	if (!join_str)
+		return (NULL);
+	while (s1[i])
+	{
+		join_str[i] = s1[i];
+		i++;
+	}
+	join_str[i] = s2;
+	i++;
+	join_str[i] = '\0';
+	return (join_str);
 }
