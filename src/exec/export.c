@@ -34,20 +34,37 @@ char	*detect_var_export(char *var)
 	return (new_var);
 }
 
+char **change_var_content(char **var)
+{
+	char **new_var = NULL;
+
+	if (ft_2darr_len(var) < 2)
+		return (var);
+	return (new_var);
+}
+
 char	**checks_for_doubles_export(char **var)
 {
 	int i;
+	int j;
 	char **new_var = NULL;
 	char *trimmed;
+	char set[12] = "declare -x ";
 
 	i = 0;
-	while (g()->export_list[i])
+	j = 0;
+	while (i < g()->export_length)
 	{
-		trimmed = ft_strtrim(g()->export_list[i], "declare -x ");
-		if (ft_strncmp(var[0], trimmed, ft_strlen(var[0])) == 0)
+		while (set[j] == g()->export_list[i][j])
+			j++;
+		trimmed = ft_strdup(&g()->export_list[i][j]);
+		if (ft_strncmp(trimmed, var[0], ft_strlen(var[0])) == 0)
 		{
-			printf("DOUBLE DETECTED\n\n");
+			// new_var = change_var_content(var);
+			free(trimmed);
+			break ;
 		}
+		free(trimmed);
 		i++;
 	}
 	return (new_var);
