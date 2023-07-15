@@ -62,7 +62,6 @@ int checks_for_doubles_export(char *var)
 
 	i = 0;
 	j = 0;
-	check_var = var;
 	if (ft_strchr(var, '='))
 	{
 		var_tab = ft_split(var, '=');
@@ -175,6 +174,27 @@ char	**ft_cpy_export(char **list)
 	return (result);
 }
 
+char	**ft_cpy_env(char **list)
+{
+	int		i;
+	char	**result;
+
+	i = 0;
+	while (list[i])
+		i++;
+	result = (char **)malloc(sizeof(char *) * (i + 1));
+	i = 0;
+	while (list[i])
+	{
+		result[i] = ft_strdup(list[i]);
+		i++;
+	}
+	result[i] = NULL;
+	g()->env_length = i;
+	ft_2darr_free(list);
+	return (result);
+}
+
 /**
  * @brief Adds an element to the env list. Simulates what (export) cmd does
  * @param new_var New element to add to list
@@ -211,6 +231,7 @@ void	ft_export(char *new_var)
 		return ;
 	}
 	g()->export_list = ft_cpy_export(g()->export_list);
+	g()->env_list = ft_cpy_env(g()->env_list);
 	if (ft_strchr(new_var, '='))
 	{
 		i = g()->env_length;
