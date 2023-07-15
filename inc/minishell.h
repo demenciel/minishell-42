@@ -11,8 +11,8 @@
 # include <limits.h>
 # include <signal.h>
 # include <stdio.h>
-# include <strings.h>
 # include <stdlib.h>
+# include <strings.h>
 # include <sys/syscall.h>
 # include <sys/wait.h>
 # include <term.h>
@@ -91,8 +91,13 @@ void					ft_export(char *new_env);
 void					ft_unset(char *var);
 
 // EXPORT UTILS
-void					add_var_to_list(char **new_var, int i, int *list_size);
+void					add_var_to_export(char *new_var, int i, int *list_size);
+int						checks_for_doubles_export(char *var);
+void					change_var_content(char *var, int index);
 char					*detect_var_export(char *var);
+char					**ft_cpy_env(char **list);
+char					**ft_cpy_export(char **list);
+void					add_var_to_env(char *new_var, int i);
 void					check_var(char *var);
 void					ft_swap_char(char **a, char **b);
 void					order_export(int *size);

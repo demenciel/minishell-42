@@ -62,6 +62,7 @@ int checks_for_doubles_export(char *var)
 
 	i = 0;
 	j = 0;
+	check_var = var;
 	if (ft_strchr(var, '='))
 	{
 		var_tab = ft_split(var, '=');
@@ -79,6 +80,7 @@ int checks_for_doubles_export(char *var)
 			free(check_var);
 			return (i) ;
 		}
+
 		free(trimmed);
 		i++;
 	}

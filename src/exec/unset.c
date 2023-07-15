@@ -11,14 +11,16 @@ void	ft_unset(char *var)
 	int i;
 	int j;
 	char *trimmed;
+	char set[12] = "declare -x ";
 
 	i = 0;
-	if (*var == '\0')
-		return ;
+	j = 0;
 	while (g()->export_list[i])
 	{
-		trimmed = ft_strtrim(g()->export_list[i], "declare -x ");
-		if (ft_strncmp(trimmed, var, ft_strlen(var)) == 0)
+		while (set[j] == g()->export_list[i][j])
+			j++;
+		trimmed = ft_strdup(&g()->export_list[i][j]);
+		if (ft_strncmp(var, trimmed, ft_strlen(var)) == 0)
 		{
 			free(g()->export_list[i]);
 			j = i;
