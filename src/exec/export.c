@@ -30,44 +30,60 @@ char	*detect_var_export(char *var)
 	}
 	new_var[j] = 34;
 	new_var[j + 1] = '\0';
-	free(var);
 	return (new_var);
 }
 
-char **change_var_content(char **var)
+void	change_var_content(char *var, int index)
 {
-	char **new_var = NULL;
+	char *new_var_content;
+	char *new_var;
 
-	if (ft_2darr_len(var) < 2)
-		return (var);
-	return (new_var);
+	if (ft_strchr(var, '='))
+	{
+		new_var = detect_var_export(var);
+		new_var_content = ft_strjoin("declare -x ", new_var);
+		free(new_var);
+	}
+	else 
+		new_var_content = ft_strjoin("declare -x ", var);
+	free(g()->export_list[index]);
+	g()->export_list[index] = new_var_content;
 }
 
-char	**checks_for_doubles_export(char **var)
+
+int checks_for_doubles_export(char *var)
 {
 	int i;
 	int j;
-	char **new_var = NULL;
 	char *trimmed;
+	char *check_var;
+	char **var_tab;
 	char set[12] = "declare -x ";
 
 	i = 0;
 	j = 0;
+	check_var = var;
+	if (ft_strchr(var, '='))
+	{
+		var_tab = ft_split(var, '=');
+		check_var = ft_strdup(var_tab[0]);
+		ft_2darr_free(var_tab);
+	}
 	while (i < g()->export_length)
 	{
 		while (set[j] == g()->export_list[i][j])
 			j++;
 		trimmed = ft_strdup(&g()->export_list[i][j]);
-		if (ft_strncmp(trimmed, var[0], ft_strlen(var[0])) == 0)
+		if (ft_strncmp(check_var, trimmed, ft_strlen(check_var)) == 0)
 		{
-			// new_var = change_var_content(var);
 			free(trimmed);
-			break ;
+			free(check_var);
+			return (i) ;
 		}
 		free(trimmed);
 		i++;
 	}
-	return (new_var);
+	return (0);
 }
 
 /**
@@ -75,27 +91,33 @@ char	**checks_for_doubles_export(char **var)
  * @param new_var The new variables to insert
  * @param i The index of where we currently are inside the export list
 */
-void	add_var_to_export(char **new_var, int i, int *list_size)
+void	add_var_to_export(char *new_var, int i, int *list_size)
 {
-	int	j;
+	int i_double;
 	int	og_size;
+	char *var;
 
-	j = 0;
 	og_size = *list_size;
-	checks_for_doubles_export(new_var);
-	while (new_var[j])
+	if (checks_for_doubles_export(new_var) > 0)
 	{
-		if (ft_strchr(new_var[j], '='))
-			new_var[j] = detect_var_export(new_var[j]);
-		(*list_size)++;
-		g()->export_list = ft_realloc(g()->export_list,
-										og_size * sizeof(char *),
-										*list_size * sizeof(char *));
-		g()->export_list[i] = ft_strjoin("declare -x ", new_var[j]);
-		i++;
-		j++;
-		og_size = *list_size;
+		i_double = checks_for_doubles_export(new_var);
+		change_var_content(new_var, i_double);
+		return ;
 	}
+	(*list_size)++;
+	g()->export_list = ft_realloc(g()->export_list,
+									og_size * sizeof(char *),
+									*list_size * sizeof(char *));
+	if (ft_strchr(new_var, '='))
+	{
+		var = detect_var_export(new_var);
+		g()->export_list[i] = ft_strjoin("declare -x ", var);
+		free(var);
+	}
+	else
+		g()->export_list[i] = ft_strjoin("declare -x ", new_var);
+	i++;
+	og_size = *list_size;
 	(*list_size)++;
 	g()->export_list = ft_realloc(g()->export_list, og_size * sizeof(char *),
 			*list_size * sizeof(char *));
@@ -107,25 +129,19 @@ void	add_var_to_export(char **new_var, int i, int *list_size)
  * @param new_var The new variables to insert
  * @param i The index of where we currently are inside the env list
 */
-void	add_var_to_env(char **new_var, int i)
+void	add_var_to_env(char *new_var, int i)
 {
-	int	j;
 	int	og_size;
 	int	new_size;
 
-	j = 0;
 	og_size = g()->env_length;
-	new_size = g()->env_length;
-	while (new_var[j])
-	{
-		new_size++;
-		g()->env_list = ft_realloc(g()->env_list, og_size * sizeof(char *),
-				new_size * sizeof(char *));
-		g()->env_list[i] = ft_strdup(new_var[j]);
-		i++;
-		j++;
-		og_size = new_size;
-	}
+	new_size = og_size;
+	new_size++;
+	g()->env_list = ft_realloc(g()->env_list, og_size * sizeof(char *),
+			new_size * sizeof(char *));
+	g()->env_list[i] = ft_strdup(new_var);
+	i++;
+	og_size = new_size;
 	new_size++;
 	g()->env_list = ft_realloc(g()->env_list, og_size * sizeof(char *), new_size
 			* sizeof(char *));
@@ -167,7 +183,6 @@ void	ft_export(char *new_var)
 {
 	int i;
 	int list_size;
-	char **new_var_tab;
 
 	check_var(new_var);
 	if (g()->export_list == NULL)
@@ -196,14 +211,12 @@ void	ft_export(char *new_var)
 		return ;
 	}
 	g()->export_list = ft_cpy_export(g()->export_list);
-	new_var_tab = ft_split(new_var, ' ');
 	if (ft_strchr(new_var, '='))
 	{
 		i = g()->env_length;
-		add_var_to_env(new_var_tab, i);
+		add_var_to_env(new_var, i);
 	}
 	i = g()->export_length;
-	add_var_to_export(new_var_tab, i, &list_size);
+	add_var_to_export(new_var, i, &list_size);
 	order_export(&list_size);
-	ft_2darr_free(new_var_tab);
 }
