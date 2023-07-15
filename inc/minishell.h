@@ -95,7 +95,7 @@ void					add_var_to_list(char **new_var, int i, int *list_size);
 char					*detect_var_export(char *var);
 void					check_var(char *var);
 void					ft_swap_char(char **a, char **b);
-void					order_export(int size);
+void					order_export(int *size);
 
 // ERROR -----------------------------------------------------------------------
 void					ft_exit(char *msg, char *builtin, int error);

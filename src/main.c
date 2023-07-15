@@ -81,13 +81,12 @@ int	main(int ac, char **av, char **env)
 			break ;
 		f_check_line(ms);
 		f_split_pipes(ms);
-		// ft_export("");
 		ft_check_builtins(ms->comand);
 		// if (ms->comand)
 		// {
 		// 	pipex(ms->comand->com, 1,  0);
 		// }
-		ft_print_details(ms);
+		// ft_print_details(ms);
 		f_zero_list(ms);
 		add_history(ms->line);
 	}

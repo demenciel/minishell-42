@@ -24,24 +24,22 @@ void	check_var(char *var)
 /**
  * @brief Swaps the two characters passed
 */
-
 void	ft_swap_char(char **a, char **b)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = *a;
 	*a = *b;
 	*b = tmp;
-
 }
 
 /**
  * @brief Using bubble sort, sorts the export list in ascending order
  * @param size The size of the list to sort
 */
-void	order_export(int size)
+void	order_export(int *size)
 {
-	int		j;
+	int j;
 	int swap;
 
 	swap = 1;
@@ -49,10 +47,9 @@ void	order_export(int size)
 	{
 		swap = 0;
 		j = 0;
-		while (j < ((size) - 2))
-		{	
-			
-			if (strcmp(g()->export_list[j], g()->export_list[j + 1]) > 0)
+		while (j < ((*size) - 2))
+		{
+			if (ft_strcmp(g()->export_list[j], g()->export_list[j + 1]) > 0)
 			{
 				ft_swap_char(&g()->export_list[j], &g()->export_list[j + 1]);
 				swap++;
