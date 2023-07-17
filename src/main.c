@@ -61,6 +61,8 @@ void ft_print_details(t_meta *ms)
 		printf("\n");
 		f_print_lst(ms->list);
 		printf("\n");
+		f_check_node(ms); //TODO fonction a revoir
+		printf("\n");
 		f_split_pipes(ms);
 		printf("\n");
 		f_print_lst_final(ms->comand);

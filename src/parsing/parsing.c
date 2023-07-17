@@ -41,6 +41,7 @@ void	f_check_word(t_meta *ms)
 {
 	int	start;
 	int	end;
+	char *temp;
 
 	printf("" GRE "---f_check_word in---\n" WHT ""); // TODO Supprimer
 	start = ms->i;
@@ -50,8 +51,8 @@ void	f_check_word(t_meta *ms)
 			&& ms->line[ms->i] != 34))
 		ms->i++;
 	end = ms->i;
-	f_addback_node(&ms->list, f_new_node(ft_substr(ms->line, start, (end
-					- start))));
+	temp = ft_substr(ms->line, start, (end - start));
+	f_addback_node(&ms->list, f_new_node(temp));
 	printf("" RED "---f_check_word_ out---\n" WHT ""); // TODO Supprimer
 }
 

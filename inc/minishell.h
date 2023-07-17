@@ -171,6 +171,7 @@ void					f_zero_new_com(t_meta *ms);
 void					f_add_com(t_meta *ms, char *add);
 void					f_add_in(t_meta *ms, char *add);
 void					f_add_out(t_meta *ms, char *add);
+void					f_check_node(t_meta *ms);
 
 // A_SUPP----------------------------------------------------------------------
 

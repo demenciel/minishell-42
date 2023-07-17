@@ -75,7 +75,7 @@ void	f_split_pipes(t_meta *ms)
 	temp = ms->list;
 	while (temp)
 	{
-		while (temp && temp->txt[0] != 124)
+		while (temp && temp->txt && temp->txt[0] != 124)
 		{
 			if (temp && temp->txt[0] == 62)
 			{

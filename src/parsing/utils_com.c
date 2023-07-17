@@ -70,3 +70,26 @@ int	f_check_env(char c)
 	else
 		return (0);
 }
+
+void f_check_node(t_meta *ms)
+{
+	printf("" GRE "---f_check_node in---\n" WHT ""); // TODO Supprimer
+	t_pars *temp;
+
+	temp = ms->list;
+	while (temp)
+	{
+		if ((temp->next == NULL || temp->next->txt == NULL ||
+		temp->next->txt[0] == 60 || temp->next->txt[0] == 62 ||
+		temp->next->txt[0] == '\0') && (temp->txt[0] == 60 ||
+		temp->txt[0] == 62))
+			f_all_clean(ms, "Erreur redir node");
+		else if ((temp->next == NULL || temp->next->txt == NULL ||
+		temp->next->txt[0] == 124 || temp->next->txt[0] == '\0') &&
+		(temp->txt[0] == 124))
+			f_all_clean(ms, "Erreur pipe node");
+		else
+			temp = temp->next;
+	}
+	printf("" GRE "---f_check_node out---\n" WHT ""); // TODO Supprimer
+}

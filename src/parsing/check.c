@@ -5,6 +5,7 @@ void	f_check_pipes(t_meta *ms)
 {
 	int	start;
 	int	end;
+	char *temp;
 
 	printf("" GRE "---f_check_pipes in---\n" WHT ""); // TODO Supprimer
 	start = ms->i;
@@ -13,8 +14,8 @@ void	f_check_pipes(t_meta *ms)
 	end = ms->i;
 	if (end - start > 1)
 		return ;
-	f_addback_node(&ms->list, f_new_node(ft_substr(ms->line, start, (end
-					- start))));
+	temp = ft_substr(ms->line, start, (end - start));
+	f_addback_node(&ms->list, f_new_node(temp));
 	printf("" RED "---f_check_pipes out---\n" WHT ""); // TODO Supprimer
 }
 
@@ -40,6 +41,7 @@ void	f_check_redir_left(t_meta *ms)
 {
 	int	start;
 	int	end;
+	char *temp;
 
 	printf("" GRE "---f_check_redir_left in---\n" WHT ""); // TODO Supprimer
 	start = ms->i;
@@ -48,8 +50,8 @@ void	f_check_redir_left(t_meta *ms)
 	end = ms->i;
 	if (end - start > 2)
 		return ;
-	f_addback_node(&ms->list, f_new_node(ft_substr(ms->line, start, (end
-					- start))));
+	temp = ft_substr(ms->line, start, (end - start));
+	f_addback_node(&ms->list, f_new_node(temp));
 	printf("" RED "---f_check_redir_left out---\n" WHT ""); // TODO Supprimer
 }
 
