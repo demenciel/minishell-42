@@ -35,7 +35,7 @@ void	exec_cmd(char **cmd)
 	if (flag > 0)
 	{
 		print_error(cmd[0]);
-		printf("ERROR");
+		exit(0);
 	}
 }
 
@@ -67,9 +67,7 @@ void	pipex(t_comand *list, char *infile)
 	t_comand *node;
 	int pipe_end[2];
 	int input;
-	int i;
 
-	i = 0;
 	node = list;
 	input = open_rd_fd(infile);
 	while (node->next)
@@ -94,18 +92,17 @@ void	pipex(t_comand *list, char *infile)
 			wait(NULL);
 			close(pipe_end[1]);
 			input = pipe_end[0];
-			node = node->next;
 		}
-		i++;
+		node = node->next;
 	}
 	if (fork() == 0)
 	{
 		dup2(input, STDIN_FILENO);
+		close(input);
 		if (ft_check_builtins(node->com))
 			find_builtins(node);
 		else
 			exec_cmd(node->com);
-		close(input);
 	}
 	else
 		wait(NULL);
