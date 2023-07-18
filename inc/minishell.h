@@ -77,12 +77,16 @@ void					heredocs(char *limiter);
 
 // PIPEX
 
-void					pipex(char **cmd, int n, char *infile);
+void					pipex(t_comand *list, char *infile);
 int						open_rd_fd(char *fd1);
 
-// BUILTINS
+// EXEC BUILTINS
+bool    ft_check_builtins(char **cmd);
+void    find_builtins(t_comand *node);
+void    find_export_unset_env(t_comand *node);
 
-void					ft_check_builtins(t_comand *t_cmd);
+
+// BUILTINS
 void					ft_echo(char *string, int flag);
 void					ft_cd(char *path);
 void					ft_pwd(void);

@@ -132,9 +132,17 @@ void	add_var_to_export(char *new_var, int i, int *list_size)
 */
 void	add_var_to_env(char *new_var, int i)
 {
+	int i_double;
 	int	og_size;
 	int	new_size;
 
+	// env var doesnt get updated with doubles
+	if (checks_for_doubles_export(new_var) > 0)
+	{
+		i_double = checks_for_doubles_export(new_var);
+		change_var_content(new_var, i_double);
+		return ;
+	}
 	og_size = g()->env_length;
 	new_size = og_size;
 	new_size++;

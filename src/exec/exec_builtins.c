@@ -41,14 +41,21 @@ void    find_builtins(t_comand *node)
 /**
  * @brief Iterates in the comand linked list to find the builtins to execute
 */
-void    ft_check_builtins(t_comand *t_cmd)
+bool    ft_check_builtins(char **cmd)
 {
-    int i;
-
-    i = 0;
-    while (t_cmd != NULL)
-    {
-        find_builtins(t_cmd);
-        t_cmd = t_cmd->next;
-    }
+    if (ft_strcmp(cmd[0], "export") == 0) 
+        return (true);
+    else if (ft_strcmp(cmd[0], "unset") == 0) 
+        return (true);
+    else if (ft_strcmp(cmd[0], "env") == 0) 
+        return (true);
+    else if (ft_strcmp(cmd[0], "echo") == 0) 
+        return (true);
+    else if (ft_strcmp(cmd[0], "cd") == 0) 
+        return (true);
+    else if (ft_strcmp(cmd[0], "pwd") == 0) 
+        return (true);
+    else if (ft_strcmp(cmd[0], "exit") == 0) 
+        return (true);
+    return (false);
 }

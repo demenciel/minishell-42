@@ -69,6 +69,7 @@ void ft_print_details(t_meta *ms)
 int	main(int ac, char **av, char **env)
 {
 	t_meta *ms;
+	// int nb_command;
 
 	f_check_arg(ac, av);
 	ms = f_init_meta();
@@ -81,12 +82,9 @@ int	main(int ac, char **av, char **env)
 			break ;
 		f_check_line(ms);
 		f_split_pipes(ms);
-		ft_check_builtins(ms->comand);
 		if (ms->comand)
-		{
-			pipex(ms->comand->com, 1,  0);
-		}
-		ft_print_details(ms);
+			pipex(ms->comand,  0);
+		// ft_print_details(ms);
 		f_zero_list(ms);
 		add_history(ms->line);
 	}

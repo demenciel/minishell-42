@@ -35,7 +35,7 @@ void	exec_cmd(char **cmd)
 	if (flag > 0)
 	{
 		print_error(cmd[0]);
-		exit(1);
+		printf("ERROR");
 	}
 }
 
@@ -62,16 +62,19 @@ int	open_rd_fd(char *fd1)
  * @brief Reproduce the effect of a pipe in shell ( | )
  * @param cmd The commands to be executed
 */
-void	pipex(char **cmd, int n, char *infile)
+void	pipex(t_comand *list, char *infile)
 {
+	t_comand *node;
 	int pipe_end[2];
 	int input;
 	int i;
 
 	i = 0;
+	node = list;
 	input = open_rd_fd(infile);
-	while (i < (n - 1))
+	while (node->next)
 	{
+		input = open_rd_fd(node->stin);
 		if (pipe(pipe_end) != 0)
 			pipex_fail("PIPE");
 		if (fork() == 0)
@@ -81,24 +84,29 @@ void	pipex(char **cmd, int n, char *infile)
 			close(input);
 			dup2(pipe_end[1], STDOUT_FILENO);
 			close(pipe_end[1]);
-			exec_cmd(cmd);
+			if (ft_check_builtins(node->com))
+				find_builtins(node);
+			else
+				exec_cmd(node->com);
 		}
 		else
 		{
 			wait(NULL);
 			close(pipe_end[1]);
 			input = pipe_end[0];
+			node = node->next;
 		}
 		i++;
 	}
 	if (fork() == 0)
 	{
 		dup2(input, STDIN_FILENO);
-		exec_cmd(cmd);
+		if (ft_check_builtins(node->com))
+			find_builtins(node);
+		else
+			exec_cmd(node->com);
 		close(input);
 	}
 	else
 		wait(NULL);
 }
-
-// itérer dans les nodes pour executer les commandes multiples
