@@ -10,7 +10,6 @@ void	f_free_list(t_pars **list)
 	while (*list)
 	{
 		temp = (*list)->next;
-		free((*list)->txt);
 		free(*list);
 		(*list) = temp;
 	}

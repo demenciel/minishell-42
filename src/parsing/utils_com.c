@@ -6,6 +6,7 @@ void	f_add_com(t_meta *ms, char *add)
 	char *temp;
 
 	temp = ft_strdup(add);
+	free(add);
 	if (ms->com_temp == NULL)
 	{
 		ms->com_temp = ft_strdup(temp);
@@ -26,6 +27,8 @@ void	f_add_in(t_meta *ms, char *add)
 	char *temp;
 
 	temp = ft_strdup(add);
+	free (add);
+	add = NULL;
 	if (ms->in == NULL)
 	{
 		ms->in = ft_strdup(temp);
@@ -47,6 +50,7 @@ void	f_add_out(t_meta *ms, char *add)
 	char *temp;
 
 	temp = ft_strdup(add);
+	free(add);
 	if (ms->out == NULL)
 	{
 		ms->out = ft_strdup(temp);
@@ -77,16 +81,14 @@ void f_check_node(t_meta *ms)
 	t_pars *temp;
 
 	temp = ms->list;
-	while (temp)
+	while (temp && temp->txt)
 	{
-		if ((temp->next == NULL || temp->next->txt == NULL ||
-		temp->next->txt[0] == 60 || temp->next->txt[0] == 62 ||
-		temp->next->txt[0] == '\0') && (temp->txt[0] == 60 ||
-		temp->txt[0] == 62))
+		if ((temp->txt[0] == 62 || temp->txt[0] == 60) &&
+		(temp->next == NULL || temp->next->txt == NULL ||
+		temp->next->txt[0] == 124 || temp->next->txt[0] == 62 || temp->next->txt[0] == 60))
 			f_all_clean(ms, "Erreur redir node");
-		else if ((temp->next == NULL || temp->next->txt == NULL ||
-		temp->next->txt[0] == 124 || temp->next->txt[0] == '\0') &&
-		(temp->txt[0] == 124))
+		else if ((temp->txt[0] == 124) && (temp->next == NULL || temp->next->txt == NULL ||
+		temp->next->txt[0] == 124))
 			f_all_clean(ms, "Erreur pipe node");
 		else
 			temp = temp->next;

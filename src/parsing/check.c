@@ -68,6 +68,8 @@ void	f_check_single_quote(t_meta *ms)
 	end = ms->i++;
 	temp = ft_substr(ms->line, start, (end - start) + 1);
 	temp = f_pars_simple_quote(ms, temp);
+	if (temp == NULL)
+		return ;
 	f_addback_node(&ms->list, f_new_node(temp));
 	printf("" RED "---f_check_single_quote out---\n" WHT ""); // TODO Supprimer
 }
@@ -80,11 +82,13 @@ void	f_check_double_quote(t_meta *ms)
 
 	printf("" GRE "---f_check_double_quote in---\n" WHT ""); // TODO Supprimer
 	start = ms->i++;
-	while (ms->line[ms->i] != 34 && ms->line[ms->i])
+	while (ms->line[ms->i] && ms->line[ms->i] != 34)
 		ms->i++;
 	end = ms->i++;
 	temp = ft_substr(ms->line, start, (end - start) + 1);
 	temp = f_pars_double_quote(ms, temp);
+	if (temp == NULL)
+		return ;
 	f_addback_node(&ms->list, f_new_node(temp));
 	printf("" RED "---f_check_double_quote out---\n" WHT ""); // TODO Supprimer
 }
