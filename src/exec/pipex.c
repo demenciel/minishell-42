@@ -62,7 +62,7 @@ int	open_rd_fd(char *fd1)
  * @brief Reproduce the effect of a pipe in shell ( | )
  * @param cmd The commands to be executed
 */
-void	pipex(t_comand *list, char *infile)
+void	pipex(t_comand *list)
 {
 	t_comand *node;
 	int pipe_end[2];
@@ -83,7 +83,9 @@ void	pipex(t_comand *list, char *infile)
 			dup2(pipe_end[1], STDOUT_FILENO);
 			close(pipe_end[1]);
 			if (ft_check_builtins(node->com))
-				find_builtins(node);
+			{
+				find_builtins(node); 
+			}
 			else
 				exec_cmd(node->com);
 		}

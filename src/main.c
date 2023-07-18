@@ -84,7 +84,7 @@ int	main(int ac, char **av, char **env)
 		f_split_pipes(ms);
 		// find_builtins(ms->comand);
 		if (ms->comand)
-			pipex(ms->comand,  0);
+			pipex(ms->comand);
 		// ft_print_details(ms);
 		f_zero_list(ms);
 		add_history(ms->line);

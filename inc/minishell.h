@@ -77,7 +77,7 @@ void					heredocs(char *limiter);
 
 // PIPEX
 
-void					pipex(t_comand *list, char *infile);
+void					pipex(t_comand *list);
 int						open_rd_fd(char *fd1);
 
 // EXEC BUILTINS

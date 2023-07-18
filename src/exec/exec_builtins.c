@@ -36,7 +36,6 @@ void    find_export_unset_env(t_comand *node)
 void    find_builtins(t_comand *node)
 {
     find_export_unset_env(node);
-    exit(0);
 }
 
 /**
