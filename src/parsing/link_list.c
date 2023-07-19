@@ -10,10 +10,10 @@ void	f_free_list(t_pars **list)
 	while (*list)
 	{
 		temp = (*list)->next;
+		free((*list)->txt);
 		free(*list);
 		(*list) = temp;
 	}
-	*list = NULL;
 }
 
 t_pars	*f_new_node(char *str)

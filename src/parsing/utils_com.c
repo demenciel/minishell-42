@@ -4,67 +4,71 @@
 void	f_add_com(t_meta *ms, char *add)
 {
 	char *temp;
+	char *prov;
 
 	temp = ft_strdup(add);
-	free(add);
 	if (ms->com_temp == NULL)
 	{
 		ms->com_temp = ft_strdup(temp);
-		free(temp);
-		temp = NULL;
+		f_free_null(temp);
 	}
 	else
 	{
-		ms->com_temp = f_join_char(ms->com_temp, 29);
-		ms->com_temp = ft_strjoin(ms->com_temp, temp);
-		free(temp);
-		temp = NULL;
+		prov = ms->com_temp;
+		ms->com_temp = f_join_char(prov, 29);
+		f_free_null(prov);
+		prov = ms->com_temp;
+		ms->com_temp = ft_strjoin(prov, temp);
+		f_free_null(prov);
+		f_free_null(temp);
 	}
 }
 
 void	f_add_in(t_meta *ms, char *add)
 {
 	char *temp;
+	char *prov;
 
 	temp = ft_strdup(add);
-	free (add);
-	add = NULL;
 	if (ms->in == NULL)
 	{
 		ms->in = ft_strdup(temp);
-		free(temp);
-		temp = NULL;
+		f_free_null(temp);
 	}
 	else
 	{
-		ms->in = f_join_char(ms->in, 29);
-		ms->in = ft_strjoin(ms->in, temp);
-		free(temp);
-		temp = NULL;
+		prov = ms->in;
+		ms->in = f_join_char(prov, 29);
+		f_free_null(prov);
+		prov = ms->in;
+		ms->in = ft_strjoin(prov, temp);
+		f_free_null(prov);
+		f_free_null(temp);
 	}
 }
 
 void	f_add_out(t_meta *ms, char *add)
 {
-	// printf("" GRE "---f_add_out in---\n" WHT ""); // TODO Supprimer
+	printf("" GRE "---f_add_out in---\n" WHT ""); // TODO Supprimer
 	char *temp;
-
+	char *prov;
 	temp = ft_strdup(add);
-	free(add);
 	if (ms->out == NULL)
 	{
 		ms->out = ft_strdup(temp);
-		free(temp);
-		temp = NULL;
+		f_free_null(temp);
 	}
 	else
 	{
-		ms->out = f_join_char(ms->out, 29);
-		ms->out = ft_strjoin(ms->out, temp);
-		free(temp);
-		temp = NULL;
+		prov = ms->out;
+		ms->out = f_join_char(prov, 29);
+		f_free_null(prov);
+		prov = ms->out;
+		ms->out = ft_strjoin(prov, temp);
+		f_free_null(prov);
+		f_free_null(temp);
 	}
-	// printf("" GRE "---f_add_out out---\n" WHT ""); // TODO Supprimer
+	printf("" GRE "---f_add_out out---\n" WHT ""); // TODO Supprimer
 }
 
 int	f_check_env(char c)
@@ -94,4 +98,10 @@ void f_check_node(t_meta *ms)
 			temp = temp->next;
 	}
 	printf("" GRE "---f_check_node out---\n" WHT ""); // TODO Supprimer
+}
+
+void	f_free_null(void *str)
+{
+	free(str);
+	str = NULL;
 }

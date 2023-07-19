@@ -30,10 +30,6 @@
 
 // STRUCTURE-------------------------------------------------------------------
 
-// enum e_error
-// {
-// 	REDIR_IN;
-// }
 typedef struct s_comand
 {
 	char				**com;
@@ -172,11 +168,13 @@ void					f_add_com(t_meta *ms, char *add);
 void					f_add_in(t_meta *ms, char *add);
 void					f_add_out(t_meta *ms, char *add);
 void					f_check_node(t_meta *ms);
+void					f_free_null(void *str);
 
 // A_SUPP----------------------------------------------------------------------
 
 void					f_print_lst(t_pars *lst);
 void					f_print_lst_final(t_comand *lst);
 void					f_print(char **cou);
+// char					*f_free_null(char *arg);
 
 #endif

@@ -46,7 +46,7 @@ void	f_all_clean(t_meta *ms, char *msg)
 
 void	f_zero_list(t_meta *ms)
 {
-	printf("" GRE "---f_zero_list in---\n" WHT ""); // TODO Supprimer
+		printf("" GRE "---f_zero_list in---\n" WHT ""); // TODO Supprimer
 	if (ms->list)
 	{
 		f_free_list(&ms->list);
@@ -122,7 +122,7 @@ char	*f_join_char(const char *s1, const char s2)
 	unsigned int	i;
 
 	i = 0;
-	join_str = malloc(((ft_strlen(s1) + 1) + 1) * sizeof(char));
+	join_str = ft_calloc((ft_strlen(s1) + 2), sizeof(char));
 	if (!join_str)
 		return (NULL);
 	while (s1[i])
@@ -131,7 +131,6 @@ char	*f_join_char(const char *s1, const char s2)
 		i++;
 	}
 	join_str[i] = s2;
-	i++;
-	join_str[i] = '\0';
 	return (join_str);
 }
+

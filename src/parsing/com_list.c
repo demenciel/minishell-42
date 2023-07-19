@@ -25,7 +25,7 @@ t_comand	*f_new_com(char *com, char *in, char *out)
 
 void	f_zero_new_com(t_meta *ms)
 {
-	if (ms->com_temp)
+	if (ms->com_temp != NULL)
 	{
 		free(ms->com_temp);
 		ms->com_temp = NULL;
@@ -101,7 +101,7 @@ void	f_split_pipes(t_meta *ms)
 			}
 			else
 			{
-				if (temp->txt != NULL)
+				if (temp && temp->txt != NULL)
 					f_add_com(ms, temp->txt);
 				printf("com_temp =%s=\n", ms->com_temp);
 			}
