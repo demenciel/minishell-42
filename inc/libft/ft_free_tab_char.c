@@ -6,7 +6,7 @@
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 11:19:49 by rofontai          #+#    #+#             */
-/*   Updated: 2023/07/19 09:48:58 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/07/19 16:50:13 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,5 @@ void	**ft_free_tab_char(char **tabl)
 		i++;
 	}
 	free(tabl);
+	return (0);
 }
