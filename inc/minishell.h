@@ -30,7 +30,7 @@
 
 // STRUCTURE-------------------------------------------------------------------
 
-# define DEBUG 1
+# define DEBUG 0
 typedef struct s_comand
 {
 	char				**com;

@@ -133,7 +133,6 @@ int	main(int ac, char **av, char **env)
         // old_fd = g()->in_fd;
         // close(g()->in_fd);
         g()->in_fd = 0;
-		f_zero_list(ms);
 		add_history(ms->line);
 		// ft_print_details(ms);
 		f_free_null_meta(ms);
