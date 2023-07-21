@@ -68,7 +68,8 @@ void	f_addback_com(t_comand **cmd, t_comand *new)
 }
 void	f_split_pipes(t_meta *ms)
 {
-	printf("" GRE "---f_split_pipes in---\n" WHT ""); // TODO Supprimer
+	if (DEBUG == 1)
+		printf("" GRE "---f_split_pipes in---\n" WHT ""); // TODO Supprimer
 
 	t_pars *temp;
 
@@ -86,7 +87,8 @@ void	f_split_pipes(t_meta *ms)
 					if (temp->txt != NULL)
 						f_add_out(ms, temp->txt);
 				}
-				printf("out =%s=\n", ms->out);
+				if (DEBUG == 1)
+					printf("out =%s=\n", ms->out);
 			}
 			else if (temp && temp->txt[0] == 60)
 			{
@@ -97,23 +99,27 @@ void	f_split_pipes(t_meta *ms)
 					if (temp->txt != NULL)
 						f_add_in(ms, temp->txt);
 				}
-				printf("in =%s=\n", ms->in);
+				if (DEBUG == 1)
+					printf("in =%s=\n", ms->in);
 			}
 			else
 			{
 				if (temp && temp->txt != NULL)
 					f_add_com(ms, temp->txt);
-				printf("com_temp =%s=\n", ms->com_temp);
+				if (DEBUG == 1)
+					printf("com_temp =%s=\n", ms->com_temp);
 			}
 			temp = temp->next;
 		}
 		f_addback_com(&ms->comand, f_new_com(ms->com_temp, ms->in, ms->out));
 		f_zero_new_com(ms);
-		printf("-----------------------------split com-----------\n");
+		if (DEBUG == 1)
+			printf("-----------------------------split com-----------\n");
 		if (temp == NULL)
 			break ;
 		temp = temp->next;
 	}
-	printf("" GRE "---f_split_pipes out---\n" WHT ""); // TODO Supprimer
+	if (DEBUG == 1)
+		printf("" GRE "---f_split_pipes out---\n" WHT ""); // TODO Supprimer
 }
 

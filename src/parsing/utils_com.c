@@ -49,7 +49,8 @@ void	f_add_in(t_meta *ms, char *add)
 
 void	f_add_out(t_meta *ms, char *add)
 {
-	printf("" GRE "---f_add_out in---\n" WHT ""); // TODO Supprimer
+	if (DEBUG == 1)
+		printf("" GRE "---f_add_out in---\n" WHT ""); // TODO Supprimer
 	char *temp;
 	char *prov;
 	temp = ft_strdup(add);
@@ -68,7 +69,8 @@ void	f_add_out(t_meta *ms, char *add)
 		f_free_null(prov);
 		f_free_null(temp);
 	}
-	printf("" GRE "---f_add_out out---\n" WHT ""); // TODO Supprimer
+	if (DEBUG == 1)
+		printf("" GRE "---f_add_out out---\n" WHT ""); // TODO Supprimer
 }
 
 int	f_check_env(char c)
@@ -81,7 +83,8 @@ int	f_check_env(char c)
 
 void f_check_node(t_meta *ms)
 {
-	printf("" GRE "---f_check_node in---\n" WHT ""); // TODO Supprimer
+	if (DEBUG == 1)
+		printf("" GRE "---f_check_node in---\n" WHT ""); // TODO Supprimer
 	t_pars *temp;
 
 	temp = ms->list;
@@ -97,7 +100,8 @@ void f_check_node(t_meta *ms)
 		else
 			temp = temp->next;
 	}
-	printf("" GRE "---f_check_node out---\n" WHT ""); // TODO Supprimer
+	if (DEBUG == 1)
+		printf("" GRE "---f_check_node out---\n" WHT ""); // TODO Supprimer
 }
 
 void	f_free_null(void *str)

@@ -46,7 +46,14 @@ void	f_all_clean(t_meta *ms, char *msg)
 
 void	f_zero_list(t_meta *ms)
 {
+	if (DEBUG == 1)
 		printf("" GRE "---f_zero_list in---\n" WHT ""); // TODO Supprimer
+
+	if (ms->line)
+	{
+		free(ms->line);
+		ms->line = NULL;
+	}
 	if (ms->list)
 	{
 		f_free_list(&ms->list);
@@ -72,7 +79,8 @@ void	f_zero_list(t_meta *ms)
 		ms->out = NULL;
 	}
 	ms->i = 0;
-	printf("" GRE "---f_zero_list out---\n" WHT ""); // TODO Supprimer
+	if (DEBUG == 1)
+		printf("" GRE "---f_zero_list out---\n" WHT ""); // TODO Supprimer
 }
 
 char	*f_trimstr(char *s1, char c)
@@ -97,7 +105,8 @@ char	*f_trimstr(char *s1, char c)
 }
 void	f_free_comand(t_comand **list)
 {
-	printf("" GRE "---f_free_comand in---\n" WHT ""); // TODO Supprimer
+	if (DEBUG == 1)
+		printf("" GRE "---f_free_comand in---\n" WHT ""); // TODO Supprimer
 	t_comand	*temp;
 
 	if (!*list || !list)
@@ -113,7 +122,8 @@ void	f_free_comand(t_comand **list)
 		(*list) = temp;
 	}
 	*list = NULL;
-	printf("" GRE "---f_free_comand out---\n" WHT ""); // TODO Supprimer
+	if (DEBUG == 1)
+		printf("" GRE "---f_free_comand out---\n" WHT ""); // TODO Supprimer
 }
 
 char	*f_join_char(const char *s1, const char s2)

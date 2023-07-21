@@ -30,6 +30,7 @@
 
 // STRUCTURE-------------------------------------------------------------------
 
+# define DEBUG 0
 typedef struct s_comand
 {
 	char				**com;
@@ -175,6 +176,5 @@ void					f_free_null(void *str);
 void					f_print_lst(t_pars *lst);
 void					f_print_lst_final(t_comand *lst);
 void					f_print(char **cou);
-// char					*f_free_null(char *arg);
 
 #endif

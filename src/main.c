@@ -56,17 +56,25 @@ void    init_env(char **env)
 
 void ft_print_details(t_meta *ms)
 {
-	printf("\n=%s=\n\n", ms->line);
-		f_check_line(ms);
+	if (DEBUG == 1)
+		printf("\n=%s=\n\n", ms->line);
+	f_check_line(ms);
+	if (DEBUG == 1)
+	{
 		printf("\n");
 		f_print_lst(ms->list);
 		printf("\n");
-		f_check_node(ms); //TODO fonction a revoir
+	}
+	f_check_node(ms); //TODO fonction a revoir
+	if (DEBUG == 1)
 		printf("\n");
-		f_split_pipes(ms);
+	f_split_pipes(ms);
+	if (DEBUG == 1)
+	{
 		printf("\n");
 		f_print_lst_final(ms->comand);
 		printf("\n");
+	}
 }
 
 int	main(int ac, char **av, char **env)
@@ -82,6 +90,7 @@ int	main(int ac, char **av, char **env)
 		ms->line = readline("minishell > ");
 		if (ft_strncmp(ms->line, "exit", 4) == 0)
 			break ;
+		add_history(ms->line);
 		// f_check_line(ms);
 		// f_split_pipes(ms);
 		// ft_check_builtins(ms->comand);
@@ -92,7 +101,6 @@ int	main(int ac, char **av, char **env)
 		// }
 		ft_print_details(ms);
 		f_zero_list(ms);
-		add_history(ms->line);
 	}
 	// if (g()->export_list)
     //     ft_2darr_free(g()->export_list);

@@ -13,7 +13,9 @@ void	f_check_arg(int ac, char **av)
 
 void	f_check_line(t_meta *ms)
 {
-	printf("" GRE "---f_check_line in---\n" WHT ""); // TODO Supprimer
+	if (DEBUG == 1)
+		printf("" GRE "---f_check_line in---\n" WHT ""); // TODO Supprimer
+
 	while (ms->line[ms->i])
 	{
 		while (ms->line[ms->i] && ms->line[ms->i] <= 32)
@@ -34,7 +36,9 @@ void	f_check_line(t_meta *ms)
 			f_check_word(ms);
 	}
 	ms->i = 0;
-	printf("" RED "---f_check_line out---\n" WHT ""); // TODO Supprimer
+
+	if (DEBUG == 1)
+		printf("" RED "---f_check_line out---\n" WHT ""); // TODO Supprimer
 }
 
 void	f_check_word(t_meta *ms)
@@ -43,7 +47,9 @@ void	f_check_word(t_meta *ms)
 	int	end;
 	char *temp;
 
-	printf("" GRE "---f_check_word in---\n" WHT ""); // TODO Supprimer
+	if (DEBUG == 1)
+		printf("" GRE "---f_check_word in---\n" WHT ""); // TODO Supprimer
+
 	start = ms->i;
 	while (ms->line[ms->i] && ms->line[ms->i] > 32 && (ms->line[ms->i] != 124
 			&& ms->line[ms->i] != 62 && ms->line[ms->i] != 36
@@ -53,7 +59,9 @@ void	f_check_word(t_meta *ms)
 	end = ms->i;
 	temp = ft_substr(ms->line, start, (end - start));
 	f_addback_node(&ms->list, f_new_node(temp));
-	printf("" RED "---f_check_word_ out---\n" WHT ""); // TODO Supprimer
+
+	if (DEBUG == 1)
+		printf("" RED "---f_check_word_ out---\n" WHT ""); // TODO Supprimer
 }
 
 void	f_check_dollar(t_meta *ms)
@@ -62,7 +70,8 @@ void	f_check_dollar(t_meta *ms)
 	int		end;
 	char	*temp;
 
-	printf("" GRE "---f_check_dollar in---\n" WHT ""); // TODO Supprimer
+	if (DEBUG == 1)
+		printf("" GRE "---f_check_dollar in---\n" WHT ""); // TODO Supprimer
 	start = ms->i++;
 	while (f_check_env(ms->line[ms->i]) == 1)
 		ms->i++;
@@ -70,5 +79,6 @@ void	f_check_dollar(t_meta *ms)
 	temp = ft_substr(ms->line, start, (end - start));
 	temp = f_pars_dollar(temp);
 	f_addback_node(&ms->list, f_new_node(temp));
-	printf("" RED "---f_check_dollar out---\n" WHT ""); // TODO Supprimer
+	if (DEBUG == 1)
+		printf("" RED "---f_check_dollar out---\n" WHT ""); // TODO Supprimer
 }
