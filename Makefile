@@ -6,17 +6,17 @@ SRC_PATH = src/
 
 OBJ_PATH = obj/
 
-LIBFT_DIR	= ./libs/libft
+LIBFT_DIR	= ./inc/libft
 LIBFT	= $(LIBFT_DIR)/libft.a
 
 READ_PATH	= libs/readline
 RLINE		= $(READ_PATH)/libreadline.a
 LIBRLINE	= readline-8.2
 
-LIBFT_A = 	libft.a
-LIBF_DIR = 	inc/libft/
-LIBFT  = 	$(addprefix $(LIBF_DIR), $(LIBFT_A))
-HEADERS	:= -I ./include
+# LIBFT_A = 	libft.a
+# LIBF_DIR = 	inc/libft/
+# LIBFT  = 	$(addprefix $(LIBF_DIR), $(LIBFT_A))
+# HEADERS	:= -I ./include
 
 
 SRC		:=  main.c \
@@ -29,14 +29,15 @@ SRC		:=  main.c \
 			exec/export2.c \
 			exec/unset.c \
 			exec/exit.c \
+			parsing/checking.c \
+			parsing/com_list.c \
+			parsing/com_utils.c \
+			parsing/free.c \
+			parsing/init.c \
 			parsing/parsing.c \
 			parsing/utils.c \
-			parsing/link_list.c \
-			parsing/pars.c \
-			parsing/check.c \
-			parsing/a_sup.c \
-			parsing/com_list.c \
-			parsing/utils_com.c \
+			parsing/a_supp.c \
+
 
 SRCS	= $(addprefix $(SRC_PATH), $(SRC))
 OBJ		= $(SRC:%.c=%.o)
@@ -46,15 +47,15 @@ GREEN = \033[0;92m
 RED = \033[0;91m
 RESET = \033[0m
 
-all: makelibft readline $(NAME)
+all: readline $(NAME) #makelibft
 	@exec 2>/dev/null
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@ $(HEADERS)
 
-makelibft:
-	@$(MAKE) -C $(LIBF_DIR)
+# makelibft:
+# 	@$(MAKE) -C $(LIBF_DIR)
 
 readline	:
 	@if [ ! -f ./libs/readline/libreadline.a ]; then \

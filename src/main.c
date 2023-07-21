@@ -34,8 +34,6 @@ t_meta	*mt(void)
 	return (&data);
 }
 
-
-
 /**
  * @brief Inits the environment, assigns it to env_list
  * @param env The computer environment
@@ -63,14 +61,25 @@ void    init_env(char **env)
 
 void ft_print_details(t_meta *ms)
 {
-	printf("\n=%s=\n\n", ms->line);
+	if (DEBUG == 1)
+		printf("\n=%s=\n\n", ms->line);
+	f_check_line(ms);
+	if (DEBUG == 1)
+	{
 		printf("\n");
 		f_print_lst(ms->list);
 		printf("\n");
+	}
+	f_check_node(ms);
+	if (DEBUG == 1)
+		printf("\n");
+	f_split_pipes(ms);
+	if (DEBUG == 1)
+	{
 		printf("\n");
 		f_print_lst_final(ms->comand);
-		// printf("com_temp =%s=", ms->com_temp);
 		printf("\n");
+	}
 }
 
 void exec_one_node(t_comand *node, int fd)
@@ -124,9 +133,10 @@ int	main(int ac, char **av, char **env)
         // old_fd = g()->in_fd;
         // close(g()->in_fd);
         g()->in_fd = 0;
-		// ft_print_details(ms);
 		f_zero_list(ms);
 		add_history(ms->line);
+		// ft_print_details(ms);
+		f_free_null_meta(ms);
 	}
 	if (g()->export_list)
         ft_2darr_free(g()->export_list);

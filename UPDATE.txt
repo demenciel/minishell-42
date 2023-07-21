@@ -1,2 +1,4 @@
-Rendu a gérer les leaks de ft_unset().
-Probleme avec export list, lernie der free dans le main. 
+si node == null supprimer
+si $ == env doesnt exist == null == node supprimer
+les exit des fonctions
+les erreurs de parsing
