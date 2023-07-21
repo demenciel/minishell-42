@@ -28,14 +28,15 @@ SRC		:=  main.c \
 			exec/export.c \
 			exec/export2.c \
 			exec/exit.c \
+			parsing/checking.c \
+			parsing/com_list.c \
+			parsing/com_utils.c \
+			parsing/free.c \
+			parsing/init.c \
 			parsing/parsing.c \
 			parsing/utils.c \
-			parsing/link_list.c \
-			parsing/pars.c \
-			parsing/check.c \
-			parsing/a_sup.c \
-			parsing/com_list.c \
-			parsing/utils_com.c \
+			parsing/a_supp.c \
+
 
 SRCS	= $(addprefix $(SRC_PATH), $(SRC))
 OBJ		= $(SRC:%.c=%.o)

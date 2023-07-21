@@ -30,7 +30,7 @@
 
 // STRUCTURE-------------------------------------------------------------------
 
-# define DEBUG 0
+# define DEBUG 1
 typedef struct s_comand
 {
 	char				**com;
@@ -115,66 +115,70 @@ void					cd_error(char *input);
 
 t_meta					*mt(void);
 
+//PARSING-MINISHELL
+
 // PARSING---------------------------------------------------------------------
 
 void					f_check_arg(int ac, char **av);
 void					f_check_line(t_meta *ms);
+
+// CHECKING--------------------------------------------------------------------
+
 void					f_check_word(t_meta *ms);
-void					f_check_dollar(t_meta *ms);
-
-// CHECK-----------------------------------------------------------------------
-
-void					f_check_pipes(t_meta *ms);
-void					f_check_redir_right(t_meta *ms);
-void					f_check_redir_left(t_meta *ms);
 void					f_check_single_quote(t_meta *ms);
+char					*f_pars_simple_quote(t_meta *ms, char *txt);
+void					f_check_dollar(t_meta *ms);
+char					*f_pars_dollar(char *txt);
 void					f_check_double_quote(t_meta *ms);
-int						f_check_env(char c);
+char					*f_pars_double_quote(t_meta *ms, char *txt);
+void					f_check_redir_left(t_meta *ms);
+void					f_check_redir_right(t_meta *ms);
+void					f_check_pipes(t_meta *ms);
 
 // UTILS-----------------------------------------------------------------------
 
-t_meta					*f_init_meta(void);
-void					f_all_clean(t_meta *ms, char *msg);
-void					f_zero_list(t_meta *ms);
-char					*f_trimstr(char *s1, char c);
-void					f_free_comand(t_comand **list);
-char					*f_join_char(const char *s1, const char s2);
-
-// PARS------------------------------------------------------------------------
-
-int						f_som_quote_simple(char *txt);
-char					*f_pars_simple_quote(t_meta *ms, char *txt);
-char					*f_pars_dollar(char *txt);
-char					*f_pars_double_quote(t_meta *ms, char *txt);
-int						f_som_quote_double(char *txt);
-
-// LINKS_LIST------------------------------------------------------------------
-
-void					f_free_list(t_pars **list);
 t_pars					*f_new_node(char *str);
 t_pars					*f_last_node(t_pars *list);
 void					f_addback_node(t_pars **cmd, t_pars *new);
+int						f_check_metachar(char c);
+char					*f_trimstr(char *s1, char c);
+int						f_som_quote_simple(char *txt);
+int						f_check_env(char c);
+int						f_som_quote_double(char *txt);
+char					*f_join_char(const char *s1, const char s2);
 
 // COM_LIST--------------------------------------------------------------------
 
 t_comand				*f_new_com(char *com, char *in, char *out);
+void					f_zero_new_com(t_meta *ms);
 t_comand				*f_last_com(t_comand *list);
 void					f_addback_com(t_comand **cmd, t_comand *new);
 void					f_split_pipes(t_meta *ms);
-void					f_zero_new_com(t_meta *ms);
 
-// UTILS_COM-------------------------------------------------------------------
+// COM_UTILS-------------------------------------------------------------------
 
 void					f_add_com(t_meta *ms, char *add);
 void					f_add_in(t_meta *ms, char *add);
 void					f_add_out(t_meta *ms, char *add);
 void					f_check_node(t_meta *ms);
-void					f_free_null(void *str);
+
+// INIT------------------------------------------------------------------------
+
+t_meta					*f_init_meta(void);
+
+// FREE------------------------------------------------------------------------
+
+void					f_free_null_meta(t_meta *ms);
+void					f_free_comand(t_comand **list);
+void					f_free_list(t_pars **list);
+void					*f_freenull(void *str);
+void					f_all_clean(t_meta *ms, char *msg);
 
 // A_SUPP----------------------------------------------------------------------
 
-void					f_print_lst(t_pars *lst);
-void					f_print_lst_final(t_comand *lst);
-void					f_print(char **cou);
+void	f_print_lst(t_pars *lst);
+void	f_print_lst_final(t_comand *lst);
+void	f_print(char **cou);
+
 
 #endif

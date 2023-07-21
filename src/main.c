@@ -65,7 +65,7 @@ void ft_print_details(t_meta *ms)
 		f_print_lst(ms->list);
 		printf("\n");
 	}
-	f_check_node(ms); //TODO fonction a revoir
+	f_check_node(ms);
 	if (DEBUG == 1)
 		printf("\n");
 	f_split_pipes(ms);
@@ -100,7 +100,7 @@ int	main(int ac, char **av, char **env)
 		// 	pipex(ms->comand->com, 1,  0);
 		// }
 		ft_print_details(ms);
-		f_zero_list(ms);
+		f_free_null_meta(ms);
 	}
 	// if (g()->export_list)
     //     ft_2darr_free(g()->export_list);

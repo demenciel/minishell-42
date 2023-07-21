@@ -1,4 +1,3 @@
-
 #include "../../inc/minishell.h"
 
 void	f_add_com(t_meta *ms, char *add)
@@ -10,17 +9,17 @@ void	f_add_com(t_meta *ms, char *add)
 	if (ms->com_temp == NULL)
 	{
 		ms->com_temp = ft_strdup(temp);
-		f_free_null(temp);
+		temp = f_freenull(temp);
 	}
 	else
 	{
 		prov = ms->com_temp;
 		ms->com_temp = f_join_char(prov, 29);
-		f_free_null(prov);
+		prov = f_freenull(prov);
 		prov = ms->com_temp;
 		ms->com_temp = ft_strjoin(prov, temp);
-		f_free_null(prov);
-		f_free_null(temp);
+		prov = f_freenull(prov);
+		temp = f_freenull(temp);
 	}
 }
 
@@ -33,17 +32,17 @@ void	f_add_in(t_meta *ms, char *add)
 	if (ms->in == NULL)
 	{
 		ms->in = ft_strdup(temp);
-		f_free_null(temp);
+		temp = f_freenull(temp);
 	}
 	else
 	{
 		prov = ms->in;
 		ms->in = f_join_char(prov, 29);
-		f_free_null(prov);
+		prov = f_freenull(prov);
 		prov = ms->in;
 		ms->in = ft_strjoin(prov, temp);
-		f_free_null(prov);
-		f_free_null(temp);
+		prov = f_freenull(prov);
+		temp = f_freenull(temp);
 	}
 }
 
@@ -57,28 +56,20 @@ void	f_add_out(t_meta *ms, char *add)
 	if (ms->out == NULL)
 	{
 		ms->out = ft_strdup(temp);
-		f_free_null(temp);
+		temp = f_freenull(temp);
 	}
 	else
 	{
 		prov = ms->out;
 		ms->out = f_join_char(prov, 29);
-		f_free_null(prov);
+		prov = f_freenull(prov);
 		prov = ms->out;
 		ms->out = ft_strjoin(prov, temp);
-		f_free_null(prov);
-		f_free_null(temp);
+		prov = f_freenull(prov);
+		temp = f_freenull(temp);
 	}
 	if (DEBUG == 1)
 		printf("" GRE "---f_add_out out---\n" WHT ""); // TODO Supprimer
-}
-
-int	f_check_env(char c)
-{
-	if (ft_isalnum(c) == 1 || c == '_' || c == '?')
-		return (1);
-	else
-		return (0);
 }
 
 void f_check_node(t_meta *ms)
@@ -102,10 +93,4 @@ void f_check_node(t_meta *ms)
 	}
 	if (DEBUG == 1)
 		printf("" GRE "---f_check_node out---\n" WHT ""); // TODO Supprimer
-}
-
-void	f_free_null(void *str)
-{
-	free(str);
-	str = NULL;
 }

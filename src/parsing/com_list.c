@@ -122,4 +122,3 @@ void	f_split_pipes(t_meta *ms)
 	if (DEBUG == 1)
 		printf("" GRE "---f_split_pipes out---\n" WHT ""); // TODO Supprimer
 }
-

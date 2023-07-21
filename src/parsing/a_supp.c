@@ -1,4 +1,3 @@
-
 #include "../../inc/minishell.h"
 
 void	f_print_lst(t_pars *lst)
@@ -6,6 +5,8 @@ void	f_print_lst(t_pars *lst)
 	t_pars *temp;
 	int i;
 
+	if (!lst)
+		return ;
 	temp = lst;
 	i = 0;
 	while (temp)
@@ -42,6 +43,7 @@ void	f_print_lst_final(t_comand *lst)
 	if (DEBUG == 1)
 		printf("" GRE "---f_print_lst_final out---\n" WHT ""); // TODO Supprimer
 }
+
 void	f_print(char **cou)
 {
 	int i;
