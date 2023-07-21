@@ -3,7 +3,7 @@
 /**
  * @brief Checks the content of the node, and executes the builtin depending of the content of the node
 */
-void    find_export_unset_env(t_comand *node)
+void find_export_unset_env(t_comand *node, int input_fd)
 {
     int i;
 
@@ -11,10 +11,10 @@ void    find_export_unset_env(t_comand *node)
     {
         i = 1;
         if (!node->com[i])
-            ft_export("");
+            ft_export("", input_fd);
         while (node->com[i])
         {
-            ft_export(node->com[i]);
+            ft_export(node->com[i], input_fd);
             i++;
         }
     }
@@ -27,15 +27,16 @@ void    find_export_unset_env(t_comand *node)
             ft_unset(node->com[i++]);
     }
     else if (ft_strcmp(node->com[0], "env") == 0)
-        ft_env();
+        ft_env(input_fd);
 }
+
 
 /**
  * @brief A function to separate the execution of the builtins
 */
-void    find_builtins(t_comand *node)
+void    find_builtins(t_comand *node, int input_fd)
 {
-    find_export_unset_env(node);
+    find_export_unset_env(node, input_fd);
 }
 
 /**

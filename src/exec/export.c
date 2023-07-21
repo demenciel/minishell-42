@@ -77,10 +77,9 @@ int checks_for_doubles_export(char *var)
 		if (ft_strncmp(check_var, trimmed, ft_strlen(check_var)) == 0)
 		{
 			free(trimmed);
-			free(check_var);
+			// free(check_var);
 			return (i) ;
 		}
-
 		free(trimmed);
 		i++;
 	}
@@ -209,7 +208,7 @@ char	**ft_cpy_env(char **list)
  * @brief Adds an element to the env list. Simulates what (export) cmd does
  * @param new_var New element to add to list
 */
-void	ft_export(char *new_var)
+void	ft_export(char *new_var, int input_fd)
 {
 	int i;
 	int list_size;
@@ -237,7 +236,7 @@ void	ft_export(char *new_var)
 	if (!new_var || *new_var == '\0')
 	{
 		order_export(&list_size);
-		ft_2darr_print(g()->export_list);
+		ft_2darr_print(g()->export_list, input_fd);
 		return ;
 	}
 	g()->export_list = ft_cpy_export(g()->export_list);

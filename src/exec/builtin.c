@@ -4,12 +4,12 @@
 /**
  * @brief Reproduce the env builtin command (env)
 */
-void    ft_env(void)
+void    ft_env(int fd)
 {
     int i;
 
     i = 0;
-    ft_2darr_print(g()->env_list);
+    ft_2darr_print(g()->env_list, fd);
 }
 
 /**

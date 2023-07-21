@@ -56,17 +56,18 @@ typedef struct s_meta
 	t_comand			*comand;
 }						t_meta;
 
-typedef struct s_pipex
+typedef struct s_exec
 {
 	int					in_fd;
 	int					old_fd;
 	int					out_fd;
+	int					pipe_end[2];
 	int					exec_flag;
 	int					env_length;
 	int					export_length;
 	char				**env_list;
 	char				**export_list;
-}						t_pipex;
+}						t_exec;
 
 // REDIRECT
 
@@ -77,21 +78,20 @@ void					heredocs(char *limiter);
 
 // PIPEX
 
-void					pipex(t_comand *list);
+void					pipex(char **cmd, bool multi, int input_fd);
 int						open_rd_fd(char *fd1);
 
 // EXEC BUILTINS
-bool    ft_check_builtins(char **cmd);
-void    find_builtins(t_comand *node);
-void    find_export_unset_env(t_comand *node);
-
+bool					ft_check_builtins(char **cmd);
+void					find_builtins(t_comand *node, int input_fd);
+void					find_export_unset_env(t_comand *node, int input_fd);
 
 // BUILTINS
 void					ft_echo(char *string, int flag);
 void					ft_cd(char *path);
 void					ft_pwd(void);
-void					ft_env(void);
-void					ft_export(char *new_env);
+void					ft_env(int fd);
+void					ft_export(char *new_env, int fd);
 void					ft_unset(char *var);
 
 // EXPORT UTILS
@@ -111,9 +111,7 @@ void					ft_exit(char *msg, char *builtin, int error);
 
 // UTILS-----------------------------------------------------------------------
 
-t_pipex					*g(void);
-
-void					init_pipex(void);
+t_exec					*g(void);
 void					exec_cmd(char **cmd);
 
 // ERROR UTILS

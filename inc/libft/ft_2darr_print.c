@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:40:18 by acouture          #+#    #+#             */
-/*   Updated: 2023/07/05 09:16:28 by acouture         ###   ########.fr       */
+/*   Updated: 2023/07/21 15:37:10 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,15 @@
  * @brief Prints a 2d array
  * @param tb The 2d array to print
 */
-void	ft_2darr_print(char **tb)
+void	ft_2darr_print(char **tb, int fd)
 {
 	int	i;
 
 	i = 0;
 	while (tb[i])
 	{
-		printf("%s\n", tb[i]);
+		ft_putstr_fd(tb[i], fd);
+		ft_putchar_fd('\n', fd);
 		i++;
 	}
 }
