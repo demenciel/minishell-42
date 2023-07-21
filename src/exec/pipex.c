@@ -97,12 +97,14 @@ void	pipex(char **cmd, bool multi, int input_fd)
 			close(pipe_end[1]);
 			g()->in_fd = pipe_end[0];
 		}
+		// close(pipe_end[0]);
 	}
 	else
 	{
 		if (fork() == 0)
 		{
 			dup2(input_fd, STDIN_FILENO);
+			close(input_fd);
 			exec_cmd(cmd);
 		}
 		else

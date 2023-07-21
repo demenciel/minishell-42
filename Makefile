@@ -20,6 +20,7 @@ LIBRLINE	= readline-8.2
 
 
 SRC		:=  main.c \
+			exec/main_exec.c \
 			exec/pipex.c \
 			exec/redirect.c \
 			exec/error_utils.c \

@@ -1,5 +1,4 @@
 #include "../../inc/minishell.h"
-#include <strings.h>
 
 /**
  * @brief If the new element is assigning a VAR, puts the content of VAR in ("")
@@ -50,17 +49,16 @@ void	change_var_content(char *var, int index)
 	g()->export_list[index] = new_var_content;
 }
 
-
 int checks_for_doubles_export(char *var)
 {
-	int i;
+	int str;
 	int j;
 	char *trimmed;
 	char *check_var;
 	char **var_tab;
 	char set[12] = "declare -x ";
 
-	i = 0;
+	str = 0;
 	j = 0;
 	check_var = var;
 	if (ft_strchr(var, '='))
@@ -69,19 +67,19 @@ int checks_for_doubles_export(char *var)
 		check_var = ft_strdup(var_tab[0]);
 		ft_2darr_free(var_tab);
 	}
-	while (i < g()->export_length)
+	while (str < g()->export_length)
 	{
-		while (set[j] == g()->export_list[i][j])
+		while (set[j] == g()->export_list[str][j])
 			j++;
-		trimmed = ft_strdup(&g()->export_list[i][j]);
+		trimmed = ft_strdup(&g()->export_list[str][j]);
 		if (ft_strncmp(check_var, trimmed, ft_strlen(check_var)) == 0)
 		{
 			free(trimmed);
-			// free(check_var);
-			return (i) ;
+			free(check_var);
+			return (str) ;
 		}
 		free(trimmed);
-		i++;
+		str++;
 	}
 	return (0);
 }

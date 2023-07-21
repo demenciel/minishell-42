@@ -1,23 +1,10 @@
 #include "../inc/minishell.h"
 
-// PARSING
-
 t_exec	*g(void)
 {
 	static t_exec	data;
 
 	return (&data);
-}
-
-void	init_exec_struct(void)
-{
-	t_exec	*p;
-
-	p = g();
-	p->in_fd = open_rd_fd(NULL);
-	p->out_fd = -1;
-	p->env_list = NULL;
-	p->export_list = NULL;
 }
 
 void    ft_reset_exec()
@@ -82,35 +69,6 @@ void ft_print_details(t_meta *ms)
 	}
 }
 
-void exec_one_node(t_comand *node, int fd)
-{
-	if (ft_check_builtins(node->com))
-        find_builtins(node, 0);
-	else
-    	pipex(node->com, false, fd);
-}
-
-void exec_multi_node(t_comand *node)
-{
-    int input_fd;
-
-    while (node)
-    {
-        if (node->stin != NULL)
-            input_fd = open_rd_fd(node->stin);
-        else
-            input_fd = g()->in_fd;
-        if (node->next == NULL)
-            exec_one_node(node, input_fd);
-        if (ft_check_builtins(node->com))
-            find_builtins(node, input_fd);
-        else
-            pipex(node->com, true, input_fd);
-        node = node->next;
-    }
-}
-
-
 int	main(int ac, char **av, char **env)
 {
 	t_meta *ms;
@@ -130,13 +88,12 @@ int	main(int ac, char **av, char **env)
 		f_split_pipes(ms);
 		node = ms->comand;
 		exec_multi_node(node);
-        // old_fd = g()->in_fd;
-        // close(g()->in_fd);
         g()->in_fd = 0;
 		add_history(ms->line);
 		// ft_print_details(ms);
 		f_free_null_meta(ms);
 	}
+	close(g()->in_fd);
 	if (g()->export_list)
         ft_2darr_free(g()->export_list);
     if (g()->env_list)

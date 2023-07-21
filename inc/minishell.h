@@ -77,9 +77,13 @@ void					append_out(char **cmd, char *infile, char *output);
 void					heredocs(char *limiter);
 
 // PIPEX
-
 void					pipex(char **cmd, bool multi, int input_fd);
 int						open_rd_fd(char *fd1);
+
+// MAIN EXEC
+void					exec_multi_node(t_comand *node);
+void					exec_one_node(t_comand *node, int fd);
+void					init_exec_struct(void);
 
 // EXEC BUILTINS
 bool					ft_check_builtins(char **cmd);
@@ -196,9 +200,8 @@ void					f_all_clean(t_meta *ms, char *msg);
 
 // A_SUPP----------------------------------------------------------------------
 
-void	f_print_lst(t_pars *lst);
-void	f_print_lst_final(t_comand *lst);
-void	f_print(char **cou);
-
+void					f_print_lst(t_pars *lst);
+void					f_print_lst_final(t_comand *lst);
+void					f_print(char **cou);
 
 #endif
