@@ -86,6 +86,7 @@ int	main(int ac, char **av, char **env)
 			break ;
 		f_check_line(ms);
 		f_split_pipes(ms);
+		// dup2(g()->in_fd, STDIN_FILENO);
 		node = ms->comand;
 		exec_multi_node(node);
         g()->in_fd = 0;

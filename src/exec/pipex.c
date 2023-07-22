@@ -76,10 +76,10 @@ int	open_rd_fd(char *fd1)
 */
 void	pipex(char **cmd, bool multi, int input_fd)
 {
-	int	pipe_end[2];
+	int pipe_end[2];
 
 	if (pipe(pipe_end) != 0)
-		pipex_fail("PIPE");
+		return ;
 	if (multi)
 	{
 		if (fork() == 0)
@@ -97,14 +97,14 @@ void	pipex(char **cmd, bool multi, int input_fd)
 			close(pipe_end[1]);
 			g()->in_fd = pipe_end[0];
 		}
-		// close(pipe_end[0]);
 	}
 	else
 	{
 		if (fork() == 0)
 		{
-			dup2(input_fd, STDIN_FILENO);
-			close(input_fd);
+			dup2(g()->in_fd, STDIN_FILENO);
+			close(pipe_end[1]);
+			close(pipe_end[0]);
 			exec_cmd(cmd);
 		}
 		else
