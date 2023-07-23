@@ -15,7 +15,6 @@ void	ft_env(int fd)
 void	ft_echo(char *string, int input_fd)
 {
 	ft_putstr_fd(string, input_fd);
-	ft_putchar_fd('\n', input_fd);
 }
 
 /**

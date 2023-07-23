@@ -40,13 +40,12 @@ void	exec_cmd(char **cmd)
 		flag = 0;
 		search_cmd = ft_strjoin(paths[i], cmd[0]);
 		if (access(search_cmd, 0) == 0)
-		{
 			execve(search_cmd, cmd, g()->env_list);
-			free(search_cmd);
-		}
 		else
 			flag++;
+		free(search_cmd);
 	}
+	ft_2darr_free(paths);
 	if (flag > 0)
 		print_error(cmd[0]);
 }

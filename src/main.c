@@ -41,7 +41,7 @@ void    init_env(char **env)
         g()->env_list[size] = ft_strdup(env[size]);
         size++;
     }
-    g()->env_list[size] = ft_strdup(env[size]);
+    g()->env_list[size] = NULL;
 }
 
 void ft_print_details(t_meta *ms)
@@ -88,7 +88,6 @@ int	main(int ac, char **av, char **env)
 		exec_multi_node(node);
         g()->in_fd = 0;
 		add_history(ms->line);
-		// ft_print_details(ms);
 		f_free_null_meta(ms);
 	}
 	close(g()->in_fd);
