@@ -163,6 +163,43 @@ char	**ft_cpy_export(char **list)
 }
 
 /**
+ * @brief Checks if the export list is empty. If yes, makes a copy of the env
+*/
+int cpy_env_if_null(void)
+{
+	int i;
+	int list_size;
+
+	i = 0;
+	list_size = 0;
+	while (g()->env_list[list_size])
+		list_size++;
+	g()->env_length = list_size;
+	g()->export_list = (char **)malloc(sizeof(char *) * (list_size + 1));
+	if (!g()->export_list)
+		return (0); // SHOULD RETURN EXIT
+	i = 0;
+	while (g()->env_list[i])
+	{
+		g()->export_list[i] = ft_strjoin("declare -x ", g()->env_list[i]);
+		i++;
+	}
+	g()->export_list[i] = NULL;
+	return (i);
+}
+
+bool	if_var_empty(char *new_var, int *list_size, int input_fd)
+{
+	if (!new_var || *new_var == '\0')
+	{
+		order_export(list_size);
+		ft_2darr_print(g()->export_list, input_fd);
+		return (true);
+	}
+	return (false);
+}
+
+/**
  * @brief Adds an element to the env list. Simulates what (export) cmd does
  * @param new_var New element to add to list
 */
@@ -174,29 +211,13 @@ void	ft_export(char *new_var, int input_fd)
 	check_var(new_var);
 	if (g()->export_list == NULL)
 	{
-		list_size = 0;
-		while (g()->env_list[list_size])
-			list_size++;
-		g()->env_length = list_size;
-		g()->export_list = (char **)malloc(sizeof(char *) * (list_size + 1));
-		if (!g()->export_list)
-			return ;
-		i = 0;
-		while (g()->env_list[i])
-		{
-			g()->export_list[i] = ft_strjoin("declare -x ", g()->env_list[i]);
-			i++;
-		}
-		g()->export_list[i] = NULL;
+		i = cpy_env_if_null();
+		list_size = g()->env_length;
 	}
 	else
 		list_size = ft_2darr_len(g()->export_list);
-	if (!new_var || *new_var == '\0')
-	{
-		order_export(&list_size);
-		ft_2darr_print(g()->export_list, input_fd);
+	if (if_var_empty(new_var, &list_size, input_fd))
 		return ;
-	}
 	g()->export_list = ft_cpy_export(g()->export_list);
 	g()->env_list = ft_cpy_env(g()->env_list);
 	if (ft_strchr(new_var, '='))

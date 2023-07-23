@@ -16,7 +16,7 @@ void	check_var(char *var)
 	while (var[i])
 	{
 		if (!ft_isalpha(var[i]) && var[i] != 95 && var[i] != '=')
-			ft_exit("invalid", "export", 1);
+			exit(1);
 		i++;
 	}
 }

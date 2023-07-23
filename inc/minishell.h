@@ -92,12 +92,19 @@ void					find_export_unset_env(t_comand *node, int input_fd);
 
 // BUILTINS
 void					ft_echo(char *string, int input_fd);
-void					ft_cd(char *path);
 char					*ft_pwd(void);
 void					ft_env(int fd);
 void					ft_export(char *new_env, int fd);
 void					ft_unset_env(char *var);
 void					ft_unset_export(char *var);
+
+// CD
+void					ft_cd(char *path);
+char					*get_env(char *input);
+void					replace_oldpwd(char *oldpath);
+void					change_pwd_env(void);
+char					*result_path(char *env_var, char *path_env,
+							bool oldpwd);
 
 // ENV
 char					**ft_cpy_env(char **list);

@@ -27,10 +27,10 @@ SRC		:=  main.c \
 			exec/builtin.c \
 			exec/exec_builtins.c \
 			exec/env.c \
+			exec/cd.c \
 			exec/export.c \
 			exec/export2.c \
 			exec/unset.c \
-			exec/exit.c \
 			parsing/checking.c \
 			parsing/com_list.c \
 			parsing/com_utils.c \

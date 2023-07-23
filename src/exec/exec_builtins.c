@@ -25,7 +25,7 @@ void	find_export_unset_env(t_comand *node, int input_fd)
 		{
 			ft_unset_export(node->com[i]);
 			ft_unset_env(node->com[i]);
-            i++;
+			i++;
 		}
 	}
 	else if (ft_strcmp(node->com[0], "env") == 0)
@@ -38,7 +38,7 @@ void	find_export_unset_env(t_comand *node, int input_fd)
 */
 void	find_cd_pwd(t_comand *node, int input_fd)
 {
-	char    *pwd;
+	char	*pwd;
 
 	if (ft_strcmp(node->com[0], "cd") == 0)
 	{

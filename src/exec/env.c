@@ -17,13 +17,14 @@ void	change_var_content_env(char *var, int index)
  * @param var The var to compare to the list
  * @return The position in the env list
 */
-int checks_for_doubles_env(char *var)
+int	checks_for_doubles_env(char *var)
 {
-	int str;
-	int j;
-	char *check_var = NULL;
-	char **var_tab;
+	int		str;
+	int		j;
+	char	*check_var;
+	char	**var_tab;
 
+	check_var = NULL;
 	str = 0;
 	j = 0;
 	var_tab = ft_split(var, '=');
@@ -31,10 +32,11 @@ int checks_for_doubles_env(char *var)
 	ft_2darr_free(var_tab);
 	while (str < g()->env_length)
 	{
-		if (ft_strncmp(check_var, g()->env_list[str], ft_strlen(check_var)) == 0)
+		if (ft_strncmp(check_var, g()->env_list[str],
+				ft_strlen(check_var)) == 0)
 		{
 			free(check_var);
-			return (str) ;
+			return (str);
 		}
 		str++;
 	}
@@ -49,11 +51,10 @@ int checks_for_doubles_env(char *var)
 */
 void	add_var_to_env(char *new_var, int i)
 {
-	int i_double;
+	int	i_double;
 	int	og_size;
 	int	new_size;
 
-	// env var doesnt get updated with doubles
 	if (checks_for_doubles_env(new_var) > 0)
 	{
 		i_double = checks_for_doubles_env(new_var);
@@ -63,8 +64,8 @@ void	add_var_to_env(char *new_var, int i)
 	og_size = g()->env_length;
 	new_size = og_size;
 	new_size++;
-	g()->env_list = ft_realloc(g()->env_list, og_size * sizeof(char *),
-			new_size * sizeof(char *));
+	g()->env_list = ft_realloc(g()->env_list, og_size * sizeof(char *), new_size
+			* sizeof(char *));
 	g()->env_list[i] = ft_strdup(new_var);
 	i++;
 	og_size = new_size;
@@ -82,8 +83,8 @@ void	add_var_to_env(char *new_var, int i)
 */
 char	**ft_cpy_env(char **list)
 {
-	int		i;
-	char	**result;
+	int i;
+	char **result;
 
 	i = 0;
 	while (list[i])
@@ -97,6 +98,6 @@ char	**ft_cpy_env(char **list)
 	}
 	result[i] = ft_strdup(list[i]);
 	g()->env_length = i;
-    ft_2darr_free(list);
+	ft_2darr_free(list);
 	return (result);
 }
