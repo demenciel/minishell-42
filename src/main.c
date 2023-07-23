@@ -41,7 +41,7 @@ void    init_env(char **env)
         g()->env_list[size] = ft_strdup(env[size]);
         size++;
     }
-    g()->env_list[size] = NULL;
+    g()->env_list[size] = ft_strdup(env[size]);
 }
 
 void ft_print_details(t_meta *ms)
@@ -76,7 +76,7 @@ int	main(int ac, char **av, char **env)
 	ms = f_init_meta();
     init_exec_struct();
     init_env(env);
-	// ft_unset_env("OLDPWD");
+	ft_unset_env("OLDPWD");
 	while (1)
 	{
 		ms->line = readline("minishell > ");

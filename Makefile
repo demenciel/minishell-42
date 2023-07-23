@@ -26,6 +26,7 @@ SRC		:=  main.c \
 			exec/error_utils.c \
 			exec/builtin.c \
 			exec/exec_builtins.c \
+			exec/env.c \
 			exec/export.c \
 			exec/export2.c \
 			exec/unset.c \

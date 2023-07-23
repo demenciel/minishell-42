@@ -19,7 +19,6 @@ void	ft_unset_env(char *var)
 		if (ft_strncmp(var, g()->env_list[i], ft_strlen(var)) == 0)
 		{
 			free(g()->env_list[i]);
-			// g()->env_list[i] = NULL;
 			j = i;
 			while (g()->env_list[j])
 			{

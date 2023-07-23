@@ -37,19 +37,20 @@ char	*detect_var_export(char *var)
  * @param var the new content of the var
  * @param index The position of the list in which to change the content
 */
-void	change_var_content(char *var, int index)
+void	change_var_content_export(char *var, int index)
 {
 	char *new_var_content;
 	char *new_var;
 
 	if (ft_strchr(var, '='))
 	{
-		new_var = detect_var_export(var);
+		new_var = ft_strdup(var);
 		new_var_content = ft_strjoin("declare -x ", new_var);
 		free(new_var);
 	}
 	else 
 		new_var_content = ft_strjoin("declare -x ", var);
+	g()->export_list[index] = NULL;
 	free(g()->export_list[index]);
 	g()->export_list[index] = new_var_content;
 }
@@ -70,7 +71,6 @@ int checks_for_doubles_export(char *var)
 	char set[12] = "declare -x ";
 
 	str = 0;
-	j = 0;
 	if (ft_strchr(var, '='))
 	{
 		var_tab = ft_split(var, '=');
@@ -81,6 +81,7 @@ int checks_for_doubles_export(char *var)
 		check_var = ft_strdup(var);
 	while (str < g()->export_length)
 	{
+		j = 0;
 		while (set[j] == g()->export_list[str][j])
 			j++;
 		trimmed = ft_strdup(&g()->export_list[str][j]);
@@ -112,7 +113,7 @@ void	add_var_to_export(char *new_var, int i, int *list_size)
 	if (checks_for_doubles_export(new_var) > 0)
 	{
 		i_double = checks_for_doubles_export(new_var);
-		change_var_content(new_var, i_double);
+		change_var_content_export(new_var, i_double);
 		return ;
 	}
 	(*list_size)++;
@@ -133,39 +134,6 @@ void	add_var_to_export(char *new_var, int i, int *list_size)
 	g()->export_list = ft_realloc(g()->export_list, og_size * sizeof(char *),
 			*list_size * sizeof(char *));
 	g()->export_list[i] = NULL;
-}
-
-/**
- * @brief Adds the new variables inside the env.
- * @param new_var The new variables to insert
- * @param i The index of where we currently are inside the env list
-*/
-void	add_var_to_env(char *new_var, int i)
-{
-	int i_double;
-	int	og_size;
-	int	new_size;
-
-	// env var doesnt get updated with doubles
-	if (checks_for_doubles_export(new_var) > 0)
-	{
-		i_double = checks_for_doubles_export(new_var);
-		change_var_content(new_var, i_double);
-		return ;
-	}
-	og_size = g()->env_length;
-	new_size = og_size;
-	new_size++;
-	g()->env_list = ft_realloc(g()->env_list, og_size * sizeof(char *),
-			new_size * sizeof(char *));
-	g()->env_list[i] = ft_strdup(new_var);
-	i++;
-	og_size = new_size;
-	new_size++;
-	g()->env_list = ft_realloc(g()->env_list, og_size * sizeof(char *), new_size
-			* sizeof(char *));
-	g()->env_list[i] = NULL;
-	g()->env_length = new_size;
 }
 
 /**
@@ -190,32 +158,6 @@ char	**ft_cpy_export(char **list)
 	}
 	result[i] = NULL;
 	g()->export_length = i;
-	ft_2darr_free(list);
-	return (result);
-}
-
-/**
- * @brief This function is to make a copy of the env list
- * @param list export list to copy
- * @return Returns a copy of the list after freeing the initial list
-*/
-char	**ft_cpy_env(char **list)
-{
-	int		i;
-	char	**result;
-
-	i = 0;
-	while (list[i])
-		i++;
-	result = (char **)malloc(sizeof(char *) * (i + 1));
-	i = 0;
-	while (list[i])
-	{
-		result[i] = ft_strdup(list[i]);
-		i++;
-	}
-	result[i] = NULL;
-	g()->env_length = i;
 	ft_2darr_free(list);
 	return (result);
 }

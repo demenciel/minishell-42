@@ -99,12 +99,17 @@ void					ft_export(char *new_env, int fd);
 void					ft_unset_env(char *var);
 void					ft_unset_export(char *var);
 
+// ENV
+char					**ft_cpy_env(char **list);
+void					change_var_content_export(char *var, int index);
+int						checks_for_doubles_env(char *var);
+void					add_var_to_env(char *new_var, int i);
+
 // EXPORT UTILS
 void					add_var_to_export(char *new_var, int i, int *list_size);
 int						checks_for_doubles_export(char *var);
-void					change_var_content(char *var, int index);
+void					change_var_content_export(char *var, int index);
 char					*detect_var_export(char *var);
-char					**ft_cpy_env(char **list);
 char					**ft_cpy_export(char **list);
 void					add_var_to_env(char *new_var, int i);
 void					check_var(char *var);
