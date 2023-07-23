@@ -80,7 +80,6 @@ void					heredocs(char *limiter);
 void					pipex(char **cmd, bool multi, int input_fd);
 int						open_rd_fd(char *fd1);
 
-
 // MAIN EXEC
 void					exec_multi_node(t_comand *node);
 void					exec_one_node(t_comand *node, int fd);
@@ -94,10 +93,11 @@ void					find_export_unset_env(t_comand *node, int input_fd);
 // BUILTINS
 void					ft_echo(char *string, int input_fd);
 void					ft_cd(char *path);
-char *ft_pwd(void);
+char					*ft_pwd(void);
 void					ft_env(int fd);
 void					ft_export(char *new_env, int fd);
-void					ft_unset(char *var);
+void					ft_unset_env(char *var);
+void					ft_unset_export(char *var);
 
 // EXPORT UTILS
 void					add_var_to_export(char *new_var, int i, int *list_size);

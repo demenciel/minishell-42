@@ -1,5 +1,8 @@
 #include "../../inc/minishell.h"
 
+/**
+ * @brief Initialize the content of the exec struct
+*/
 void	init_exec_struct(void)
 {
 	t_exec	*p;
@@ -12,6 +15,11 @@ void	init_exec_struct(void)
 	p->export_list = NULL;
 }
 
+/**
+ * @brief Executes a single node in the program
+ * @param node The node to be executed
+ * @param fd The fd into which to write the execution
+*/
 void	exec_one_node(t_comand *node, int fd)
 {
 	if (ft_check_builtins(node->com))
@@ -20,6 +28,11 @@ void	exec_one_node(t_comand *node, int fd)
 		pipex(node->com, false, fd);
 }
 
+/**
+ * @brief Iterates over all the nodes in the program,
+ * 			assigns the appropriate fd, and executes the node
+ * @param node The node to be executed
+*/
 void	exec_multi_node(t_comand *node)
 {
 	int fd;
@@ -41,9 +54,3 @@ void	exec_multi_node(t_comand *node)
 		node = node->next;
 	}
 }
-
-/**
- * TRYING TO PASS PIPE ENDS TO THE FUNCTIONS SO EVEN BUILTINS
- * CAN WRITE INTO THE PIPE, SO THEN THE OTHER COMMAND CAN READ FROM
- * THAT PIPE
-*/

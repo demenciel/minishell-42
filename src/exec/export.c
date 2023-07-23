@@ -32,6 +32,11 @@ char	*detect_var_export(char *var)
 	return (new_var);
 }
 
+/**
+ * @brief Goes at index position in the list and change its content by var
+ * @param var the new content of the var
+ * @param index The position of the list in which to change the content
+*/
 void	change_var_content(char *var, int index)
 {
 	char *new_var_content;
@@ -49,24 +54,31 @@ void	change_var_content(char *var, int index)
 	g()->export_list[index] = new_var_content;
 }
 
+
+/**
+ * @brief Iterates over the export list and checks if var has a double in the list
+ * @param var The var to compare to the list
+ * @return The position in the export list
+*/
 int checks_for_doubles_export(char *var)
 {
 	int str;
 	int j;
 	char *trimmed;
-	char *check_var;
+	char *check_var = NULL;
 	char **var_tab;
 	char set[12] = "declare -x ";
 
 	str = 0;
 	j = 0;
-	check_var = var;
 	if (ft_strchr(var, '='))
 	{
 		var_tab = ft_split(var, '=');
 		check_var = ft_strdup(var_tab[0]);
 		ft_2darr_free(var_tab);
 	}
+	else
+		check_var = ft_strdup(var);
 	while (str < g()->export_length)
 	{
 		while (set[j] == g()->export_list[str][j])
@@ -81,6 +93,7 @@ int checks_for_doubles_export(char *var)
 		free(trimmed);
 		str++;
 	}
+	free(check_var);
 	return (0);
 }
 
@@ -181,6 +194,11 @@ char	**ft_cpy_export(char **list)
 	return (result);
 }
 
+/**
+ * @brief This function is to make a copy of the env list
+ * @param list export list to copy
+ * @return Returns a copy of the list after freeing the initial list
+*/
 char	**ft_cpy_env(char **list)
 {
 	int		i;

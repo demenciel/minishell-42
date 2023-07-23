@@ -28,22 +28,20 @@ t_meta	*mt(void)
 void    init_env(char **env)
 {
     int size;
-    t_exec *exec;
 
     size = 0;
-    exec = g();
     while (env[size])
         size++;
-    exec->env_list = malloc(sizeof(char *) * (size + 1));
-    if (!exec->env_list)
+    g()->env_list = malloc(sizeof(char *) * (size + 1));
+    if (!g()->env_list)
         return ;
     size = 0;
     while (env[size])
     {
-        exec->env_list[size] = ft_strdup(env[size]);
+        g()->env_list[size] = ft_strdup(env[size]);
         size++;
     }
-    exec->env_list[size] = NULL;
+    g()->env_list[size] = NULL;
 }
 
 void ft_print_details(t_meta *ms)
@@ -73,12 +71,12 @@ int	main(int ac, char **av, char **env)
 {
 	t_meta *ms;
 	t_comand *node;
-    // int old_fd;
 
 	f_check_arg(ac, av);
 	ms = f_init_meta();
     init_exec_struct();
     init_env(env);
+	// ft_unset_env("OLDPWD");
 	while (1)
 	{
 		ms->line = readline("minishell > ");
@@ -86,7 +84,6 @@ int	main(int ac, char **av, char **env)
 			break ;
 		f_check_line(ms);
 		f_split_pipes(ms);
-		// dup2(g()->in_fd, STDIN_FILENO);
 		node = ms->comand;
 		exec_multi_node(node);
         g()->in_fd = 0;
