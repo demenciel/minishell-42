@@ -77,12 +77,13 @@ void					append_out(char **cmd, char *infile, char *output);
 void					heredocs(char *limiter);
 
 // PIPEX
-void					pipex(char **cmd, bool multi, int input_fd);
+void					pipex(char **cmd, bool multi, int input_fd, int out_fd);
 int						open_rd_fd(char *fd1);
+int						create_rd_fd(char *fd1);
 
 // MAIN EXEC
 void					exec_multi_node(t_comand *node);
-void					exec_one_node(t_comand *node, int fd);
+void					exec_one_node(t_comand *node, int fd, int out_fd);
 void					init_exec_struct(void);
 
 // EXEC BUILTINS
