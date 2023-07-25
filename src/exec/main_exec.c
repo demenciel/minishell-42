@@ -91,10 +91,11 @@ void	exec_multi_node(t_comand *node)
 		single_node = false;
 	while (node)
 	{ 
-		printf("NODE ?\n");
 		out_fd = redirect_nodes(single_node, pipe_end[1], node);
 		if (out_fd < 0)
 			return ;
+		else if (out_fd == HEREDOC_SUCCESS)
+			break ;
 		if (node->next == NULL)
 			exec_one_node(node, g()->in_fd, out_fd);
 		else 

@@ -14,8 +14,7 @@ int	heredocs(char *limiter)
 		return (HEREDOC_ERROR);
 	while (1)
 	{
-		rl_line = readline("heredoc> ");
-		add_history(rl_line);
+		rl_line = readline("heredoc > ");
 		if (ft_strnstr(rl_line, limiter, ft_strlen(rl_line)))
 			break ;
 		free(rl_line);
@@ -59,14 +58,25 @@ int redirect_out(t_comand *node)
 	fd = ft_split(node->stout, 29);
 	if (ft_strlen(fd[0]) == 2)
 	{
-		heredocs(fd[1]);
-	}
-	out_fd = create_rd_fd(fd[1]);
-	if (out_fd < 0)
-	{
+		out_fd = append_rd_fd(fd[1]);
+		if (out_fd < 0)
+		{
+			ft_2darr_free(fd);
+			return (FD_ERROR);
+		}
 		ft_2darr_free(fd);
-		return (FD_ERROR);
+		return (out_fd);
 	}
-	ft_2darr_free(fd);
-	return (out_fd);
+	else
+	{
+		out_fd = create_rd_fd(fd[1]);
+		if (out_fd < 0)
+		{
+			ft_2darr_free(fd);
+			return (FD_ERROR);
+		}
+		ft_2darr_free(fd);
+		return (out_fd);
+	}
+	return (0);
 }

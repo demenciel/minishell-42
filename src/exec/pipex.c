@@ -94,6 +94,22 @@ int	create_rd_fd(char *fd1)
 	return (fd);
 }
 
+int	append_rd_fd(char *fd1)
+{
+	int	fd;
+
+	fd = 0;
+	if (!fd1)
+		return (0);
+	fd = open(fd1, O_RDWR | O_CREAT | O_APPEND , 00644);
+	if (fd < 0)
+	{
+		fd_error(fd1);
+		return (-1);
+	}
+	return (fd);
+}
+
 /**
  * @brief Reproduce the effect of a pipe in shell ( | )
  * @param cmd The commands to be executed
