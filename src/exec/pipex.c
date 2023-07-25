@@ -87,8 +87,6 @@ int	create_rd_fd(char *fd1)
 	return (fd);
 }
 
-
-
 /**
  * @brief Reproduce the effect of a pipe in shell ( | )
  * @param cmd The commands to be executed
@@ -97,6 +95,7 @@ void	pipex(char **cmd, bool multi, int input_fd, int out_fd)
 {
 	int pipe_end[2];
 
+	(void)out_fd;
 	if (pipe(pipe_end) != 0)
 		return ;
 	if (multi)
@@ -122,11 +121,8 @@ void	pipex(char **cmd, bool multi, int input_fd, int out_fd)
 		{
 			dup2(g()->in_fd, STDIN_FILENO);
 			close(g()->in_fd);
-			if (out_fd != 0)
-			{
-				dup2(out_fd, STDOUT_FILENO);
-				close(out_fd);
-			}
+			dup2(out_fd, STDOUT_FILENO);
+			// close(out_fd);
 			exec_cmd(cmd);
 		}
 		else
