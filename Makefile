@@ -1,6 +1,6 @@
 
 NAME	:= minishell
-CFLAGS	:= -g -Wextra -Wall -Werror #-fsanitize=address
+CFLAGS	:= -g -Wextra -Wall -Werror 
 #
 SRC_PATH = src/
 

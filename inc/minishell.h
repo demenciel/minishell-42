@@ -31,6 +31,9 @@
 // STRUCTURE-------------------------------------------------------------------
 
 # define DEBUG 0
+# define HEREDOC_ERROR -2
+# define FD_ERROR -3
+
 typedef struct s_comand
 {
 	char				**com;
@@ -71,13 +74,12 @@ typedef struct s_exec
 
 // REDIRECT
 
-void					redir_out(char **cmd, char *in, char *out);
-void					redir_in(char **cmd, char *infile);
-void					append_out(char **cmd, char *infile, char *output);
-void					heredocs(char *limiter);
+int						redirect_out(t_comand *node);
+int						redirect_in(t_comand *node);
+int					heredocs(char *limiter);
 
 // PIPEX
-void					pipex(char **cmd, bool multi, int input_fd, int out_fd);
+pid_t					pipex(char **cmd, bool multi, int input_fd, int out_fd);
 int						open_rd_fd(char *fd1);
 int						create_rd_fd(char *fd1);
 

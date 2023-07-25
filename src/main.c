@@ -76,13 +76,13 @@ int	main(int ac, char **av, char **env)
 	ms = f_init_meta();
     init_exec_struct();
     init_env(env);
-	// ft_unset_env("OLDPWD");
 	while (1)
 	{
 		ms->line = readline("minishell > ");
 		if (ft_strncmp(ms->line, "exit", 4) == 0)
 			break ;
 		f_check_line(ms);
+		f_check_node(ms);
 		f_split_pipes(ms);
 		node = ms->comand;
 		exec_multi_node(node);

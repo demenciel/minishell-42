@@ -43,11 +43,18 @@ int redirect_nodes(bool single_node, int pipe_write, t_comand *node)
 	if (single_node || node->next == NULL)
 		out_fd = 1;
 	if (node->stin != NULL)
-		g()->in_fd = open_rd_fd(node->stin);
+	{
+		g()->in_fd = redirect_in(node);
+		if (g()->in_fd == FD_ERROR)
+			return (FD_ERROR);
+		else if (g()->in_fd == -2)
+			return (HEREDOC_ERROR);
+	}
 	if (node->stout != NULL)
 	{
-		char **res = ft_split(node->stout, 29);
-		out_fd = create_rd_fd(res[1]);
+		out_fd = redirect_out(node);
+		if (out_fd < -1)
+			return (FD_ERROR);
 	}
 	return (out_fd);
 }
@@ -83,8 +90,11 @@ void	exec_multi_node(t_comand *node)
 	if (lst_size(node) > 1)
 		single_node = false;
 	while (node)
-	{
+	{ 
+		printf("NODE ?\n");
 		out_fd = redirect_nodes(single_node, pipe_end[1], node);
+		if (out_fd < 0)
+			return ;
 		if (node->next == NULL)
 			exec_one_node(node, g()->in_fd, out_fd);
 		else 

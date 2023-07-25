@@ -6,10 +6,12 @@
  * @brief Loops readline and add each line to rl history until limiter is found
  * @param limiter The limiter for the heredocs
 */
-void	heredocs(char *limiter)
+int	heredocs(char *limiter)
 {
 	char	*rl_line;
 
+	if (!limiter || *limiter == '\0')
+		return (HEREDOC_ERROR);
 	while (1)
 	{
 		rl_line = readline("heredoc> ");
@@ -18,82 +20,53 @@ void	heredocs(char *limiter)
 			break ;
 		free(rl_line);
 	}
+	return (0);
 }
 
-/**
- * @brief Redirects the infile to the STDIN
- * @param cmd Command to be executed
- * @param infile The infile to become the STDIN
-*/
-void	redir_in(char **cmd, char *infile)
+int redirect_in(t_comand *node)
 {
-	int	fd;
-	int	stdin_backup;
+	char **fd;
+	int in_fd;
 
-	stdin_backup = dup(STDIN_FILENO);
-	fd = open_rd_fd(infile);
-	if (fd == -1)
-		print_error("Error opening fd");
-	dup2(fd, STDIN_FILENO);
-	close(fd);
-	exec_cmd(cmd);
-	dup2(stdin_backup, STDIN_FILENO);
-	close(stdin_backup);
+	fd = ft_split(node->stin, 29);
+	if (ft_strlen(fd[0]) == 2)
+	{
+		if (fd[1])
+		{
+			if (heredocs(fd[1]) < 0)
+				return (HEREDOC_ERROR);
+		}
+	}
+	else
+	{
+		in_fd = open_rd_fd(fd[1]);
+		if (in_fd < 0)
+		{
+			ft_2darr_free(fd);
+			return (FD_ERROR);
+		}
+		ft_2darr_free(fd);
+		return (in_fd);
+	}
+	return (0);
 }
 
-/**
- * @brief Redirects the output of the command executed,
-	but appends the ouput to the infile
- * @param cmd The command to be executed
- * @param infile If there is a fd, redirects it as the input of the command
- * @param outfile The result of the appended file
-*/
-void	append_out(char **cmd, char *infile, char *outfile)
+int redirect_out(t_comand *node)
 {
-	int	fd[2];
-	int	stdout_backup;
+	char **fd;
+	int out_fd;
 
-	stdout_backup = dup(STDOUT_FILENO);
-	fd[0] = open_rd_fd(infile);
-	if (fd[0] == -1)
-		print_error("Error opening fd");
-	dup2(fd[0], STDIN_FILENO);
-	close(fd[0]);
-	fd[1] = open(outfile, O_RDWR | O_APPEND | O_CREAT, 00644);
-	if (fd[1] < 0)
-		fd_error(outfile);
-	dup2(fd[1], STDOUT_FILENO);
-	exec_cmd(cmd);
-	close(fd[1]);
-	dup2(stdout_backup, STDOUT_FILENO);
-	close(stdout_backup);
-}
-
-/**
- * @brief Redirects the output of the command executed
- * @param cmd The command to be executed
- * @param infile If there is a fd, redirects it as the input of the command
- * @param outfile The new file created as the output of the executed command
-*/
-void	redir_out(char **cmd, char *infile, char *outfile)
-{
-	int	fd[2];
-	int	stdout_backup;
-
-	stdout_backup = dup(STDOUT_FILENO);
-	fd[0] = open_rd_fd(infile);
-	if (fd[0] == -1)
-		print_error("Error opening fd");
-	dup2(fd[0], STDIN_FILENO);
-	close(fd[0]);
-	fd[1] = open(outfile, O_RDWR | O_CREAT | O_TRUNC, 00644);
-	if (fd[1] < 0)
-		fd_error(outfile);
-	if (dup2(fd[1], STDOUT_FILENO) == -1)
-		print_error("Dup2 failed");
-	exec_cmd(cmd);
-	close(fd[1]);
-	if (dup2(stdout_backup, STDOUT_FILENO) == -1)
-		print_error("Dup2 failed");
-	close(stdout_backup);
+	fd = ft_split(node->stout, 29);
+	if (ft_strlen(fd[0]) == 2)
+	{
+		heredocs(fd[1]);
+	}
+	out_fd = create_rd_fd(fd[1]);
+	if (out_fd < 0)
+	{
+		ft_2darr_free(fd);
+		return (FD_ERROR);
+	}
+	ft_2darr_free(fd);
+	return (out_fd);
 }

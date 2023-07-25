@@ -64,10 +64,14 @@ int	open_rd_fd(char *fd1)
 	if (!fd1)
 		return (0);
 	fd = open(fd1, O_RDONLY);
-	if (!fd)
+	if (fd < 0)
+	{
 		fd_error(fd1);
+		return (-1);
+	}
 	return (fd);
 }
+
 /**
  * @brief Create a file to read
  * @param fd1 The file to be open
@@ -82,8 +86,11 @@ int	create_rd_fd(char *fd1)
 	if (!fd1)
 		return (0);
 	fd = open(fd1, O_RDWR | O_CREAT | O_TRUNC , 00644);
-	if (!fd)
+	if (fd < 0)
+	{
 		fd_error(fd1);
+		return (-1);
+	}
 	return (fd);
 }
 
@@ -91,15 +98,14 @@ int	create_rd_fd(char *fd1)
  * @brief Reproduce the effect of a pipe in shell ( | )
  * @param cmd The commands to be executed
 */
-void	pipex(char **cmd, bool multi, int input_fd, int out_fd)
+pid_t	pipex(char **cmd, bool multi, int input_fd, int out_fd)
 {
-	int pipe_end[2];
+	int 	pipe_end[2];
 
-	(void)out_fd;
-	if (pipe(pipe_end) != 0)
-		return ;
 	if (multi)
 	{
+		if (pipe(pipe_end) != 0)
+			return (-1);
 		if (fork() == 0)
 		{
 			close(pipe_end[0]);
@@ -122,14 +128,10 @@ void	pipex(char **cmd, bool multi, int input_fd, int out_fd)
 			dup2(g()->in_fd, STDIN_FILENO);
 			close(g()->in_fd);
 			dup2(out_fd, STDOUT_FILENO);
-			// close(out_fd);
 			exec_cmd(cmd);
 		}
 		else
-		{
 			wait(NULL);
-			close(pipe_end[0]);
-			close(pipe_end[1]);
-		}
 	}
+	return (0);
 }
