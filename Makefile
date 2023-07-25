@@ -1,6 +1,6 @@
 
 NAME	:= minishell
-CFLAGS	:= -g -Wextra -Wall -Werror #-fsanitize=address
+CFLAGS	:= -g -Wextra -Wall -Werror -fsanitize=address
 #
 SRC_PATH = src/
 
@@ -39,6 +39,7 @@ SRC		:=  main.c \
 			parsing/parsing.c \
 			parsing/utils.c \
 			parsing/a_supp.c \
+			parsing/exit.c \
 
 
 SRCS	= $(addprefix $(SRC_PATH), $(SRC))
@@ -98,6 +99,6 @@ leak : all
 	@leaks --atExit --list -- ./minishell
 
 leaks : all
-	@valgrind --track-fds=yes --trace-children=yes --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=supp.txt -s ./minishell
+	@valgrind --track-fds=yes --trace-children=yes --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=supp.txt ./minishell
 
 .PHONY: all, clean, fclean, re, leak, leaks

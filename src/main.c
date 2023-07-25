@@ -71,6 +71,7 @@ int	main(int ac, char **av, char **env)
 {
 	t_meta *ms;
 	t_comand *node;
+	// (void)env;
 
 	f_check_arg(ac, av);
 	ms = f_init_meta();
@@ -80,14 +81,24 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		ms->line = readline("minishell > ");
-		if (ft_strncmp(ms->line, "exit", 4) == 0)
-			break ;
-		f_check_line(ms);
-		f_split_pipes(ms);
-		node = ms->comand;
-		exec_multi_node(node);
+		// f_check_line(ms);
+		// f_check_node(ms);
+		// f_split_pipes(ms);
+		ft_print_details(ms);
+		if (ms->comand && ms->comand->com &&
+		ft_strcmp(ms->comand->com[0], "exit") == 0)
+			f_exit(ms);
+		if (ms->error_flag == 0)
+		{
+			node = ms->comand;
+			exec_multi_node(node);
+			ms->exit_status = 0;
+		}
+		else
+			ft_putstr_fd("salut la compagnie\n", 2);
         g()->in_fd = 0;
 		add_history(ms->line);
+
 		f_free_null_meta(ms);
 	}
 	close(g()->in_fd);

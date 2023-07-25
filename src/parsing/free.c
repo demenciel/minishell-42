@@ -24,6 +24,7 @@ void	f_free_null_meta(t_meta *ms)
 		f_free_comand(&ms->comand);
 		ms->comand = NULL;
 	}
+	ms->error_flag = 0;
 
 	if (DEBUG == 1)
 		printf("" GRE "---f_free_null_meta out---\n" WHT ""); // TODO Supprimer
@@ -100,8 +101,30 @@ void	f_all_clean(t_meta *ms, char *msg)
 	free(ms);
 	if (msg)
 	{
-		printf("🚨 %s\n", msg);
+		printf("%s\n", msg);
 		exit(EXIT_FAILURE);
 	}
 	exit(EXIT_SUCCESS);
+}
+
+
+void	f_all_clean_exit(t_meta *ms, int nb)
+{
+	int i;
+
+	i = nb;
+	if (ms->line)
+		free(ms->line);
+	if (ms->comand)
+		f_free_comand(&ms->comand);
+	if (ms->com_temp)
+		free(ms->com_temp);
+	if (ms->in)
+		free(ms->in);
+	if (ms->out)
+		free(ms->out);
+	if (ms->list)
+		f_free_list(&ms->list);
+	free(ms);
+	exit(i);
 }

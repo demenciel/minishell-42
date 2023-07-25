@@ -31,6 +31,7 @@
 // STRUCTURE-------------------------------------------------------------------
 
 # define DEBUG 0
+
 typedef struct s_comand
 {
 	char				**com;
@@ -54,6 +55,8 @@ typedef struct s_meta
 	int					i;
 	t_pars				*list;
 	t_comand			*comand;
+	int					exit_status;
+	int					error_flag;
 }						t_meta;
 
 typedef struct s_exec
@@ -165,7 +168,7 @@ void					f_free_comand(t_comand **list);
 int						f_som_quote_simple(char *txt);
 char					*f_pars_simple_quote(t_meta *ms, char *txt);
 void					f_check_dollar(t_meta *ms);
-char					*f_pars_dollar(char *txt);
+char					*f_pars_dollar(t_meta *ms, char *txt);
 void					f_check_double_quote(t_meta *ms);
 char					*f_pars_double_quote(t_meta *ms, char *txt);
 void					f_check_redir_left(t_meta *ms);
@@ -210,11 +213,19 @@ void					f_free_comand(t_comand **list);
 void					f_free_list(t_pars **list);
 void					*f_freenull(void *str);
 void					f_all_clean(t_meta *ms, char *msg);
+void					f_all_clean_exit(t_meta *ms, int nb);
 
 // A_SUPP----------------------------------------------------------------------
 
 void					f_print_lst(t_pars *lst);
 void					f_print_lst_final(t_comand *lst);
 void					f_print(char **cou);
+
+// EXIT------------------------------------------------------------------------
+
+int						f_exit(t_meta *ms);
+int						f_size_table(char **table);
+int						f_arg_is_num(char *txt);
+char					*f_error_message(int nb);
 
 #endif

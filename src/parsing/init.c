@@ -16,6 +16,7 @@ t_meta	*f_init_meta(void)
 		new->i = 0;
 		new->line = NULL;
 		new->comand = NULL;
+		new->exit_status = 0;
 	}
 	return (new);
 }

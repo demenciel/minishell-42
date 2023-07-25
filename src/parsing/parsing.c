@@ -14,7 +14,7 @@ void	f_check_line(t_meta *ms)
 {
 	if (DEBUG == 1)
 		printf("" GRE "---f_check_line in---\n" WHT ""); // TODO Supprimer
-
+		
 	while (ms->line[ms->i])
 	{
 		while (ms->line[ms->i] && ms->line[ms->i] <= 32)
