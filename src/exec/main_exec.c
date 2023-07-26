@@ -34,14 +34,14 @@ int	lst_size(t_comand *lst)
 	return (i);
 }
 
-int redirect_nodes(bool single_node, int pipe_write, t_comand *node)
+int redirect_nodes(int pipe_write, t_comand *node)
 {
 	int out_fd;
 
-	if (!single_node)
-		out_fd = pipe_write;
-	if (single_node || node->next == NULL)
+	if (node->next == NULL)
 		out_fd = 1;
+	else
+		out_fd = pipe_write;
 	if (node->stin != NULL)
 	{
 		g()->in_fd = redirect_in(node);
@@ -60,19 +60,6 @@ int redirect_nodes(bool single_node, int pipe_write, t_comand *node)
 }
 
 /**
- * @brief Executes a single node in the program
- * @param node The node to be executed
- * @param fd The fd into which to write the execution
-*/
-void	exec_one_node(t_comand *node, int fd, int out_fd)
-{
-	if (ft_check_builtins(node->com))
-		find_builtins(node, out_fd);
-	else
-		pipex(node->com, false, fd, out_fd);
-}
-
-/**
  * @brief Iterates over all the nodes in the program,
  * 			assigns the appropriate fd, and executes the node
  * @param node The node to be executed
@@ -81,36 +68,44 @@ void	exec_multi_node(t_comand *node)
 {
 	int 	pipe_end[2];
 	int 	out_fd;
-	bool	single_node;
+	pid_t	*pid;
+	int i = 0;
 
-	single_node = true;
 	if (pipe(pipe_end) != 0)
 		return ;
-	if (lst_size(node) > 1)
-		single_node = false;
+	i = lst_size(node);
+	pid = malloc(sizeof(pid_t) * (i + 1));
+	i = 0;
 	while (node)
 	{
 		g()->in_fd = pipe_end[0];
-		out_fd = redirect_nodes(single_node, pipe_end[1], node);
+		out_fd = redirect_nodes(pipe_end[1], node);
 		if (out_fd < 0)
 			return ;
 		else if (out_fd == HEREDOC_SUCCESS)
 			break ;
-		if (node->next == NULL)
-			exec_one_node(node, g()->in_fd, out_fd);
-		else 
+		if (!ft_check_builtins(node->com))
 		{
-			if (!ft_check_builtins(node->com))
-				pipex(node->com, true, g()->in_fd, out_fd);
-			else
-			{
-				find_builtins(node, out_fd);
-				close(out_fd);
-			}
+			pid[i] = fork();
+			pipex(pid[i], node->com, pipe_end, g()->in_fd, out_fd);
+			i++;
 		}
+		else
+		{
+			find_builtins(node, out_fd);
+			close(out_fd);
+		}
+		printf("NODE %s\n", node->com[0]);
+		printf("IN FD %d\n", g()->in_fd);
+		printf("OUT FD %d\n", out_fd);
 		node = node->next;
 	}
-	close(g()->in_fd);
-	close(pipe_end[0]);
-	close(pipe_end[1]);
+	for (int j = 0; j < i; j++)
+    {
+        int status;
+        waitpid(pid[j], &status, 0);
+		close(g()->in_fd);
+		close(pipe_end[0]);
+		close(pipe_end[1]);
+    }
 }

@@ -64,6 +64,7 @@ typedef struct s_meta
 
 typedef struct s_exec
 {
+	pid_t				*pid;
 	int					in_fd;
 	int					old_fd;
 	int					out_fd;
@@ -82,14 +83,13 @@ int						redirect_in(t_comand *node);
 int						heredocs(char *limiter);
 
 // PIPEX
-pid_t					pipex(char **cmd, bool multi, int input_fd, int out_fd);
+pid_t					pipex(pid_t pid, char **cmd, int *pipe, int input_fd, int out_fd);
 int						open_rd_fd(char *fd1);
 int						create_rd_fd(char *fd1);
 int						append_rd_fd(char *fd1);
 
 // MAIN EXEC
 void					exec_multi_node(t_comand *node);
-void					exec_one_node(t_comand *node, int fd, int out_fd);
 void					init_exec_struct(void);
 
 // EXEC BUILTINS
