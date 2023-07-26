@@ -97,19 +97,19 @@ void	find_builtins(t_comand *node, int input_fd)
 */
 bool	ft_check_builtins(char **cmd)
 {
-	if (ft_strcmp(cmd[0], "export") == 0)
+	if (ft_strncmp(cmd[0], "export", 6) == 0)
 		return (true);
-	else if (ft_strcmp(cmd[0], "unset") == 0)
+	else if (ft_strncmp(cmd[0], "unset", 5) == 0)
 		return (true);
-	else if (ft_strcmp(cmd[0], "env") == 0)
+	else if (ft_strncmp(cmd[0], "env", 3) == 0)
 		return (true);
-	else if (ft_strcmp(cmd[0], "echo") == 0)
+	else if (ft_strncmp(cmd[0], "echo", 4) == 0)
 		return (true);
-	else if (ft_strcmp(cmd[0], "cd") == 0)
+	else if (ft_strncmp(cmd[0], "cd", 2) == 0)
 		return (true);
-	else if (ft_strcmp(cmd[0], "pwd") == 0)
+	else if (ft_strncmp(cmd[0], "pwd", 3) == 0)
 		return (true);
-	else if (ft_strcmp(cmd[0], "exit") == 0)
+	else if (ft_strncmp(cmd[0], "exit", 4) == 0)
 		return (true);
 	return (false);
 }

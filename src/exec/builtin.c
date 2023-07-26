@@ -22,19 +22,9 @@ void	ft_echo(char *string, int input_fd)
 */
 char	*ft_pwd(void)
 {
-	char buf[PATH_MAX];
 	char *pwd;
 
-	if (getcwd(buf, sizeof(buf)))
-	{
-		pwd = ft_strdup(buf);
-		if (!pwd)
-			return (NULL);
-		return (pwd);
-	}
-	else
-	{
-		perror("getcwd");
-	}
-	return (NULL);
+	pwd = NULL;
+	pwd = get_env("PWD=");
+	return (pwd);
 }

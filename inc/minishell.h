@@ -109,7 +109,7 @@ void					ft_unset_export(char *var);
 void					ft_cd(char *path);
 char					*get_env(char *input);
 void					replace_oldpwd(char *oldpath);
-void					change_pwd_env(void);
+void	change_pwd_env(char *oldpath, char *path);
 char					*result_path(char *env_var, char *path_env,
 							bool oldpwd);
 

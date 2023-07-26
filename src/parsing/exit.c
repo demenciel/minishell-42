@@ -27,7 +27,7 @@ int	f_exit(t_meta *ms)
 			nb = nb%256;
 		f_all_clean_exit(ms, nb);
 	}
-		f_all_clean(ms, NULL);
+	f_all_clean(ms, NULL);
 	return (0);
 }
 
@@ -36,6 +36,8 @@ int f_size_table(char **table)
 	int i;
 
 	i = 0;
+	if (!table)
+		return (i);
 	while (table[i])
 		i++;
 	return (i);

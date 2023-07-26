@@ -80,10 +80,10 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		ms->line = readline("minishell > ");
-		// f_check_line(ms);
-		// f_check_node(ms);
-		// f_split_pipes(ms);
-		ft_print_details(ms);
+		f_check_line(ms);
+		f_check_node(ms);
+		f_split_pipes(ms);
+		// ft_print_details(ms);
 		if (ms->comand && ms->comand->com &&
 		ft_strcmp(ms->comand->com[0], "exit") == 0)
 			f_exit(ms);
@@ -97,14 +97,8 @@ int	main(int ac, char **av, char **env)
 			ft_putstr_fd("salut la compagnie\n", 2);
         g()->in_fd = 0;
 		add_history(ms->line);
-
 		f_free_null_meta(ms);
 	}
-	close(g()->in_fd);
-	if (g()->export_list)
-        ft_2darr_free(g()->export_list);
-    if (g()->env_list)
-        ft_2darr_free(g()->env_list);
 	f_all_clean(ms, NULL);
 	return (0);
 }

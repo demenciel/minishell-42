@@ -37,10 +37,12 @@ void	replace_oldpwd(char *oldpath)
 	free(oldpath);
 }
 
-void	change_pwd_env(void)
+void	change_pwd_env(char *oldpath, char *path)
 {
 	int		i;
+	char	*chpwd;
 	char	*pwd;
+	char buf[PATH_MAX];
 
 	i = 0;
 	while (g()->env_list[i])
@@ -50,9 +52,14 @@ void	change_pwd_env(void)
 		i++;
 	}
 	free(g()->env_list[i]);
-	pwd = ft_pwd();
+	chpwd = ft_strjoin("/", path);
+	if (getcwd(buf, sizeof(buf)))
+		pwd = ft_strdup(buf);
+	else
+		pwd = ft_strjoin(oldpath, chpwd);
 	g()->env_list[i] = ft_strjoin("PWD=", pwd);
 	free(pwd);
+	free(chpwd);
 }
 
 char	*result_path(char *env_var, char *path_env, bool oldpwd)
@@ -81,7 +88,7 @@ void	ft_cd(char *path)
 	char *result;
 	char *path_env;
 	char *oldpath;
-
+	
 	result = NULL;
 	path_env = NULL;
 	oldpath = NULL;
@@ -92,9 +99,11 @@ void	ft_cd(char *path)
 	else
 		result = ft_strdup(path);
 	oldpath = ft_pwd();
+	if (oldpath == NULL)
+		return ;
 	if (chdir(result) == -1)
 		cd_error(result);
+	change_pwd_env(oldpath, path);
 	replace_oldpwd(oldpath);
-	change_pwd_env();
 	free(result);
 }

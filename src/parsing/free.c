@@ -99,6 +99,11 @@ void	f_all_clean(t_meta *ms, char *msg)
 	if (ms->list)
 		f_free_list(&ms->list);
 	free(ms);
+	if (g()->export_list)
+        ft_2darr_free(g()->export_list);
+    if (g()->env_list)
+        ft_2darr_free(g()->env_list);
+	close(g()->in_fd);
 	if (msg)
 	{
 		printf("%s\n", msg);
@@ -125,6 +130,11 @@ void	f_all_clean_exit(t_meta *ms, int nb)
 		free(ms->out);
 	if (ms->list)
 		f_free_list(&ms->list);
+	if (g()->export_list)
+        ft_2darr_free(g()->export_list);
+    if (g()->env_list)
+        ft_2darr_free(g()->env_list);
+	close(g()->in_fd);
 	free(ms);
 	exit(i);
 }

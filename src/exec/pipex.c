@@ -40,7 +40,10 @@ void	exec_cmd(char **cmd)
 		flag = 0;
 		search_cmd = ft_strjoin(paths[i], cmd[0]);
 		if (access(search_cmd, 0) == 0)
-			execve(search_cmd, cmd, g()->env_list);
+		{
+			if (execve(search_cmd, cmd, g()->env_list) != 0)
+				printf("%d\n", errno);
+		}
 		else
 			flag++;
 		free(search_cmd);
@@ -116,38 +119,42 @@ int	append_rd_fd(char *fd1)
 */
 pid_t	pipex(char **cmd, bool multi, int input_fd, int out_fd)
 {
-	int 	pipe_end[2];
-
-	if (multi)
-	{
-		if (pipe(pipe_end) != 0)
-			return (-1);
+	// int 	pipe_end[2];
+	(void)multi;
+	// if (multi)
+	// {
+	// 	if (pipe(pipe_end) != 0)
+	// 		return (-1);
+	// 	if (fork() == 0)
+	// 	{
+	// 		close(pipe_end[0]);
+	// 		dup2(input_fd, STDIN_FILENO);
+	// 		close(input_fd);
+	// 		dup2(pipe_end[1], STDOUT_FILENO);
+	// 		exec_cmd(cmd);
+	// 	}
+	// 	else
+	// 	{
+	// 		wait(NULL);
+	// 		close(pipe_end[1]);
+	// 		g()->in_fd = pipe_end[0];
+	// 	}
+	// }
+	// else
+	// {
 		if (fork() == 0)
 		{
-			close(pipe_end[0]);
 			dup2(input_fd, STDIN_FILENO);
 			close(input_fd);
-			dup2(pipe_end[1], STDOUT_FILENO);
-			exec_cmd(cmd);
-		}
-		else
-		{
-			wait(NULL);
-			close(pipe_end[1]);
-			g()->in_fd = pipe_end[0];
-		}
-	}
-	else
-	{
-		if (fork() == 0)
-		{
-			dup2(g()->in_fd, STDIN_FILENO);
-			close(g()->in_fd);
 			dup2(out_fd, STDOUT_FILENO);
 			exec_cmd(cmd);
 		}
 		else
+		{
 			wait(NULL);
-	}
+			close(out_fd);
+			g()->in_fd = input_fd;
+		}
+	// }
 	return (0);
 }

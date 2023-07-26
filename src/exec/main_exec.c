@@ -22,7 +22,7 @@ int	lst_size(t_comand *lst)
 	i = 0;
 
 	node = lst;
-	if (node->next == NULL)
+	if (!node || node->next == NULL)
 		return (1);
 	while (node->next)
 	{
@@ -53,7 +53,7 @@ int redirect_nodes(bool single_node, int pipe_write, t_comand *node)
 	if (node->stout != NULL)
 	{
 		out_fd = redirect_out(node);
-		if (out_fd < -1)
+		if (out_fd < 0)
 			return (FD_ERROR);
 	}
 	return (out_fd);
@@ -86,11 +86,11 @@ void	exec_multi_node(t_comand *node)
 	single_node = true;
 	if (pipe(pipe_end) != 0)
 		return ;
-	g()->in_fd = pipe_end[0];
 	if (lst_size(node) > 1)
 		single_node = false;
 	while (node)
-	{ 
+	{
+		g()->in_fd = pipe_end[0];
 		out_fd = redirect_nodes(single_node, pipe_end[1], node);
 		if (out_fd < 0)
 			return ;
