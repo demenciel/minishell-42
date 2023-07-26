@@ -36,6 +36,8 @@ int f_size_table(char **table)
 	int i;
 
 	i = 0;
+	if (!table)
+		return (i);
 	while (table[i])
 		i++;
 	return (i);

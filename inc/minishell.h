@@ -31,6 +31,9 @@
 // STRUCTURE-------------------------------------------------------------------
 
 # define DEBUG 0
+# define HEREDOC_SUCCESS 11
+# define HEREDOC_ERROR -2
+# define FD_ERROR -3
 
 typedef struct s_comand
 {
@@ -74,18 +77,19 @@ typedef struct s_exec
 
 // REDIRECT
 
-void					redir_out(char **cmd, char *in, char *out);
-void					redir_in(char **cmd, char *infile);
-void					append_out(char **cmd, char *infile, char *output);
-void					heredocs(char *limiter);
+int						redirect_out(t_comand *node);
+int						redirect_in(t_comand *node);
+int						heredocs(char *limiter);
 
 // PIPEX
-void					pipex(char **cmd, bool multi, int input_fd);
+pid_t					pipex(char **cmd, bool multi, int input_fd, int out_fd);
 int						open_rd_fd(char *fd1);
+int						create_rd_fd(char *fd1);
+int						append_rd_fd(char *fd1);
 
 // MAIN EXEC
 void					exec_multi_node(t_comand *node);
-void					exec_one_node(t_comand *node, int fd);
+void					exec_one_node(t_comand *node, int fd, int out_fd);
 void					init_exec_struct(void);
 
 // EXEC BUILTINS
@@ -167,7 +171,9 @@ void					f_free_comand(t_comand **list);
 
 int						f_som_quote_simple(char *txt);
 char					*f_pars_simple_quote(t_meta *ms, char *txt);
-void					f_check_dollar(t_meta *ms);
+// void					f_check_dollar(t_meta *ms);
+char					*f_pars_new_dollar(t_meta *ms, char *txt);
+void 					f_new_check_dollar(t_meta *ms);
 char					*f_pars_dollar(t_meta *ms, char *txt);
 void					f_check_double_quote(t_meta *ms);
 char					*f_pars_double_quote(t_meta *ms, char *txt);
@@ -186,6 +192,7 @@ int						f_som_quote_simple(char *txt);
 int						f_check_env(char c);
 int						f_som_quote_double(char *txt);
 char					*f_join_char(const char *s1, const char s2);
+int						f_check_env_dol(char c);
 
 // COM_LIST--------------------------------------------------------------------
 
@@ -220,6 +227,7 @@ void					f_all_clean_exit(t_meta *ms, int nb);
 void					f_print_lst(t_pars *lst);
 void					f_print_lst_final(t_comand *lst);
 void					f_print(char **cou);
+
 
 // EXIT------------------------------------------------------------------------
 

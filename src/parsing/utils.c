@@ -92,6 +92,14 @@ int	f_check_env(char c)
 		return (0);
 }
 
+int	f_check_env_dol(char c)
+{
+	if (ft_isalnum(c) == 1 || c == '_' || c == '?'|| c == '$' || c == 32)
+		return (1);
+	else
+		return (0);
+}
+
 int	f_som_quote_double(char *txt)
 {
 	int	i;

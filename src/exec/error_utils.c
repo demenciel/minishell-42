@@ -14,7 +14,7 @@ void	cd_error(char *input)
 
 void	fd_error(char *fd)
 {
-	printf("minishell: No such file or directory: %s", fd);
+	printf("minishell: No such file or directory: %s\n", fd);
 }
 
 void	pipex_fail(char *s)
