@@ -84,13 +84,24 @@ void f_check_node(t_meta *ms)
 		if ((temp->txt[0] == 62 || temp->txt[0] == 60) &&
 		(temp->next == NULL || temp->next->txt == NULL ||
 		temp->next->txt[0] == 124 || temp->next->txt[0] == 62 || temp->next->txt[0] == 60))
-			f_all_clean(ms, "Erreur redir node");
+		{
+			ms->exit_status = 7;
+			ms->error_flag = 1;
+			f_free_list(&ms->list);
+			return ;
+		}
 		else if ((temp->txt[0] == 124) && (temp->next == NULL || temp->next->txt == NULL ||
 		temp->next->txt[0] == 124))
-			f_all_clean(ms, "Erreur pipe node");
+		{
+			ms->exit_status = 8;
+			ms->error_flag = 1;
+			f_free_list(&ms->list);
+			return ;
+		}
 		else
 			temp = temp->next;
 	}
+
 	if (DEBUG == 1)
 		printf("" GRE "---f_check_node out---\n" WHT ""); // TODO Supprimer
 }
