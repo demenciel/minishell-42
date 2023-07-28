@@ -7,9 +7,9 @@
 char	*get_env(char *input)
 {
 	char	*path;
+	char	*new_path;
 	int		i;
 
-	path = NULL;
 	i = 0;
 	while (g()->env_list[i])
 	{
@@ -18,7 +18,9 @@ char	*get_env(char *input)
 		i++;
 	}
 	path = ft_strtrim(g()->env_list[i], input);
-	return (path);
+	new_path = ft_strtrim(path, "=");
+	path = f_freenull(path);
+	return (new_path);
 }
 
 void	replace_oldpwd(char *oldpath)

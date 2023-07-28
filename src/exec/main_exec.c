@@ -96,6 +96,8 @@ void	exec_one_node(t_comand *node, int fd, int out_fd)
 */
 void	exec_multi_node(t_comand *node)
 {
+	if (DEBUG == 1 )
+		printf("" GRE "---exec in---\n" WHT ""); // TODO Supprimer
 	int 	pipe_end[2];
 	int 	out_fd;
 	int 	nb_node;

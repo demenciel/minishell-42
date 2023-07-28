@@ -51,9 +51,17 @@ void	exec_cmd(char **cmd)
 	ft_2darr_free(paths);
 	if (flag > 0)
 	{
+<<<<<<< HEAD
 		print_error(cmd[0]);
 		exit(mt()->exit_status);
 	}
+=======
+
+		print_error(cmd[0]);
+		exit (0);
+	}
+
+>>>>>>> new_pars
 }
 
 /**

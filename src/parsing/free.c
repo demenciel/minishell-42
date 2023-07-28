@@ -5,8 +5,8 @@ void	f_free_null_meta(t_meta *ms)
 	if (DEBUG == 1)
 		printf("" GRE "---f_free_null_meta in---\n" WHT ""); // TODO Supprimer
 
-	if (ms->line)
-		ms->line = f_freenull(ms->line);
+	// if (ms->line)
+	// 	ms->line = f_freenull(ms->line);
 	if (ms->com_temp)
 		ms->com_temp = f_freenull(ms->com_temp);
 	if (ms->in)
@@ -136,5 +136,10 @@ void	f_all_clean_exit(t_meta *ms, int nb)
         ft_2darr_free(g()->env_list);
 	close(g()->in_fd);
 	free(ms);
+	if (g()->export_list)
+        ft_2darr_free(g()->export_list);
+    if (g()->env_list)
+        ft_2darr_free(g()->env_list);
+	close(g()->in_fd);
 	exit(i);
 }
