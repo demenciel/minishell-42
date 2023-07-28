@@ -83,7 +83,7 @@ int						redirect_in(t_comand *node);
 int						heredocs(char *limiter);
 
 // PIPEX
-pid_t					pipex(pid_t pid, char **cmd, int *pipe, int input_fd, int out_fd);
+pid_t	pipex(char **cmd, bool multi, int input_fd, int out_fd);
 int						open_rd_fd(char *fd1);
 int						create_rd_fd(char *fd1);
 int						append_rd_fd(char *fd1);
@@ -91,6 +91,7 @@ int						append_rd_fd(char *fd1);
 // MAIN EXEC
 void					exec_multi_node(t_comand *node);
 void					init_exec_struct(void);
+int	lst_size(t_comand *lst);
 
 // EXEC BUILTINS
 bool					ft_check_builtins(char **cmd);

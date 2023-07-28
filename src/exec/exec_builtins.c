@@ -66,19 +66,29 @@ void	find_echo(t_comand *node, int input_fd)
 {
 	char	*echo_string;
 	int		i;
+	int 	flag = 0;
 
 	if (ft_strcmp(node->com[0], "echo") == 0)
 	{
-		i = 1;
+		if (ft_strcmp(node->com[1], "-n") == 0)
+		{
+			i = 2;
+			flag = 1;
+		}
+		else
+			i = 1;
 		echo_string = NULL;
 		while (node->com[i])
 		{
+			if (ft_strncmp(node->com[i], "-n", 2) == 0)
+				break ;
 			echo_string = ft_strjoin(node->com[i], " ");
 			ft_echo(echo_string, input_fd);
+			if (flag == 0)
+				ft_putchar_fd('\n', input_fd);
 			free(echo_string);
 			i++;
 		}
-		ft_putchar_fd('\n', input_fd);
 	}
 }
 

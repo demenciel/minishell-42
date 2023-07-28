@@ -1,0 +1,11 @@
+Makefile
+NOTE.txt
+inc
+libs
+minishell
+minishell.dSYM
+obj
+outfile
+salut
+src
+supp.txt

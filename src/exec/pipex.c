@@ -50,7 +50,10 @@ void	exec_cmd(char **cmd)
 	}
 	ft_2darr_free(paths);
 	if (flag > 0)
+	{
 		print_error(cmd[0]);
+		exit(mt()->exit_status);
+	}
 }
 
 /**
@@ -117,16 +120,41 @@ int	append_rd_fd(char *fd1)
  * @brief Reproduce the effect of a pipe in shell ( | )
  * @param cmd The commands to be executed
 */
-pid_t	pipex(pid_t pid, char **cmd, int *pipe, int input_fd, int out_fd)
+pid_t	pipex(char **cmd, bool multi, int input_fd, int out_fd)
 {
-	if (pid == 0)
+	int 	pipe_end[2];
+	int i = 0;
+
+	if (multi)
 	{
-		dup2(input_fd, STDIN_FILENO);
-		close(input_fd);
-		dup2(out_fd, STDOUT_FILENO);
-		exec_cmd(cmd);
+		if (pipe(pipe_end) != 0)
+			return (-1);
+		g()->pid[i] = fork();
+		if (g()->pid[i] == 0)
+		{
+			close(pipe_end[0]);
+			dup2(input_fd, STDIN_FILENO);
+			close(input_fd);
+			dup2(pipe_end[1], STDOUT_FILENO);
+			exec_cmd(cmd);
+		}
+		else
+		{
+			close(pipe_end[1]);
+			g()->in_fd = pipe_end[0];
+		}
+		i++;
 	}
 	else
-		close(pipe[1]);
+	{
+		g()->pid[i] = fork();
+		if (g()->pid[i] == 0)
+		{
+			dup2(g()->in_fd, STDIN_FILENO);
+			close(g()->in_fd);
+			dup2(out_fd, STDOUT_FILENO);
+			exec_cmd(cmd);
+		}
+	}
 	return (0);
 }
