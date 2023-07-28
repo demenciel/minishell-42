@@ -173,6 +173,8 @@ void					f_free_comand(t_comand **list);
 int						f_som_quote_simple(char *txt);
 char					*f_pars_simple_quote(t_meta *ms, char *txt);
 void					f_check_dollar(t_meta *ms);
+char					*f_pars_new_dollar(t_meta *ms, char *txt);
+void 					f_new_check_dollar(t_meta *ms);
 char					*f_pars_dollar(t_meta *ms, char *txt);
 void					f_check_double_quote(t_meta *ms);
 char					*f_pars_double_quote(t_meta *ms, char *txt);
@@ -191,6 +193,7 @@ int						f_som_quote_simple(char *txt);
 int						f_check_env(char c);
 int						f_som_quote_double(char *txt);
 char					*f_join_char(const char *s1, const char s2);
+int						f_check_env_dol(char c);
 
 // COM_LIST--------------------------------------------------------------------
 
@@ -225,6 +228,7 @@ void					f_all_clean_exit(t_meta *ms, int nb);
 void					f_print_lst(t_pars *lst);
 void					f_print_lst_final(t_comand *lst);
 void					f_print(char **cou);
+
 
 // EXIT------------------------------------------------------------------------
 

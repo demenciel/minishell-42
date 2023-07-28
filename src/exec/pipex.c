@@ -2,6 +2,24 @@
 
 #include "../../inc/minishell.h"
 
+/**
+ * @brief Executes a command with its absolute path.
+ * @param cmd Path and command to be executed
+*/
+void	execute_absolute(char **cmd)
+{
+	if (access(cmd[0], 0) == 0)
+	{
+		if (execve(cmd[0], cmd, g()->env_list) != 0)
+			exit(mt()->exit_status);
+	}
+	else
+		return ;
+}
+
+/**
+ * @brief Creates paths to check executable commands
+*/
 char	**get_env_path(void)
 {
 	char	**path;
@@ -35,6 +53,11 @@ void	exec_cmd(char **cmd)
 	while (paths[++i])
 		paths[i] = ft_strjoin(paths[i], "/");
 	i = -1;
+	if (ft_strchr(cmd[0], '/'))
+	{
+		execute_absolute(cmd);
+		return ;
+	}
 	while (paths[++i])
 	{
 		flag = 0;
@@ -42,7 +65,7 @@ void	exec_cmd(char **cmd)
 		if (access(search_cmd, 0) == 0)
 		{
 			if (execve(search_cmd, cmd, g()->env_list) != 0)
-				printf("%d\n", errno);
+				exit(mt()->exit_status);
 		}
 		else
 			flag++;
@@ -50,18 +73,7 @@ void	exec_cmd(char **cmd)
 	}
 	ft_2darr_free(paths);
 	if (flag > 0)
-	{
-<<<<<<< HEAD
 		print_error(cmd[0]);
-		exit(mt()->exit_status);
-	}
-=======
-
-		print_error(cmd[0]);
-		exit (0);
-	}
-
->>>>>>> new_pars
 }
 
 /**

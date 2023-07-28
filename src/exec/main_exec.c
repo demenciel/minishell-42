@@ -13,7 +13,7 @@ void	init_exec_struct(void)
 	p->out_fd = 0;
 	p->env_list = NULL;
 	p->export_list = NULL;
-	p->pid = NULL;
+	p->pid = 0;
 }
 
 int	lst_size(t_comand *lst)
@@ -96,8 +96,6 @@ void	exec_one_node(t_comand *node, int fd, int out_fd)
 */
 void	exec_multi_node(t_comand *node)
 {
-	if (DEBUG == 1 )
-		printf("" GRE "---exec in---\n" WHT ""); // TODO Supprimer
 	int 	pipe_end[2];
 	int 	out_fd;
 	int 	nb_node;
@@ -106,7 +104,7 @@ void	exec_multi_node(t_comand *node)
 		return ;
 	g()->in_fd = pipe_end[0];
 	nb_node = lst_size(node);
-	g()->pid = malloc(sizeof(pid_t) * nb_node);
+	g()->pid = malloc(sizeof(pid_t) * (nb_node + 1));
 	while (node)
 	{
 		out_fd = redirect_nodes(pipe_end[1], node);
