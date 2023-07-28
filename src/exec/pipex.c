@@ -47,7 +47,12 @@ void	exec_cmd(char **cmd)
 	}
 	ft_2darr_free(paths);
 	if (flag > 0)
+	{
+
 		print_error(cmd[0]);
+		exit (0);
+	}
+
 }
 
 /**

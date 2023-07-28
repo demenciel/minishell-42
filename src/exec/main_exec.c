@@ -115,6 +115,7 @@ void	exec_multi_node(t_comand *node)
 	close(g()->in_fd);
 	close(pipe_end[0]);
 	close(pipe_end[1]);
+	
 	if (DEBUG == 1 )
 		printf("" RED "---exec out---\n" WHT ""); // TODO Supprimer
 }

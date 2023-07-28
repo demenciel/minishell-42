@@ -131,7 +131,9 @@ char	*f_pars_new_dollar(t_meta *ms, char *txt)
 		while (temp[i] && temp[i] != 36)
 			i++;
 		if (txt == NULL)
+		{
 			txt = ft_substr(temp, start, (i - start));
+		}
 		else
 		{
 			env = ft_substr(temp, start, (i - start));
@@ -182,7 +184,7 @@ char	*f_pars_dollar(t_meta *ms, char *txt)
 	}
 	temp = f_trimstr(txt, 36);
 	txt = f_freenull(txt);
-	env = getenv(temp);
+	env = get_env(temp);
 	temp = f_freenull(temp);
 	if (env == NULL)
 		return (NULL);

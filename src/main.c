@@ -59,6 +59,8 @@ void ft_print_details(t_meta *ms)
 	if (DEBUG == 1)
 		printf("\n");
 	f_split_pipes(ms);
+	if (!ms->comand || ms->comand->com[0] == 0)
+		ms->exit_status = 23;
 	if (DEBUG == 1)
 	{
 		printf("\n");
@@ -86,8 +88,7 @@ int	main(int ac, char **av, char **env)
 		// f_check_node(ms);
 		// f_split_pipes(ms);
 		ft_print_details(ms);
-		if (ms->comand && ms->comand->com &&
-		ft_strncmp(ms->comand->com[0], "exit", 4) == 0)
+		if (ms->exit_status == 0 && ft_strncmp(ms->comand->com[0], "exit", 4) == 0)
 			f_exit(ms);
 		else if (ms->error_flag == 0)
 		{

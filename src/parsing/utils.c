@@ -133,3 +133,4 @@ char	*f_join_char(const char *s1, const char s2)
 	join_str[i] = s2;
 	return (join_str);
 }
+
