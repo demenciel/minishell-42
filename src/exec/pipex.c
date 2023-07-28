@@ -47,7 +47,12 @@ void	exec_cmd(char **cmd)
 	}
 	ft_2darr_free(paths);
 	if (flag > 0)
+	{
+
 		print_error(cmd[0]);
+		exit (0);
+	}
+
 }
 
 /**
@@ -64,8 +69,49 @@ int	open_rd_fd(char *fd1)
 	if (!fd1)
 		return (0);
 	fd = open(fd1, O_RDONLY);
-	if (!fd)
+	if (fd < 0)
+	{
 		fd_error(fd1);
+		return (-1);
+	}
+	return (fd);
+}
+
+/**
+ * @brief Create a file to read
+ * @param fd1 The file to be open
+ * @return The value of fd. Returns STDOUT if no file. Returns
+	-1 if error opening file
+*/
+int	create_rd_fd(char *fd1)
+{
+	int	fd;
+
+	fd = 0;
+	if (!fd1)
+		return (0);
+	fd = open(fd1, O_RDWR | O_CREAT | O_TRUNC , 00644);
+	if (fd < 0)
+	{
+		fd_error(fd1);
+		return (-1);
+	}
+	return (fd);
+}
+
+int	append_rd_fd(char *fd1)
+{
+	int	fd;
+
+	fd = 0;
+	if (!fd1)
+		return (0);
+	fd = open(fd1, O_RDWR | O_CREAT | O_APPEND , 00644);
+	if (fd < 0)
+	{
+		fd_error(fd1);
+		return (-1);
+	}
 	return (fd);
 }
 
@@ -73,21 +119,20 @@ int	open_rd_fd(char *fd1)
  * @brief Reproduce the effect of a pipe in shell ( | )
  * @param cmd The commands to be executed
 */
-void	pipex(char **cmd, bool multi, int input_fd)
+pid_t	pipex(char **cmd, bool multi, int input_fd, int out_fd)
 {
-	int pipe_end[2];
+	int 	pipe_end[2];
 
-	if (pipe(pipe_end) != 0)
-		return ;
 	if (multi)
 	{
+		if (pipe(pipe_end) != 0)
+			return (-1);
 		if (fork() == 0)
 		{
 			close(pipe_end[0]);
 			dup2(input_fd, STDIN_FILENO);
 			close(input_fd);
 			dup2(pipe_end[1], STDOUT_FILENO);
-			close(pipe_end[1]);
 			exec_cmd(cmd);
 		}
 		else
@@ -102,11 +147,12 @@ void	pipex(char **cmd, bool multi, int input_fd)
 		if (fork() == 0)
 		{
 			dup2(g()->in_fd, STDIN_FILENO);
-			close(pipe_end[1]);
-			close(pipe_end[0]);
+			close(g()->in_fd);
+			dup2(out_fd, STDOUT_FILENO);
 			exec_cmd(cmd);
 		}
 		else
 			wait(NULL);
 	}
+	return (0);
 }

@@ -33,6 +33,8 @@ char	*ft_pwd(void)
 		return (pwd);
 	}
 	else
+	{
 		perror("getcwd");
+	}
 	return (NULL);
 }

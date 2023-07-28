@@ -120,6 +120,9 @@ void	f_split_pipes(t_meta *ms)
 			break ;
 		temp = temp->next;
 	}
+	f_free_list(&ms->list);
+	ms->list = NULL;
+
 	if (DEBUG == 1)
 		printf("" GRE "---f_split_pipes out---\n" WHT ""); // TODO Supprimer
 }

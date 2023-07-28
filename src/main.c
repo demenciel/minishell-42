@@ -59,6 +59,8 @@ void ft_print_details(t_meta *ms)
 	if (DEBUG == 1)
 		printf("\n");
 	f_split_pipes(ms);
+	if (!ms->comand || ms->comand->com[0] == 0)
+		ms->exit_status = 23;
 	if (DEBUG == 1)
 	{
 		printf("\n");
@@ -71,41 +73,40 @@ int	main(int ac, char **av, char **env)
 {
 	t_meta *ms;
 	t_comand *node;
+	char	*temp;
 	// (void)env;
 
 	f_check_arg(ac, av);
 	ms = f_init_meta();
     init_exec_struct();
     init_env(env);
-	ft_unset_env("OLDPWD");
 	while (1)
 	{
 		ms->line = readline("minishell > ");
+		add_history(ms->line);
 		// f_check_line(ms);
 		// f_check_node(ms);
 		// f_split_pipes(ms);
 		ft_print_details(ms);
-		if (ms->comand && ms->comand->com &&
-		ft_strcmp(ms->comand->com[0], "exit") == 0)
+		if (ms->exit_status == 0 && ft_strncmp(ms->comand->com[0], "exit", 4) == 0)
 			f_exit(ms);
-		if (ms->error_flag == 0)
+		else if (ms->error_flag == 0)
 		{
 			node = ms->comand;
 			exec_multi_node(node);
 			ms->exit_status = 0;
 		}
 		else
+		{
+			temp = ft_strdup(f_error_message(ms->exit_status));
+			printf("%s\n", temp);
+			temp = f_freenull(temp);
 			ft_putstr_fd("salut la compagnie\n", 2);
-        g()->in_fd = 0;
-		add_history(ms->line);
+		}
 
+		g()->in_fd = 0;
 		f_free_null_meta(ms);
 	}
-	close(g()->in_fd);
-	if (g()->export_list)
-        ft_2darr_free(g()->export_list);
-    if (g()->env_list)
-        ft_2darr_free(g()->env_list);
 	f_all_clean(ms, NULL);
 	return (0);
 }
