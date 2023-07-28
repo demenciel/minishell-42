@@ -62,7 +62,7 @@ char	*f_error_message(int nb)
 
 	if (nb == 2)
 		return ("syntax error near unexpted token");
-	else if (nb == 126)
+	else if (nb == 8)
 		return ("permission denied");
 	else if (nb == 127)
 		return ("command not found");

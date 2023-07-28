@@ -79,6 +79,8 @@ void	exec_one_node(t_comand *node, int fd, int out_fd)
 */
 void	exec_multi_node(t_comand *node)
 {
+	if (DEBUG == 1 )
+		printf("" GRE "---exec in---\n" WHT ""); // TODO Supprimer
 	int 	pipe_end[2];
 	int 	out_fd;
 	bool	single_node;
@@ -90,7 +92,7 @@ void	exec_multi_node(t_comand *node)
 	if (lst_size(node) > 1)
 		single_node = false;
 	while (node)
-	{ 
+	{
 		out_fd = redirect_nodes(single_node, pipe_end[1], node);
 		if (out_fd < 0)
 			return ;
@@ -98,7 +100,7 @@ void	exec_multi_node(t_comand *node)
 			break ;
 		if (node->next == NULL)
 			exec_one_node(node, g()->in_fd, out_fd);
-		else 
+		else
 		{
 			if (!ft_check_builtins(node->com))
 				pipex(node->com, true, g()->in_fd, out_fd);
@@ -113,4 +115,6 @@ void	exec_multi_node(t_comand *node)
 	close(g()->in_fd);
 	close(pipe_end[0]);
 	close(pipe_end[1]);
+	if (DEBUG == 1 )
+		printf("" RED "---exec out---\n" WHT ""); // TODO Supprimer
 }

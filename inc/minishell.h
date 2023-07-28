@@ -30,7 +30,7 @@
 
 // STRUCTURE-------------------------------------------------------------------
 
-# define DEBUG 0
+# define DEBUG 1
 # define HEREDOC_SUCCESS 11
 # define HEREDOC_ERROR -2
 # define FD_ERROR -3
@@ -171,7 +171,7 @@ void					f_free_comand(t_comand **list);
 
 int						f_som_quote_simple(char *txt);
 char					*f_pars_simple_quote(t_meta *ms, char *txt);
-// void					f_check_dollar(t_meta *ms);
+void					f_check_dollar(t_meta *ms);
 char					*f_pars_new_dollar(t_meta *ms, char *txt);
 void 					f_new_check_dollar(t_meta *ms);
 char					*f_pars_dollar(t_meta *ms, char *txt);

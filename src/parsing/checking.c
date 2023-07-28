@@ -35,7 +35,10 @@ void	f_check_single_quote(t_meta *ms)
 	temp = ft_substr(ms->line, start, (ms->i - start) + 1);
 	temp = f_pars_simple_quote(ms, temp);
 	if (temp == NULL)
+	{
+		ms->i++;
 		return ;
+	}
 	f_addback_node(&ms->list, f_new_node(temp));
 	ms->i++;
 
@@ -65,26 +68,26 @@ char	*f_pars_simple_quote(t_meta *ms, char *txt)
 		printf("" RED "---f_pars_simple_quote out---\n" WHT ""); // TODO Supprimer
 }
 
-// void	f_check_dollar(t_meta *ms)
-// {
-// 	int		start;
-// 	char	*temp;
+void	f_check_dollar(t_meta *ms)
+{
+	int		start;
+	char	*temp;
 
-// 	if (DEBUG == 1)
-// 		printf("" GRE "---f_check_dollar in---\n" WHT ""); // TODO Supprimer
+	if (DEBUG == 1)
+		printf("" GRE "---f_check_dollar in---\n" WHT ""); // TODO Supprimer
 
-// 	start = ms->i++;
-// 	while (f_check_env(ms->line[ms->i]) == 1)
-// 		ms->i++;
-// 	temp = ft_substr(ms->line, start, (ms->i - start));
-// 	temp = f_pars_dollar(ms, temp);
-// 	if (temp == NULL)
-// 		return ;
-// 	f_addback_node(&ms->list, f_new_node(temp));
+	start = ms->i++;
+	while (f_check_env(ms->line[ms->i]) == 1)
+		ms->i++;
+	temp = ft_substr(ms->line, start, (ms->i - start));
+	temp = f_pars_dollar(ms, temp);
+	if (temp == NULL)
+		return ;
+	f_addback_node(&ms->list, f_new_node(temp));
 
-// 	if (DEBUG == 1)
-// 		printf("" RED "---f_check_dollar out---\n" WHT ""); // TODO Supprimer
-// }
+	if (DEBUG == 1)
+		printf("" RED "---f_check_dollar out---\n" WHT ""); // TODO Supprimer
+}
 
 void f_new_check_dollar(t_meta *ms)
 {
@@ -107,6 +110,7 @@ void f_new_check_dollar(t_meta *ms)
 		printf("" RED "---f_new_check_dollar out---\n" WHT ""); // TODO Supprimer
 }
 
+			// printf("env =%s=\n", env);
 char	*f_pars_new_dollar(t_meta *ms, char *txt)
 {
 	char	*temp;
@@ -203,7 +207,10 @@ void	f_check_double_quote(t_meta *ms)
 	temp = ft_substr(ms->line, start, (ms->i - start) + 1);
 	temp = f_pars_double_quote(ms, temp);
 	if (temp == NULL)
+	{
+		ms->i++;
 		return ;
+	}
 	f_addback_node(&ms->list, f_new_node(temp));
 	ms->i++;
 
@@ -330,6 +337,7 @@ void	f_check_pipes(t_meta *ms)
 	{
 		ms->exit_status = 2;
 		ms->error_flag = ms->exit_status;
+		ms->i++;
 		return ;
 	}
 	start = ms->i;
