@@ -70,6 +70,11 @@ void	find_echo(t_comand *node, int input_fd)
 
 	if (ft_strcmp(node->com[0], "echo") == 0)
 	{
+		if (!node->com[1])
+		{
+			ft_putchar_fd('\n', input_fd);
+			return ;
+		}
 		if (ft_strcmp(node->com[1], "-n") == 0)
 		{
 			i = 2;

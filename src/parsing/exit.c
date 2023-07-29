@@ -24,7 +24,7 @@ int	f_exit(t_meta *ms)
 	{
 		nb = ft_atoi(ms->comand->com[1]);
 		if (nb > 256)
-			nb = nb%256;
+			nb = nb % 256;
 		f_all_clean_exit(ms, nb);
 	}
 	f_all_clean(ms, NULL);
@@ -36,7 +36,7 @@ int f_size_table(char **table)
 	int i;
 
 	i = 0;
-	if (!table)
+	if (!table || *table == NULL)
 		return (i);
 	while (table[i])
 		i++;

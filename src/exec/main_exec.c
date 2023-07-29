@@ -35,20 +35,20 @@ int	lst_size(t_comand *lst)
 	return (i);
 }
 
-int redirect_nodes(int pipe, t_comand *node)
+int redirect_nodes(int *pipe, t_comand *node)
 {
 	int out_fd;
 
 	if (node->next == NULL)
 		out_fd = 1;
 	else
-		out_fd = pipe;
+		out_fd = pipe[1];
 	if (node->stin != NULL)
 	{
-		g()->in_fd = redirect_in(node);
+		g()->in_fd = redirect_in(node, pipe);
 		if (g()->in_fd == FD_ERROR)
 			return (FD_ERROR);
-		else if (g()->in_fd == -2)
+		else if (g()->in_fd == HEREDOC_ERROR)
 			return (HEREDOC_ERROR);
 	}
 	if (node->stout != NULL)
@@ -86,7 +86,7 @@ void	exec_one_node(t_comand *node, int fd, int out_fd)
 	if (ft_check_builtins(node->com))
 		find_builtins(node, out_fd);
 	else
-		pipex(node->com, false, fd, out_fd);
+		pipex(node, false, fd, out_fd);
 }
 
 /**
@@ -100,6 +100,8 @@ void	exec_multi_node(t_comand *node)
 	int 	out_fd;
 	int 	nb_node;
 
+	if (!node || node->com[0] == NULL)
+		return ;
 	if (pipe(pipe_end) != 0)
 		return ;
 	g()->in_fd = pipe_end[0];
@@ -107,17 +109,17 @@ void	exec_multi_node(t_comand *node)
 	g()->pid = malloc(sizeof(pid_t) * (nb_node + 1));
 	while (node)
 	{
-		out_fd = redirect_nodes(pipe_end[1], node);
+		out_fd = redirect_nodes(pipe_end, node);
 		if (out_fd < 0)
 			return ;
-		else if (out_fd == HEREDOC_SUCCESS)
+		else if (out_fd == HEREDOC_ERROR)
 			break ;
 		if (node->next == NULL)
 			exec_one_node(node, g()->in_fd, out_fd);
 		else
 		{
 			if (!ft_check_builtins(node->com))
-				pipex(node->com, true, g()->in_fd, out_fd);
+				pipex(node, true, g()->in_fd, out_fd);
 			else
 			{
 				find_builtins(node, out_fd);

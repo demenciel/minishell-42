@@ -34,6 +34,7 @@
 # define HEREDOC_SUCCESS 11
 # define HEREDOC_ERROR -2
 # define FD_ERROR -3
+# define EXEC_ERROR -14
 
 typedef struct s_comand
 {
@@ -79,14 +80,15 @@ typedef struct s_exec
 // REDIRECT
 
 int						redirect_out(t_comand *node);
-int						redirect_in(t_comand *node);
-int						heredocs(char *limiter);
+int						redirect_in(t_comand *node, int *pipe);
+int						heredocs(char *limiter, int input_fd);
 
 // PIPEX
-pid_t	pipex(char **cmd, bool multi, int input_fd, int out_fd);
+pid_t	pipex(t_comand *node, bool multi, int input_fd, int out_fd);
 int						open_rd_fd(char *fd1);
 int						create_rd_fd(char *fd1);
 int						append_rd_fd(char *fd1);
+void	wait_free_pid(t_comand *node, int *pipe);
 
 // MAIN EXEC
 void					exec_multi_node(t_comand *node);

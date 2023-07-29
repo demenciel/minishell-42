@@ -89,7 +89,7 @@ int	main(int ac, char **av, char **env)
 		// ft_print_details(ms);
 		if (ms->comand && ms->comand->com[0] != NULL &&
 		ft_strncmp(ms->comand->com[0], "exit", 4) == 0)
-			f_exit(ms);
+				f_exit(ms);
 		else if (ms->error_flag == 0)
 		{
 			node = ms->comand;
