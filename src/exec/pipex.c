@@ -48,6 +48,8 @@ void	exec_cmd(char **cmd)
 	char	*search_cmd;
 	char	**paths;
 
+	if (!ft_isalnum(cmd[0][0]))
+		return ;
 	i = -1;
 	paths = get_env_path();
 	while (paths[++i])
@@ -73,7 +75,10 @@ void	exec_cmd(char **cmd)
 	}
 	ft_2darr_free(paths);
 	if (flag > 0)
+	{
 		print_error(cmd[0]);
+		// f_all_clean_exit(mt(), 1);
+	}
 }
 
 /**
@@ -156,7 +161,7 @@ pid_t	pipex(t_comand *node, pid_t pid, bool multi, int input_fd, int out_fd)
 			close(input_fd);
 			dup2(pipe_end[1], STDOUT_FILENO);
 			exec_cmd(node->com);
-			f_exit(mt());
+			exit(1);
 		}
 		else
 		{
@@ -174,7 +179,7 @@ pid_t	pipex(t_comand *node, pid_t pid, bool multi, int input_fd, int out_fd)
 			close(g()->in_fd);
 			dup2(out_fd, STDOUT_FILENO);
 			exec_cmd(node->com);
-			f_exit(mt());
+			exit(1);
 		}
 	}
 	return (0);
