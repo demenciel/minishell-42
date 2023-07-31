@@ -48,8 +48,6 @@ void	exec_cmd(char **cmd)
 	char	*search_cmd;
 	char	**paths;
 
-	if (!ft_isalnum(cmd[0][0]))
-		return ;
 	i = -1;
 	paths = get_env_path();
 	while (paths[++i])
@@ -75,10 +73,7 @@ void	exec_cmd(char **cmd)
 	}
 	ft_2darr_free(paths);
 	if (flag > 0)
-	{
 		print_error(cmd[0]);
-		// f_all_clean_exit(mt(), 1);
-	}
 }
 
 /**
@@ -145,41 +140,40 @@ int	append_rd_fd(char *fd1)
  * @brief Reproduce the effect of a pipe in shell ( | )
  * @param cmd The commands to be executed
 */
-pid_t	pipex(t_comand *node, pid_t pid, bool multi, int input_fd, int out_fd)
+pid_t	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
 {
 	int 	pipe_end[2];
+	int i = 0;
 
 	if (multi)
 	{
 		if (pipe(pipe_end) != 0)
 			return (-1);
-		pid = fork();
-		if (pid == 0)
+		g()->pid[i] = fork();
+		if (g()->pid[i] == 0)
 		{
 			close(pipe_end[0]);
 			dup2(input_fd, STDIN_FILENO);
 			close(input_fd);
 			dup2(pipe_end[1], STDOUT_FILENO);
 			exec_cmd(node->com);
-			exit(1);
 		}
 		else
 		{
 			close(pipe_end[1]);
-			close(out_fd);
 			g()->in_fd = pipe_end[0];
 		}
+		i++;
 	}
 	else
 	{
-		pid = fork();
-		if (pid == 0)
+		g()->pid[i] = fork();
+		if (g()->pid[i] == 0)
 		{
 			dup2(g()->in_fd, STDIN_FILENO);
 			close(g()->in_fd);
 			dup2(out_fd, STDOUT_FILENO);
 			exec_cmd(node->com);
-			exit(1);
 		}
 	}
 	return (0);
