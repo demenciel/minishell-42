@@ -90,7 +90,7 @@ void	ft_cd(char *path)
 	char *result;
 	char *path_env;
 	char *oldpath;
-	
+
 	result = NULL;
 	path_env = NULL;
 	oldpath = NULL;

@@ -152,9 +152,9 @@ char	*f_pars_new_dollar(t_meta *ms, char *txt)
 			if (env)
 			{
 				prov = ft_strjoin(txt, env);
+				env = f_freenull(env);
 				txt = f_freenull(txt);
 				txt = prov;
-				env = f_freenull(env);
 			}
 		}
 	}
@@ -180,6 +180,7 @@ char	*f_pars_dollar(t_meta *ms, char *txt)
 		return (txt);
 	else if (txt[1] == '?')
 	{
+		txt = f_freenull(txt);
 		return (ft_itoa(nb));
 	}
 	temp = f_trimstr(txt, 36);
