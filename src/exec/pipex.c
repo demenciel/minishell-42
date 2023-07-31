@@ -64,6 +64,9 @@ void	exec_cmd(char **cmd)
 		search_cmd = ft_strjoin(paths[i], cmd[0]);
 		if (access(search_cmd, 0) == 0)
 		{
+			for (int i = 3; i < 200; i++) {
+				close(i);
+			}
 			if (execve(search_cmd, cmd, g()->env_list) != 0)
 				exit(mt()->exit_status);
 		}
@@ -156,12 +159,19 @@ pid_t	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
 			dup2(input_fd, STDIN_FILENO);
 			close(input_fd);
 			dup2(pipe_end[1], STDOUT_FILENO);
+			close(pipe_end[1]);
+			close(out_fd);
 			exec_cmd(node->com);
+			for (int i = 3; i < 200; i++) {
+				close(i);
+			}
+			exit(1);
 		}
 		else
 		{
 			close(pipe_end[1]);
-			g()->in_fd = pipe_end[0];
+			dup2(pipe_end[0], g()->in_fd);
+			close(pipe_end[0]);
 		}
 		i++;
 	}
@@ -174,6 +184,10 @@ pid_t	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
 			close(g()->in_fd);
 			dup2(out_fd, STDOUT_FILENO);
 			exec_cmd(node->com);
+			for (int i = 3; i < 200; i++) {
+				close(i);
+			}
+			exit(1);
 		}
 	}
 	return (0);

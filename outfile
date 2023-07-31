@@ -1,11 +1,11 @@
 Makefile
 NOTE.txt
+bonjour
 inc
 libs
 minishell
 minishell.dSYM
 obj
 outfile
-salut
 src
 supp.txt

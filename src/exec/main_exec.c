@@ -23,8 +23,8 @@ int	lst_size(t_comand *lst)
 	i = 0;
 
 	node = lst;
-	if (!node || node->next == NULL)
-		return (1);
+	if (!node)
+		return (0);
 	while (node->next)
 	{
 		i++;
@@ -65,7 +65,7 @@ void	wait_free_pid(t_comand *node, int *pipe)
 	int i;
 
 	i = 0;
-	while (i < lst_size(node))
+	while (i <= lst_size(node))
 	{
 		waitpid(g()->pid[i], &mt()->exit_status, 0);
 		close(g()->in_fd);
@@ -106,7 +106,7 @@ void	exec_multi_node(t_comand *node)
 		return ;
 	g()->in_fd = pipe_end[0];
 	nb_node = lst_size(node);
-	g()->pid = malloc(sizeof(pid_t) * (nb_node + 1));
+	g()->pid = malloc(sizeof(pid_t) * (nb_node));
 	while (node)
 	{
 		out_fd = redirect_nodes(pipe_end, node);
