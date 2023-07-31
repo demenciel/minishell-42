@@ -1,0 +1,21 @@
+1. Rendu à nettoyer
+    FAIT :
+        - builtin.c
+        - cd.c
+        - env.c
+        - error_utils.c
+        - exec_builtin.c
+
+    À FAIRE : 
+        - export.c
+        - export2.c
+        - main_exec.c 
+        - pipex.c  
+        - redirect.c 
+        - unset.c 
+
+1. Checker heredocs, heredocs devient entrée read.
+
+2. Leaks lorsque commande invalide, invalid read in f_exit()
+
+3. Check si heredoc seul sans commande, segfault
