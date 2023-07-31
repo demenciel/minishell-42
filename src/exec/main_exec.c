@@ -89,6 +89,25 @@ void	exec_one_node(t_comand *node, int fd, int out_fd)
 		pipex(node, false, fd, out_fd);
 }
 
+int	init_pid_and_nb_node(t_comand *node)
+{
+	int 	nb_node;
+	int i;
+
+	i = 0;
+	nb_node = lst_size(node);
+	g()->pid = malloc(sizeof(pid_t) * (nb_node));
+	if (!g()->pid)
+		f_all_clean_exit(mt(), MALLOC_ERROR);
+	while (i < nb_node)
+	{
+		g()->pid[i] = -1;
+		i++;
+	}
+	return (nb_node);
+}
+
+
 /**
  * @brief Iterates over all the nodes in the program,
  * 			assigns the appropriate fd, and executes the node
@@ -105,8 +124,7 @@ void	exec_multi_node(t_comand *node)
 	if (pipe(pipe_end) != 0)
 		return ;
 	g()->in_fd = pipe_end[0];
-	nb_node = lst_size(node);
-	g()->pid = malloc(sizeof(pid_t) * (nb_node));
+	nb_node = init_pid_and_nb_node(node);
 	while (node)
 	{
 		out_fd = redirect_nodes(pipe_end, node);

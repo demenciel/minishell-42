@@ -35,6 +35,7 @@
 # define HEREDOC_ERROR -2
 # define FD_ERROR -3
 # define EXEC_ERROR -14
+# define MALLOC_ERROR -5
 
 typedef struct s_comand
 {
