@@ -84,7 +84,7 @@ int						redirect_in(t_comand *node, int *pipe);
 int						heredocs(char *limiter, int input_fd);
 
 // PIPEX
-pid_t	pipex(t_comand *node, bool multi, int input_fd, int out_fd);
+pid_t	pipex(t_comand *node, pid_t pid, bool multi, int input_fd, int out_fd);
 int						open_rd_fd(char *fd1);
 int						create_rd_fd(char *fd1);
 int						append_rd_fd(char *fd1);

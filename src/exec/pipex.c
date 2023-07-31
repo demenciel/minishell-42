@@ -140,17 +140,16 @@ int	append_rd_fd(char *fd1)
  * @brief Reproduce the effect of a pipe in shell ( | )
  * @param cmd The commands to be executed
 */
-pid_t	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
+pid_t	pipex(t_comand *node, pid_t pid, bool multi, int input_fd, int out_fd)
 {
 	int 	pipe_end[2];
-	int i = 0;
 
 	if (multi)
 	{
 		if (pipe(pipe_end) != 0)
 			return (-1);
-		g()->pid[i] = fork();
-		if (g()->pid[i] == 0)
+		pid = fork();
+		if (pid == 0)
 		{
 			close(pipe_end[0]);
 			dup2(input_fd, STDIN_FILENO);
@@ -165,12 +164,11 @@ pid_t	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
 			close(out_fd);
 			g()->in_fd = pipe_end[0];
 		}
-		i++;
 	}
 	else
 	{
-		g()->pid[i] = fork();
-		if (g()->pid[i] == 0)
+		pid = fork();
+		if (pid == 0)
 		{
 			dup2(g()->in_fd, STDIN_FILENO);
 			close(g()->in_fd);
