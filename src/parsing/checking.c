@@ -152,9 +152,9 @@ char	*f_pars_new_dollar(t_meta *ms, char *txt)
 			if (env)
 			{
 				prov = ft_strjoin(txt, env);
+				env = f_freenull(env);
 				txt = f_freenull(txt);
 				txt = prov;
-				env = f_freenull(env);
 			}
 		}
 	}
@@ -170,6 +170,7 @@ char	*f_pars_dollar(t_meta *ms, char *txt)
 {
 	char	*temp;
 	char	*env;
+	char	*prov;
 	int		nb;
 
 	nb = ms->exit_status;
@@ -180,6 +181,7 @@ char	*f_pars_dollar(t_meta *ms, char *txt)
 		return (txt);
 	else if (txt[1] == '?')
 	{
+		txt = f_freenull(txt);
 		return (ft_itoa(nb));
 	}
 	temp = f_trimstr(txt, 36);
@@ -189,7 +191,11 @@ char	*f_pars_dollar(t_meta *ms, char *txt)
 	if (env == NULL)
 		return (NULL);
 	else
-		return (ft_strdup(env));
+	{
+		prov = ft_strdup(env);
+		env = f_freenull(env);
+		return (prov);
+	}
 
 	if (DEBUG == 1)
 		printf("" RED "---f_pars_dollar out---\n" WHT ""); // TODO Supprimer

@@ -83,6 +83,7 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		ms->line = readline("minishell > ");
+		add_history(ms->line);
 		f_check_line(ms);
 		f_check_node(ms);
 		f_split_pipes(ms);
@@ -103,7 +104,6 @@ int	main(int ac, char **av, char **env)
 			temp = f_freenull(temp);
 			ft_putstr_fd("salut la compagnie\n", 2);
 		}
-		add_history(ms->line);
 		f_free_null_meta(ms);
 	}
 	f_all_clean(ms, NULL);
