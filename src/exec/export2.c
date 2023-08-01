@@ -12,12 +12,12 @@ int	check_var(char *var)
 
 	i = 0;
 	if (*var == '\0')
-		return (-1);
+		return (-2);
 	while (var[i])
 	{
-		if (!ft_isalnum(var[i]) && var[i] != 95 && var[i] != '=')
+		if (ft_isdigit(var[0]) || ((var[i] != '/') && !(var[i] == 95) && !(ft_isalpha(var[i])) && var[i] != '=') || (ft_strncmp("=", var, ft_strlen(var)) == 0) || (var[0] == '=' && var[1]))
 		{
-			printf("%s: not a valid identifier\n", var);
+			printf("minishell: %s: not a valid identifier\n", var);
 			mt()->exit_status = 1;
 			return (-1);
 		}
