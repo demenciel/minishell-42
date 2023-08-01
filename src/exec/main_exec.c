@@ -65,12 +65,14 @@ void	wait_free_pid(t_comand *node, int *pipe)
 	int i;
 
 	i = 0;
+	(void)pipe;
 	while (i <= lst_size(node))
 	{
 		waitpid(g()->pid[i], &mt()->exit_status, 0);
 		close(g()->in_fd);
-		close(pipe[0]);
-		close(pipe[1]);
+		for (int i = 3; i < 200; i++) {
+			close(i);
+		}
 		i++;
 	}
 	free(g()->pid);
@@ -104,9 +106,9 @@ void	exec_multi_node(t_comand *node)
 		return ;
 	if (pipe(pipe_end) != 0)
 		return ;
-	g()->in_fd = pipe_end[0];
 	nb_node = lst_size(node);
-	g()->pid = malloc(sizeof(pid_t) * (nb_node));
+	g()->in_fd = pipe_end[0];
+	g()->pid = malloc(sizeof(pid_t) * (nb_node + 1));
 	while (node)
 	{
 		out_fd = redirect_nodes(pipe_end, node);
