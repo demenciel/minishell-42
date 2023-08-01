@@ -14,8 +14,5 @@
         - redirect.c 
         - unset.c 
 
-1. Checker heredocs, heredocs devient entrée read.
-
-2. Leaks lorsque commande invalide, invalid read in f_exit()
-
-3. Check si heredoc seul sans commande, segfault
+1. Check si heredoc seul sans commande, segfault
+2. Si input export invalide, retourne erreur, comment gérer ?

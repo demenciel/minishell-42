@@ -6,19 +6,24 @@
 	* @brief Checks for the first value of the variable. If is not a letter or udnerscore exits program
  * @param var Variable to check
 */
-void	check_var(char *var)
+int	check_var(char *var)
 {
 	int	i;
 
 	i = 0;
 	if (*var == '\0')
-		return ;
+		return (-1);
 	while (var[i])
 	{
-		if (!ft_isalpha(var[i]) && var[i] != 95 && var[i] != '=')
-			exit(1);
+		if (!ft_isalnum(var[i]) && var[i] != 95 && var[i] != '=')
+		{
+			printf("%s: not a valid identifier\n", var);
+			mt()->exit_status = 1;
+			return (-1);
+		}
 		i++;
 	}
+	return (0);
 }
 
 /**

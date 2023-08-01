@@ -57,6 +57,24 @@ void	find_cd_pwd(t_comand *node, int input_fd)
 		free(pwd);
 	}
 }
+char	*ft_strtrim_echo(char const *s1, char const *set)
+{
+	char	*new_str;
+	size_t	start;
+	size_t	end;
+
+	if (!s1 || !set)
+		return (NULL);
+	start = 0;
+	end = ft_strlen(s1);
+	while (s1[start] && ft_strchr(set, s1[start]))
+		start++;
+	new_str = (char *)malloc((end - start) + 1 * sizeof(char));
+	if (!new_str)
+		return (NULL);
+	ft_strlcpy(new_str, s1 + start, end - start + 1);
+	return (new_str);
+}
 
 int iterate_over_echo_flag(t_comand *node, int i)
 {
@@ -68,7 +86,7 @@ int iterate_over_echo_flag(t_comand *node, int i)
 	temp = node;
 	while (node->com[j])
 	{
-		trim = ft_strtrim(node->com[j], "-");
+		trim = ft_strtrim_echo(node->com[j], "-");
 		if (!(ft_strchr(trim, '-')))
 		{
 			if (ft_strcmp("n", trim) == 0)
@@ -81,6 +99,7 @@ int iterate_over_echo_flag(t_comand *node, int i)
 	}
 	return (i);
 }
+
 
 /**
  * @brief Checks the content of the node,
@@ -102,7 +121,7 @@ void	find_echo(t_comand *node, int input_fd)
 		}
 		if (ft_strcmp("-n", node->com[1]) == 0)
 		{
-			trim = ft_strtrim(node->com[1], "-");
+			trim = ft_strtrim_echo(node->com[1], "-");
 			if (!(ft_strchr(trim, '-')))
 			{
 				i = 2;
