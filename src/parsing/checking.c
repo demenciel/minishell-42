@@ -119,7 +119,6 @@ void f_new_check_dollar(t_meta *ms)
 		printf("" RED "---f_new_check_dollar out---\n" WHT ""); // TODO Supprimer
 }
 
-			// printf("env =%s=\n", env);
 char	*f_pars_new_dollar(t_meta *ms, char *txt)
 {
 	char	*temp;

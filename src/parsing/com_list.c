@@ -73,7 +73,6 @@ void	f_split_pipes(t_meta *ms)
 		printf("" GRE "---f_split_pipes in---\n" WHT ""); // TODO Supprimer
 
 	t_pars *temp;
-
 	temp = ms->list;
 	while (temp)
 	{
