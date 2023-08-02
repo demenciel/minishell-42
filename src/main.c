@@ -60,7 +60,7 @@ void ft_print_details(t_meta *ms)
 		printf("\n");
 	f_split_pipes(ms);
 	if (!ms->comand || ms->comand->com[0] == 0)
-		ms->exit_status = 23;
+		ms->exit_status = 1;
 	if (DEBUG == 1)
 	{
 		printf("\n");
@@ -84,10 +84,12 @@ int	main(int ac, char **av, char **env)
 	{
 		ms->line = readline("minishell > ");
 		add_history(ms->line);
-		f_check_line(ms);
-		f_check_node(ms);
-		f_split_pipes(ms);
-		// ft_print_details(ms);
+		// f_check_line(ms);
+		// f_check_node(ms);
+		// f_split_pipes(ms);
+		// if (!ms->comand || ms->comand->com[0] == 0)
+		// 	ms->exit_status = 2;
+		ft_print_details(ms);
 		if (ms->comand && ms->comand->com[0] != NULL &&
 		ft_strncmp(ms->comand->com[0], "exit", 4) == 0)
 				f_exit(ms);
@@ -102,11 +104,11 @@ int	main(int ac, char **av, char **env)
 			temp = ft_strdup(f_error_message(ms->exit_status));
 			printf("%s\n", temp);
 			temp = f_freenull(temp);
-			ft_putstr_fd("salut la compagnie\n", 2);
+			// ft_putstr_fd("salut la compagnie\n", 2);
 		}
 		f_free_null_meta(ms);
 	}
-	f_all_clean(ms, NULL);
+	// f_all_clean(ms, NULL);
 	return (0);
 }
 

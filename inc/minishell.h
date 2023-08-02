@@ -30,7 +30,7 @@
 
 // STRUCTURE-------------------------------------------------------------------
 
-# define DEBUG 0
+# define DEBUG 1
 # define HEREDOC_SUCCESS 11
 # define HEREDOC_ERROR -2
 # define FD_ERROR -3
@@ -84,11 +84,12 @@ int						redirect_in(t_comand *node, int *pipe);
 int						heredocs(char *limiter, int input_fd);
 
 // PIPEX
-pid_t	pipex(t_comand *node, bool multi, int input_fd, int out_fd);
+pid_t	pipex(t_comand *node, pid_t pid, bool multi, int input_fd, int out_fd);
 int						open_rd_fd(char *fd1);
 int						create_rd_fd(char *fd1);
 int						append_rd_fd(char *fd1);
 void	wait_free_pid(t_comand *node, int *pipe);
+char	**get_env_path(void);
 
 // MAIN EXEC
 void					exec_multi_node(t_comand *node);
@@ -196,6 +197,8 @@ int						f_check_env(char c);
 int						f_som_quote_double(char *txt);
 char					*f_join_char(const char *s1, const char s2);
 int						f_check_env_dol(char c);
+char					**f_check_command(char *str);
+int						f_exec_cmd(char **cmd);
 
 // COM_LIST--------------------------------------------------------------------
 
@@ -224,6 +227,7 @@ void					f_free_list(t_pars **list);
 void					*f_freenull(void *str);
 void					f_all_clean(t_meta *ms, char *msg);
 void					f_all_clean_exit(t_meta *ms, int nb);
+void					f_free_exit_child(t_meta *ms, int nb);
 
 // A_SUPP----------------------------------------------------------------------
 

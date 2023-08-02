@@ -85,16 +85,16 @@ void f_check_node(t_meta *ms)
 		(temp->next == NULL || temp->next->txt == NULL ||
 		temp->next->txt[0] == 124 || temp->next->txt[0] == 62 || temp->next->txt[0] == 60))
 		{
-			ms->exit_status = 7;
-			ms->error_flag = 1;
+			ms->exit_status = 2;
+			ms->error_flag = ms->exit_status;
 			f_free_list(&ms->list);
 			return ;
 		}
 		else if ((temp->txt[0] == 124) && (temp->next == NULL || temp->next->txt == NULL ||
 		temp->next->txt[0] == 124))
 		{
-			ms->exit_status = 8;
-			ms->error_flag = 1;
+			ms->exit_status = 2;
+			ms->error_flag = ms->exit_status;
 			f_free_list(&ms->list);
 			return ;
 		}

@@ -5,7 +5,10 @@ int	f_exit(t_meta *ms)
 	int i;
 	int nb;
 
-	i = f_size_table(ms->comand->com);
+
+	i = 0;
+	if (ms->comand->com)
+		i = f_size_table(ms->comand->com);
 	if (i > 2)
 	{
 		ft_putendl_fd("exit", 2);
@@ -61,14 +64,14 @@ char	*f_error_message(int nb)
 {
 
 	if (nb == 2)
-		return ("syntax error near unexpted token");
+		return ("minishell: syntax error");
 	else if (nb == 8)
-		return ("permission denied");
+		return ("minishell: permission denied");
 	else if (nb == 127)
-		return ("command not found");
+		return ("minishell: command not found");
 	else if (nb == 130)
 		return ("Ctr_C");
 	else if (nb == 1)
-		return ("not a valid identifier");
+		return ("minishell: not a valid identifier");
 	return (NULL);
 }

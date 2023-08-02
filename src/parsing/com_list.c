@@ -10,6 +10,7 @@ t_comand	*f_new_com(char *com, char *in, char *out)
 		return (NULL);
 	if (com)
 		new->com = ft_split(com, 29);
+		// new->com = f_check_command(com);
 	else
 		new->com = NULL;
 	if (in)

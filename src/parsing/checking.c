@@ -56,7 +56,7 @@ char	*f_pars_simple_quote(t_meta *ms, char *txt)
 
 	if (f_som_quote_simple(txt) != 2)
 	{
-		ms->exit_status = 5;
+		ms->exit_status = 2;
 		f_freenull(txt);
 		return (NULL);
 	}
@@ -240,7 +240,7 @@ char	*f_pars_double_quote(t_meta *ms, char *txt) //TODO a travailer
 ;
 	if (f_som_quote_double(txt) != 2)
 	{
-		ms->exit_status = 6;
+		ms->exit_status = 2;
 		txt = f_freenull(txt);
 		return (NULL);
 	}
@@ -298,7 +298,8 @@ void	f_check_redir_left(t_meta *ms)
 	end = ms->i;
 	if (end - start > 2)
 	{
-		ms->exit_status = 4;
+		ms->exit_status = 2;
+		ms->error_flag = ms->exit_status;
 		return ;
 	}
 	temp = ft_substr(ms->line, start, (end - start));
@@ -322,7 +323,8 @@ void	f_check_redir_right(t_meta *ms)
 	end = ms->i;
 	if (end - start > 2)
 	{
-		ms->exit_status = 3;
+		ms->exit_status = 2;
+		ms->error_flag = ms->exit_status;
 		return ;
 	}
 	temp = ft_substr(ms->line, start, (end - start));
