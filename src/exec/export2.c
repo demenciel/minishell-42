@@ -6,19 +6,24 @@
 	* @brief Checks for the first value of the variable. If is not a letter or udnerscore exits program
  * @param var Variable to check
 */
-void	check_var(char *var)
+int	check_var(char *var)
 {
 	int	i;
 
 	i = 0;
 	if (*var == '\0')
-		return ;
+		return (-2);
 	while (var[i])
 	{
-		if (!ft_isalpha(var[i]) && var[i] != 95 && var[i] != '=')
-			exit(1);
+		if (ft_isdigit(var[0]) || ((var[i] != '/') && !(var[i] == 95) && !(ft_isalpha(var[i])) && var[i] != '=') || (ft_strncmp("=", var, ft_strlen(var)) == 0) || (var[0] == '=' && var[1]))
+		{
+			printf("minishell: %s: not a valid identifier\n", var);
+			mt()->exit_status = 1;
+			return (-1);
+		}
 		i++;
 	}
+	return (0);
 }
 
 /**

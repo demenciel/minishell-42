@@ -57,6 +57,49 @@ void	find_cd_pwd(t_comand *node, int input_fd)
 		free(pwd);
 	}
 }
+char	*ft_strtrim_echo(char const *s1, char const *set)
+{
+	char	*new_str;
+	size_t	start;
+	size_t	end;
+
+	if (!s1 || !set)
+		return (NULL);
+	start = 0;
+	end = ft_strlen(s1);
+	while (s1[start] && ft_strchr(set, s1[start]))
+		start++;
+	new_str = (char *)malloc((end - start) + 1 * sizeof(char));
+	if (!new_str)
+		return (NULL);
+	ft_strlcpy(new_str, s1 + start, end - start + 1);
+	return (new_str);
+}
+
+int iterate_over_echo_flag(t_comand *node, int i)
+{
+	t_comand *temp;
+	char *trim;
+	int j;
+
+	j = i;
+	temp = node;
+	while (node->com[j])
+	{
+		trim = ft_strtrim_echo(node->com[j], "-");
+		if (!(ft_strchr(trim, '-')))
+		{
+			if (ft_strcmp("n", trim) == 0)
+				i++;
+			else
+				break;
+		}
+		j++;
+		free(trim);
+	}
+	return (i);
+}
+
 
 /**
  * @brief Checks the content of the node,
@@ -65,8 +108,9 @@ void	find_cd_pwd(t_comand *node, int input_fd)
 void	find_echo(t_comand *node, int input_fd)
 {
 	char	*echo_string;
-	int		i;
+	int		i = 1;
 	int 	flag = 0;
+	char 	*trim;
 
 	if (ft_strcmp(node->com[0], "echo") == 0)
 	{
@@ -75,25 +119,32 @@ void	find_echo(t_comand *node, int input_fd)
 			ft_putchar_fd('\n', input_fd);
 			return ;
 		}
-		if (ft_strcmp(node->com[1], "-n") == 0)
+		if (ft_strcmp("-n", node->com[1]) == 0)
 		{
-			i = 2;
-			flag = 1;
+			trim = ft_strtrim_echo(node->com[1], "-");
+			if (!(ft_strchr(trim, '-')))
+			{
+				i = 2;
+				i = iterate_over_echo_flag(node, i);
+				flag = 1;
+			}
+			free(trim);
 		}
-		else
-			i = 1;
 		echo_string = NULL;
 		while (node->com[i])
 		{
-			if (ft_strncmp(node->com[i], "-n", 2) == 0)
+			if (ft_strncmp(node->com[1], "-n", ft_strlen(node->com[1])) == 0 && !node->com[2])
 				break ;
-			echo_string = ft_strjoin(node->com[i], " ");
+			if (node->next == NULL && node == NULL )
+				echo_string = ft_strdup(node->com[i]);
+			else
+				echo_string = ft_strjoin(node->com[i], " ");
 			ft_echo(echo_string, input_fd);
-			if (flag == 0)
-				ft_putchar_fd('\n', input_fd);
 			free(echo_string);
 			i++;
 		}
+		if (!(flag > 0))
+			ft_putchar_fd('\n', input_fd);
 	}
 }
 

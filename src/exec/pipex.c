@@ -157,10 +157,7 @@ pid_t	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
 		{
 			close(pipe_end[0]);
 			dup2(input_fd, STDIN_FILENO);
-			close(input_fd);
 			dup2(pipe_end[1], STDOUT_FILENO);
-			close(pipe_end[1]);
-			close(out_fd);
 			exec_cmd(node->com);
 			for (int i = 3; i < 200; i++) {
 				close(i);
@@ -181,7 +178,6 @@ pid_t	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
 		if (g()->pid[i] == 0)
 		{
 			dup2(g()->in_fd, STDIN_FILENO);
-			close(g()->in_fd);
 			dup2(out_fd, STDOUT_FILENO);
 			exec_cmd(node->com);
 			for (int i = 3; i < 200; i++) {

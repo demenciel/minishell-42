@@ -131,7 +131,7 @@ void					change_var_content_export(char *var, int index);
 char					*detect_var_export(char *var);
 char					**ft_cpy_export(char **list);
 void					add_var_to_env(char *new_var, int i);
-void					check_var(char *var);
+int						check_var(char *var);
 void					ft_swap_char(char **a, char **b);
 void					order_export(int *size);
 
