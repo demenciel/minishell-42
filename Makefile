@@ -99,6 +99,6 @@ leak : all
 	@leaks --atExit --list -- ./minishell
 
 leaks : all
-	@valgrind --track-fds=yes --trace-children=yes --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=supp.txt ./minishell
+	@valgrind --track-fds=yes --trace-children=yes --leak-check=full --show-leak-kinds=all --track-origins=yes --show-reachable=yes --suppressions=supp.txt ./minishell
 
 .PHONY: all, clean, fclean, re, leak, leaks

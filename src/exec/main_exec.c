@@ -9,7 +9,7 @@ void	init_exec_struct(void)
 
 	p = g();
 	p->in_fd = 0;
-	p->old_fd = -1;
+	p->old_fd = 0;
 	p->out_fd = 0;
 	p->env_list = NULL;
 	p->export_list = NULL;
@@ -23,8 +23,8 @@ int	lst_size(t_comand *lst)
 	i = 0;
 
 	node = lst;
-	if (!node || node->next == NULL)
-		return (1);
+	if (!node)
+		return (0);
 	while (node->next)
 	{
 		i++;
@@ -65,12 +65,14 @@ void	wait_free_pid(t_comand *node, int *pipe)
 	int i;
 
 	i = 0;
-	while (i < lst_size(node))
+	(void)pipe;
+	while (i <= lst_size(node))
 	{
 		waitpid(g()->pid[i], &mt()->exit_status, 0);
 		close(g()->in_fd);
-		close(pipe[0]);
-		close(pipe[1]);
+		for (int i = 3; i < 200; i++) {
+			close(i);
+		}
 		i++;
 	}
 	free(g()->pid);
@@ -81,12 +83,12 @@ void	wait_free_pid(t_comand *node, int *pipe)
  * @param node The node to be executed
  * @param fd The fd into which to write the execution
 */
-void	exec_one_node(t_comand *node, pid_t pid, int fd, int out_fd)
+void	exec_one_node(t_comand *node, int fd, int out_fd)
 {
 	if (ft_check_builtins(node->com))
 		find_builtins(node, out_fd);
 	else
-		pipex(node, pid, false, fd, out_fd);
+		pipex(node, false, fd, out_fd);
 }
 
 /**
@@ -99,38 +101,33 @@ void	exec_multi_node(t_comand *node)
 	int 	pipe_end[2];
 	int 	out_fd;
 	int 	nb_node;
-	int i = 0;
 
 	if (!node || node->com[0] == NULL)
 		return ;
 	if (pipe(pipe_end) != 0)
 		return ;
-	g()->in_fd = pipe_end[0];
 	nb_node = lst_size(node);
+	g()->in_fd = pipe_end[0];
 	g()->pid = malloc(sizeof(pid_t) * (nb_node + 1));
 	while (node)
 	{
-		g()->pid[i] = -1;
 		out_fd = redirect_nodes(pipe_end, node);
 		if (out_fd < 0)
 			return ;
 		else if (out_fd == HEREDOC_ERROR)
 			break ;
 		if (node->next == NULL)
-			exec_one_node(node, g()->pid[i], g()->in_fd, out_fd);
+			exec_one_node(node, g()->in_fd, out_fd);
 		else
 		{
 			if (!ft_check_builtins(node->com))
-			{
-				pipex(node, g()->pid[i], true, g()->in_fd, out_fd);
-			}
+				pipex(node, true, g()->in_fd, out_fd);
 			else
 			{
 				find_builtins(node, out_fd);
 				close(out_fd);
 			}
 		}
-		i++;
 		node = node->next;
 	}
 	wait_free_pid(node, pipe_end);

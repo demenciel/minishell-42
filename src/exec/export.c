@@ -208,7 +208,8 @@ void	ft_export(char *new_var, int input_fd)
 	int i;
 	int list_size;
 
-	check_var(new_var);
+	if (check_var(new_var) == -1)
+		return ;
 	if (g()->export_list == NULL)
 	{
 		i = cpy_env_if_null();
