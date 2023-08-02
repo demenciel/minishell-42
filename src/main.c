@@ -74,7 +74,6 @@ int	main(int ac, char **av, char **env)
 	t_meta *ms;
 	t_comand *node;
 	char	*temp;
-	// (void)env;
 
 	f_check_arg(ac, av);
 	ms = f_init_meta();
@@ -87,10 +86,10 @@ int	main(int ac, char **av, char **env)
 		// f_check_line(ms);
 		// f_check_node(ms);
 		// f_split_pipes(ms);
-		// if (!ms->comand || ms->comand->com[0] == 0)
-		// 	ms->exit_status = 2;
+		if (!ms->comand || ms->comand->com[0] == 0)
+			ms->exit_status = 2;
 		ft_print_details(ms);
-		if (ms->comand->com != NULL && ft_strncmp(ms->comand->com[0], "exit", 4) == 0)
+		if (ms && ms->comand->com != NULL && ft_strncmp(ms->comand->com[0], "exit", 4) == 0)
 				f_exit(ms);
 		else if (ms->error_flag == 0)
 		{
@@ -107,7 +106,6 @@ int	main(int ac, char **av, char **env)
 		}
 		f_free_null_meta(ms);
 	}
-	// f_all_clean(ms, NULL);
 	return (0);
 }
 

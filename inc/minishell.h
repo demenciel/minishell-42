@@ -96,6 +96,7 @@ void					wait_free_pid(int nb_node);
 void					exec_multi_node(t_comand *node);
 void					init_exec_struct(void);
 int	lst_size(t_comand *lst);
+char	**get_env_path(void);
 
 // EXEC BUILTINS
 bool					ft_check_builtins(char **cmd);
