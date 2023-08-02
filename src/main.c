@@ -89,7 +89,8 @@ int	main(int ac, char **av, char **env)
 		if (!ms->comand || ms->comand->com[0] == 0)
 			ms->exit_status = 2;
 		ft_print_details(ms);
-		if (ms && ms->comand->com != NULL && ft_strncmp(ms->comand->com[0], "exit", 4) == 0)
+		if (ms->comand && ms->comand->com != NULL &&
+		ft_strncmp(ms->comand->com[0], "exit", 4) == 0)
 				f_exit(ms);
 		else if (ms->error_flag == 0)
 		{
