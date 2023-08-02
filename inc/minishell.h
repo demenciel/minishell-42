@@ -90,7 +90,7 @@ pid_t	pipex(t_comand *node, bool multi, int input_fd, int out_fd);
 int						open_rd_fd(char *fd1);
 int						create_rd_fd(char *fd1);
 int						append_rd_fd(char *fd1);
-void	wait_free_pid(t_comand *node, int *pipe);
+void					wait_free_pid(int nb_node);
 
 // MAIN EXEC
 void					exec_multi_node(t_comand *node);

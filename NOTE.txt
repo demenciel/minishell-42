@@ -15,5 +15,4 @@
         - unset.c 
 
 1. Check si heredoc seul sans commande, segfault
-2. Si input export invalide, retourne erreur, comment gérer ?
-3. Regarder pour input vide pour export
+2. Checker le export allo=ca export allo=cava, leaks
