@@ -116,6 +116,8 @@ int	init_pid_and_nb_node(t_comand *node)
 */
 void	exec_multi_node(t_comand *node)
 {
+	if (DEBUG == 1)
+		printf("" GRE "---f_exec_multi in---\n" WHT ""); // TODO Supprimer
 	int 	pipe_end[2];
 	int 	out_fd;
 	int 	nb_node;

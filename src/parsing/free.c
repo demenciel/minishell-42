@@ -136,3 +136,27 @@ void	f_all_clean_exit(t_meta *ms, int nb)
 	free(ms);
 	exit(i);
 }
+
+void f_free_exit_child(t_meta *ms, int nb)
+{
+	if (ms->line)
+		ms->line = f_freenull(ms->line);
+	if (ms->com_temp)
+		ms->com_temp = f_freenull(ms->com_temp);
+	if (ms->in)
+		ms->in = f_freenull(ms->in);
+	if (ms->out)
+		ms->out = f_freenull(ms->out);
+	ms->i = 0;
+	if (ms->list)
+	{
+		f_free_list(&ms->list);
+		ms->list = NULL;
+	}
+	if (ms->comand)
+	{
+		f_free_comand(&ms->comand);
+		ms->comand = NULL;
+	}
+	exit (nb);
+}

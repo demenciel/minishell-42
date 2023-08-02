@@ -198,6 +198,9 @@ int						f_check_env(char c);
 int						f_som_quote_double(char *txt);
 char					*f_join_char(const char *s1, const char s2);
 int						f_check_env_dol(char c);
+char					**f_check_command(char *str);
+int						f_exec_cmd(char **cmd);
+int						f_search_dollar(char *str);
 
 // COM_LIST--------------------------------------------------------------------
 
@@ -226,6 +229,7 @@ void					f_free_list(t_pars **list);
 void					*f_freenull(void *str);
 void					f_all_clean(t_meta *ms, char *msg);
 void					f_all_clean_exit(t_meta *ms, int nb);
+void					f_free_exit_child(t_meta *ms, int nb);
 
 // A_SUPP----------------------------------------------------------------------
 

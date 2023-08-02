@@ -8,7 +8,7 @@ t_meta	*f_init_meta(void)
 	{
 		new = ft_calloc(sizeof(t_meta), 1);
 		if (!new)
-			exit(EXIT_FAILURE);
+			return (NULL);
 		new->list = NULL;
 		new->com_temp = NULL;
 		new->in = NULL;

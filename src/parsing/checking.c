@@ -56,7 +56,7 @@ char	*f_pars_simple_quote(t_meta *ms, char *txt)
 
 	if (f_som_quote_simple(txt) != 2)
 	{
-		ms->exit_status = 5;
+		ms->exit_status = 2;
 		f_freenull(txt);
 		return (NULL);
 	}
@@ -93,6 +93,7 @@ void f_new_check_dollar(t_meta *ms)
 {
 	int		start;
 	char	*temp;
+	char	*add;
 
 	if (DEBUG == 1)
 		printf("" GRE "---f_new_check_dollar in---\n" WHT ""); // TODO Supprimer
@@ -104,7 +105,15 @@ void f_new_check_dollar(t_meta *ms)
 	temp = f_pars_new_dollar(ms, temp);
 	if (temp == NULL)
 		return ;
-	f_addback_node(&ms->list, f_new_node(temp));
+	if (f_search_dollar(ms->line) == -1)
+	{
+		add = ft_strjoin(f_last_node(ms->list)->txt, temp);
+		f_last_node(ms->list)->txt = f_freenull(f_last_node(ms->list)->txt);
+		f_last_node(ms->list)->txt = ft_strdup(add);
+		add = f_freenull(add);
+	}
+	else
+		f_addback_node(&ms->list, f_new_node(temp));
 
 	if (DEBUG == 1)
 		printf("" RED "---f_new_check_dollar out---\n" WHT ""); // TODO Supprimer
@@ -240,7 +249,7 @@ char	*f_pars_double_quote(t_meta *ms, char *txt) //TODO a travailer
 ;
 	if (f_som_quote_double(txt) != 2)
 	{
-		ms->exit_status = 6;
+		ms->exit_status = 2;
 		txt = f_freenull(txt);
 		return (NULL);
 	}
@@ -298,7 +307,8 @@ void	f_check_redir_left(t_meta *ms)
 	end = ms->i;
 	if (end - start > 2)
 	{
-		ms->exit_status = 4;
+		ms->exit_status = 2;
+		ms->error_flag = ms->exit_status;
 		return ;
 	}
 	temp = ft_substr(ms->line, start, (end - start));
@@ -322,7 +332,8 @@ void	f_check_redir_right(t_meta *ms)
 	end = ms->i;
 	if (end - start > 2)
 	{
-		ms->exit_status = 3;
+		ms->exit_status = 2;
+		ms->error_flag = ms->exit_status;
 		return ;
 	}
 	temp = ft_substr(ms->line, start, (end - start));

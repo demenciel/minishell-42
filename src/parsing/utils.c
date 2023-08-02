@@ -134,3 +134,63 @@ char	*f_join_char(const char *s1, const char s2)
 	return (join_str);
 }
 
+
+char	**f_check_command(char *str)
+{
+	char **temp;
+
+	temp = ft_split(str, 29);
+
+	if (ft_check_builtins(temp) == false)
+	{
+		if (f_exec_cmd(temp) != 0)
+		{
+			ft_free_tab_char(temp);
+			return (NULL);
+		}
+	}
+	return (temp);
+}
+
+int	f_exec_cmd(char **cmd)
+{
+	int		i;
+	int		flag;
+	char	*search_cmd;
+	char	**paths;
+
+	i = -1;
+	paths = get_env_path();
+	while (paths[++i])
+		paths[i] = ft_strjoin(paths[i], "/");
+	i = -1;
+	while (paths[++i])
+	{
+		flag = 0;
+		search_cmd = ft_strjoin(paths[i], cmd[0]);
+		if (access(search_cmd, 0) != 0)
+			flag++;
+		free(search_cmd);
+	}
+	ft_2darr_free(paths);
+	if (flag > 0)
+	{
+		mt()->exit_status = 127;
+		mt()->error_flag = mt()->exit_status;
+	}
+	return (flag);
+}
+
+int f_search_dollar(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (i > 1 && str[i] == 36 && str[i - 1] != 32)
+			return (-1);
+		i++;
+	}
+	return (i);
+}
