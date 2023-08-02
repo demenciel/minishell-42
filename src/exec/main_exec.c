@@ -98,6 +98,8 @@ void	exec_one_node(t_comand *node, int fd, int out_fd)
 */
 void	exec_multi_node(t_comand *node)
 {
+	if (DEBUG == 1)
+		printf("" GRE "---f_exec_multi in---\n" WHT ""); // TODO Supprimer
 	int 	pipe_end[2];
 	int 	out_fd;
 	int 	nb_node;
@@ -131,4 +133,6 @@ void	exec_multi_node(t_comand *node)
 		node = node->next;
 	}
 	wait_free_pid(node, pipe_end);
+	if (DEBUG == 1)
+		printf("" RED "---f_exec_multi out---\n" WHT ""); // TODO Supprimer
 }

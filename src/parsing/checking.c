@@ -93,6 +93,7 @@ void f_new_check_dollar(t_meta *ms)
 {
 	int		start;
 	char	*temp;
+	char	*add;
 
 	if (DEBUG == 1)
 		printf("" GRE "---f_new_check_dollar in---\n" WHT ""); // TODO Supprimer
@@ -104,7 +105,15 @@ void f_new_check_dollar(t_meta *ms)
 	temp = f_pars_new_dollar(ms, temp);
 	if (temp == NULL)
 		return ;
-	f_addback_node(&ms->list, f_new_node(temp));
+	if (f_search_dollar(ms->line) == -1)
+	{
+		add = ft_strjoin(f_last_node(ms->list)->txt, temp);
+		f_last_node(ms->list)->txt = f_freenull(f_last_node(ms->list)->txt);
+		f_last_node(ms->list)->txt = ft_strdup(add);
+		add = f_freenull(add);
+	}
+	else
+		f_addback_node(&ms->list, f_new_node(temp));
 
 	if (DEBUG == 1)
 		printf("" RED "---f_new_check_dollar out---\n" WHT ""); // TODO Supprimer

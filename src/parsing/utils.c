@@ -180,3 +180,17 @@ int	f_exec_cmd(char **cmd)
 	}
 	return (flag);
 }
+
+int f_search_dollar(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (i > 1 && str[i] == 36 && str[i - 1] != 32)
+			return (-1);
+		i++;
+	}
+	return (i);
+}

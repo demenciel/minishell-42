@@ -30,7 +30,7 @@
 
 // STRUCTURE-------------------------------------------------------------------
 
-# define DEBUG 1
+# define DEBUG 0
 # define HEREDOC_SUCCESS 11
 # define HEREDOC_ERROR -2
 # define FD_ERROR -3
@@ -200,6 +200,7 @@ char					*f_join_char(const char *s1, const char s2);
 int						f_check_env_dol(char c);
 char					**f_check_command(char *str);
 int						f_exec_cmd(char **cmd);
+int						f_search_dollar(char *str);
 
 // COM_LIST--------------------------------------------------------------------
 
