@@ -5,8 +5,8 @@
 # include <curses.h>
 # include <errno.h>
 # include <fcntl.h>
-# include <readline/history.h>
-// # include <readline.h>
+# include "history.h"
+# include "readline.h"
 # include "libft/libft.h"
 # include <limits.h>
 # include <signal.h>
@@ -30,7 +30,7 @@
 
 // STRUCTURE-------------------------------------------------------------------
 
-# define DEBUG 1
+# define DEBUG 0
 # define HEREDOC_SUCCESS 11
 # define HEREDOC_ERROR -2
 # define FD_ERROR -3
@@ -177,7 +177,6 @@ void					f_free_comand(t_comand **list);
 
 int						f_som_quote_simple(char *txt);
 char					*f_pars_simple_quote(t_meta *ms, char *txt);
-void					f_check_dollar(t_meta *ms);
 char					*f_pars_new_dollar(t_meta *ms, char *txt);
 void 					f_new_check_dollar(t_meta *ms);
 char					*f_pars_dollar(t_meta *ms, char *txt);
@@ -245,5 +244,11 @@ int						f_exit(t_meta *ms);
 int						f_size_table(char **table);
 int						f_arg_is_num(char *txt);
 char					*f_error_message(int nb);
+
+// SIGNAL----------------------------------------------------------------------
+
+void	f_sighandler(int sig);
+void	f_sighandler_com(int sig);
+void	f_signals(int nb);
 
 #endif

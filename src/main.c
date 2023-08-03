@@ -79,9 +79,12 @@ int	main(int ac, char **av, char **env)
 	ms = f_init_meta();
     init_exec_struct();
     init_env(env);
+	f_signals(1);
 	while (1)
 	{
 		ms->line = readline("minishell > ");
+		if (ms->line == NULL)
+			f_all_clean(ms, NULL);
 		add_history(ms->line);
 		// f_check_line(ms);
 		// f_check_node(ms);

@@ -30,7 +30,6 @@ void	f_check_line(t_meta *ms)
 		else if (ms->line[ms->i] && (ms->line[ms->i] == 34))
 			f_check_double_quote(ms);
 		else if (ms->line[ms->i] && ms->line[ms->i] == 36)
-			// f_check_dollar(ms);
 			f_new_check_dollar(ms);
 		else
 			f_check_word(ms);

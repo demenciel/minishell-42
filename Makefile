@@ -40,6 +40,7 @@ SRC		:=  main.c \
 			parsing/utils.c \
 			parsing/a_supp.c \
 			parsing/exit.c \
+			parsing/signal.c \
 
 
 SRCS	= $(addprefix $(SRC_PATH), $(SRC))
@@ -89,7 +90,7 @@ clean:
 
 fclean: clean
 	@make fclean -C $(LIBFT_DIR)
-#	@rm -rf $(READ_PATH)
+	@rm -rf $(READ_PATH)
 	@rm -f $(NAME)
 
 re: fclean all
