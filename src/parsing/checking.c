@@ -5,6 +5,7 @@ void	f_check_word(t_meta *ms)
 {
 	int	start;
 	char *temp;
+	char *add;
 
 	if (DEBUG == 1)
 		printf("" GRE "---f_check_word in---\n" WHT ""); // TODO Supprimer
@@ -15,7 +16,16 @@ void	f_check_word(t_meta *ms)
 	temp = ft_substr(ms->line, start, (ms->i - start));
 	if (temp == NULL)
 		return ;
-	f_addback_node(&ms->list, f_new_node(temp));
+	else if (start > 1  && f_check_metachar(ms->line[start - 1]) == 0)
+	{
+		add = ft_strjoin(f_last_node(ms->list)->txt, temp);
+		f_last_node(ms->list)->txt = f_freenull(f_last_node(ms->list)->txt);
+		f_last_node(ms->list)->txt = ft_strdup(add);
+		add = f_freenull(add);
+		temp = f_freenull(temp);
+	}
+	else
+		f_addback_node(&ms->list, f_new_node(temp));
 
 	if (DEBUG == 1)
 		printf("" RED "---f_check_word_ out---\n" WHT ""); // TODO Supprimer
@@ -105,12 +115,13 @@ void f_new_check_dollar(t_meta *ms)
 	temp = f_pars_new_dollar(ms, temp);
 	if (temp == NULL)
 		return ;
-	if (f_search_dollar(ms->line) == -1)
+	else if (f_search_dollar(ms->line) == -1)
 	{
 		add = ft_strjoin(f_last_node(ms->list)->txt, temp);
 		f_last_node(ms->list)->txt = f_freenull(f_last_node(ms->list)->txt);
 		f_last_node(ms->list)->txt = ft_strdup(add);
 		add = f_freenull(add);
+		temp = f_freenull(temp);
 	}
 	else
 		f_addback_node(&ms->list, f_new_node(temp));
@@ -148,7 +159,8 @@ char	*f_pars_new_dollar(t_meta *ms, char *txt)
 			prov = ft_strjoin(txt, env);
 			env = f_freenull(env);
 			txt = f_freenull(txt);
-			txt = prov;
+			txt = ft_strdup(prov);
+			prov = f_freenull(prov);
 		}
 		if (temp [i] && temp[i] == 36)
 		{
@@ -162,7 +174,8 @@ char	*f_pars_new_dollar(t_meta *ms, char *txt)
 				prov = ft_strjoin(txt, env);
 				env = f_freenull(env);
 				txt = f_freenull(txt);
-				txt = prov;
+				txt = ft_strdup(prov);
+				prov = f_freenull(prov);
 			}
 		}
 	}
