@@ -108,6 +108,7 @@ int	init_pid_and_nb_node(t_comand *node)
 	while (i < nb_node)
 	{
 		g()->pid[i] = j;
+		printf("PID ID %d\n", g()->pid[i]);
 		i++;
 		j--;
 	}
@@ -152,6 +153,7 @@ void	exec_multi_node(t_comand *node)
 			}
 		}
 		node = node->next;
+		g()->pid_index++;
 	}
 	wait_free_pid(nb_node);
 }

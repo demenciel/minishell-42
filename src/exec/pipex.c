@@ -175,7 +175,6 @@ pid_t	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
 		close(pipe_end[1]);
 		dup2(pipe_end[0], g()->in_fd);
 		close(pipe_end[0]);
-		g()->pid_index++;
 	}
 	return (0);
 }
