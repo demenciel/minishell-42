@@ -14,6 +14,7 @@ void	init_exec_struct(void)
 	p->env_list = NULL;
 	p->export_list = NULL;
 	p->pid = 0;
+	p->pid_index = 0;
 }
 
 int	lst_size(t_comand *lst)
@@ -74,6 +75,7 @@ void	wait_free_pid(int nb_node)
 		}
 		i++;
 	}
+	g()->pid_index = 0;
 	free(g()->pid);
 }
 
@@ -94,6 +96,7 @@ int	init_pid_and_nb_node(t_comand *node)
 {
 	int 	nb_node;
 	int i;
+	int j = -1;
 
 	i = 0;
 	nb_node = lst_size(node);
@@ -102,8 +105,9 @@ int	init_pid_and_nb_node(t_comand *node)
 		f_all_clean_exit(mt(), MALLOC_ERROR);
 	while (i < nb_node)
 	{
-		g()->pid[i] = -1;
+		g()->pid[i] = j;
 		i++;
+		j--;
 	}
 	return (nb_node);
 }

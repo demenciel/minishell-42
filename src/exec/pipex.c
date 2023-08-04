@@ -149,16 +149,15 @@ int	append_rd_fd(char *fd1)
 pid_t	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
 {
 	int 	pipe_end[2];
-	int i = 0;
 
 	if (multi)
 	{
 		if (pipe(pipe_end) != 0)
 			return (-1);
-		g()->pid[i] = fork();
-		if (g()->pid[i] == 0)
+		printf("Multi Working PID %d\n", g()->pid[g()->pid_index]);
+		g()->pid[g()->pid_index] = fork();
+		if (g()->pid[g()->pid_index] == 0)
 		{
-			f_signals(2);
 			close(pipe_end[0]);
 			dup2(input_fd, STDIN_FILENO);
 			dup2(pipe_end[1], STDOUT_FILENO);
@@ -173,15 +172,15 @@ pid_t	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
 			close(pipe_end[1]);
 			dup2(pipe_end[0], g()->in_fd);
 			close(pipe_end[0]);
+			g()->pid_index++;
 		}
-		i++;
 	}
 	else
 	{
-		g()->pid[i] = fork();
-		if (g()->pid[i] == 0)
+		printf("Single Working PID %d\n", g()->pid[g()->pid_index]);
+		g()->pid[g()->pid_index] = fork();
+		if (g()->pid[g()->pid_index] == 0)
 		{
-			f_signals(2);
 			dup2(g()->in_fd, STDIN_FILENO);
 			dup2(out_fd, STDOUT_FILENO);
 			exec_cmd(node->com);
@@ -190,6 +189,8 @@ pid_t	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
 			}
 			exit(1);
 		}
+		else
+			g()->pid_index++;
 	}
 	return (0);
 }
