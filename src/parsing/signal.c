@@ -30,6 +30,5 @@ void	f_signals(int nb)
 	{
 		signal(SIGQUIT, f_sighandler_com);
 		signal(SIGINT, f_sighandler_com);
-		// signal(SIGQUIT, SIG_IGN);
 	}
 }

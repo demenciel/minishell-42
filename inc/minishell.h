@@ -240,7 +240,7 @@ void					f_print(char **cou);
 
 // EXIT------------------------------------------------------------------------
 
-int						f_exit(t_meta *ms);
+int						find_exit(t_comand *node, t_meta *ms);
 int						f_size_table(char **table);
 int						f_arg_is_num(char *txt);
 char					*f_error_message(int nb);

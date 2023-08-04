@@ -1,3 +1,4 @@
+
 #include "../inc/minishell.h"
 
 t_exec	*g(void)
@@ -59,7 +60,7 @@ void ft_print_details(t_meta *ms)
 	if (DEBUG == 1)
 		printf("\n");
 	f_split_pipes(ms);
-	if (!ms->comand || ms->comand->com[0] == 0)
+	if (!ms->comand)
 		ms->exit_status = 1;
 	if (DEBUG == 1)
 	{
@@ -92,10 +93,10 @@ int	main(int ac, char **av, char **env)
 		// if (!ms->comand || ms->comand->com[0] == 0)
 		// 	ms->exit_status = 2;
 		ft_print_details(ms);
-		if (ms->comand && ms->comand->com[0] != NULL &&
-			ft_strncmp(ms->comand->com[0], "exit", 4) == 0)
-				f_exit(ms);
-		else if (ms->error_flag == 0)
+		// if (ms->comand && ms->comand->com[0] != NULL &&
+		// 	ft_strncmp(ms->comand->com[0], "exit", 4) == 0)
+		// 		f_exit(ms);
+		if (ms->error_flag == 0)
 		{
 			node = ms->comand;
 			exec_multi_node(node);
@@ -106,7 +107,6 @@ int	main(int ac, char **av, char **env)
 			temp = ft_strdup(f_error_message(ms->exit_status));
 			printf("%s\n", temp);
 			temp = f_freenull(temp);
-			// ft_putstr_fd("salut la compagnie\n", 2);
 		}
 		f_free_null_meta(ms);
 	}

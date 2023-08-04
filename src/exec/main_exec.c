@@ -120,9 +120,7 @@ void	exec_multi_node(t_comand *node)
 	int 	out_fd;
 	int 	nb_node;
 
-	if (!node || node->com[0] == NULL)
-		return ;
-	if (pipe(pipe_end) != 0)
+	if (!node || pipe(pipe_end) != 0)
 		return ;
 	nb_node = init_pid_and_nb_node(node);
 	g()->in_fd = pipe_end[0];
@@ -133,6 +131,11 @@ void	exec_multi_node(t_comand *node)
 			return ;
 		else if (out_fd == HEREDOC_ERROR)
 			break ;
+		if (node->com == NULL || node->com[0] == NULL)
+		{
+			wait_free_pid(nb_node);
+			return ;
+		}
 		if (node->next == NULL)
 			exec_one_node(node, g()->in_fd, out_fd);
 		else
