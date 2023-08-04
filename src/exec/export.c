@@ -50,7 +50,6 @@ void	change_var_content_export(char *var, int index)
 	}
 	else 
 		new_var_content = ft_strjoin("declare -x ", var);
-	g()->export_list[index] = NULL;
 	free(g()->export_list[index]);
 	g()->export_list[index] = new_var_content;
 }

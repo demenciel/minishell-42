@@ -95,8 +95,8 @@ int iterate_over_echo_flag(t_comand *node, int i)
 				break;
 		}
 		j++;
-		free(trim);
 	}
+	free(trim);
 	return (i);
 }
 
