@@ -7,13 +7,6 @@ t_exec	*g(void)
 	return (&data);
 }
 
-void    ft_reset_exec()
-{
-    t_exec *exec;
-
-    exec = g();
-}
-
 t_meta	*mt(void)
 {
 	static t_meta	data;
@@ -42,6 +35,15 @@ void    init_env(char **env)
         size++;
     }
     g()->env_list[size] = NULL;
+}
+
+void	clean_fd()
+{
+	int i;
+
+	i = 2;
+	while (++i < 200)
+		close(i);
 }
 
 void ft_print_details(t_meta *ms)

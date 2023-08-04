@@ -64,9 +64,7 @@ void	exec_cmd(char **cmd)
 		search_cmd = ft_strjoin(paths[i], cmd[0]);
 		if (access(search_cmd, 0) == 0)
 		{
-			for (int i = 3; i < 200; i++) {
-				close(i);
-			}
+			clean_fd();
 			if (execve(search_cmd, cmd, g()->env_list) != 0)
 				exit(mt()->exit_status);
 		}
@@ -164,9 +162,7 @@ pid_t	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
 		else
 			dup2(pipe_end[1], STDOUT_FILENO);
 		exec_cmd(node->com);
-		for (int i = 3; i < 200; i++) {
-			close(i);
-		}
+		clean_fd();
 		exit(1);
 	}
 	else

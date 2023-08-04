@@ -98,6 +98,7 @@ void					exec_multi_node(t_comand *node);
 void					init_exec_struct(void);
 int	lst_size(t_comand *lst);
 char	**get_env_path(void);
+void	clean_fd();
 
 // EXEC BUILTINS
 bool					ft_check_builtins(char **cmd);

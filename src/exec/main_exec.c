@@ -72,9 +72,7 @@ void	wait_free_pid(int nb_node)
 	{
 		waitpid(g()->pid[i], &mt()->exit_status, 0);
 		close(g()->in_fd);
-		for (int i = 3; i < 200; i++) {
-			close(i);
-		}
+		clean_fd();
 		i++;
 	}
 	g()->pid_index = 0;
@@ -108,7 +106,6 @@ int	init_pid_and_nb_node(t_comand *node)
 	while (i < nb_node)
 	{
 		g()->pid[i] = j;
-		printf("PID ID %d\n", g()->pid[i]);
 		i++;
 		j--;
 	}
