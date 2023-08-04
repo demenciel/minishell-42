@@ -154,11 +154,11 @@ pid_t	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
 	{
 		if (pipe(pipe_end) != 0)
 			return (-1);
-		printf("Multi Working PID %d\n", g()->pid[g()->pid_index]);
 		g()->pid[g()->pid_index] = fork();
 		if (g()->pid[g()->pid_index] == 0)
 		{
 			close(pipe_end[0]);
+			// printf("INPUT FD %D\n", input_fd);
 			dup2(input_fd, STDIN_FILENO);
 			if (g()->redir_flag)
 				dup2(out_fd, STDOUT_FILENO);
@@ -181,10 +181,10 @@ pid_t	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
 	}
 	else
 	{
-		printf("Single Working PID %d\n", g()->pid[g()->pid_index]);
 		g()->pid[g()->pid_index] = fork();
 		if (g()->pid[g()->pid_index] == 0)
 		{
+			// printf("INPUT FD %D\n", input_fd);
 			dup2(g()->in_fd, STDIN_FILENO);
 			dup2(out_fd, STDOUT_FILENO);
 			exec_cmd(node->com);
