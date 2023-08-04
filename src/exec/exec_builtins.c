@@ -92,7 +92,10 @@ int iterate_over_echo_flag(t_comand *node, int i)
 			if (ft_strcmp("n", trim) == 0)
 				i++;
 			else
+			{
+				free(trim);	
 				break;
+			}
 		}
 		j++;
 	}
