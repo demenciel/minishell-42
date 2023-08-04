@@ -67,6 +67,7 @@ typedef struct s_meta
 typedef struct s_exec
 {
 	pid_t				*pid;
+	bool				redir_flag;
 	int					pid_index;
 	int					in_fd;
 	int					old_fd;

@@ -15,6 +15,7 @@ void	init_exec_struct(void)
 	p->export_list = NULL;
 	p->pid = 0;
 	p->pid_index = 0;
+	p->redir_flag = false;
 }
 
 int	lst_size(t_comand *lst)
@@ -57,6 +58,7 @@ int redirect_nodes(int *pipe, t_comand *node)
 		out_fd = redirect_out(node);
 		if (out_fd < 0)
 			return (FD_ERROR);
+		g()->redir_flag = true;
 	}
 	return (out_fd);
 }
