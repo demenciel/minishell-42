@@ -23,6 +23,7 @@ void	execute_absolute(char **cmd)
 char	**get_env_path(void)
 {
 	char	**path;
+	bool	found;
 	int		i;
 
 	path = NULL;
@@ -30,10 +31,16 @@ char	**get_env_path(void)
 	while (g()->env_list[i])
 	{
 		if (ft_strncmp("PATH", g()->env_list[i], 4) == 0)
+		{
+			found = true;
 			break ;
+		}
+		else
+			found = false;
 		i++;
 	}
-	path = ft_split(g()->env_list[i], ':');
+	if (found)
+		path = ft_split(g()->env_list[i], ':');
 	return (path);
 }
 
@@ -65,8 +72,7 @@ void	exec_cmd(char **cmd)
 		if (access(search_cmd, 0) == 0)
 		{
 			clean_fd();
-			if (execve(search_cmd, cmd, g()->env_list) != 0)
-				exit(mt()->exit_status);
+			execve(search_cmd, cmd, g()->env_list);
 		}
 		else
 			flag++;
@@ -74,10 +80,7 @@ void	exec_cmd(char **cmd)
 	}
 	ft_2darr_free(paths);
 	if (flag > 0)
-	{
 		print_error(cmd[0]);
-		// f_free_exit_child(mt(), 127);
-	}
 }
 
 /**
@@ -144,12 +147,14 @@ int	append_rd_fd(char *fd1)
  * @brief Reproduce the effect of a pipe in shell ( | )
  * @param cmd The commands to be executed
 */
-pid_t	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
+void	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
 {
 	int 	pipe_end[2];
 
 	if (pipe(pipe_end) != 0)
-		return (-1);
+		return ;
+	if (get_env("PATH") == NULL)
+		return ;
 	if (g()->pid[g()->pid_index] == -1)
 		input_fd = 0;
 	g()->pid[g()->pid_index] = fork();
@@ -163,7 +168,7 @@ pid_t	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
 			dup2(pipe_end[1], STDOUT_FILENO);
 		exec_cmd(node->com);
 		clean_fd();
-		exit(1);
+		f_free_exit_child(mt(), 2);
 	}
 	else
 	{
@@ -172,5 +177,4 @@ pid_t	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
 		dup2(pipe_end[0], g()->in_fd);
 		close(pipe_end[0]);
 	}
-	return (0);
 }

@@ -108,7 +108,6 @@ int	main(int ac, char **av, char **env)
 			temp = ft_strdup(f_error_message(ms->exit_status));
 			printf("%s\n", temp);
 			temp = f_freenull(temp);
-			// ft_putstr_fd("salut la compagnie\n", 2);
 		}
 		f_free_null_meta(ms);
 	}

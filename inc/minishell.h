@@ -87,7 +87,7 @@ int						redirect_in(t_comand *node, int *pipe);
 int						heredocs(char *limiter, int input_fd);
 
 // PIPEX
-pid_t	pipex(t_comand *node, bool multi, int input_fd, int out_fd);
+void					pipex(t_comand *node, bool multi, int input_fd, int out_fd);
 int						open_rd_fd(char *fd1);
 int						create_rd_fd(char *fd1);
 int						append_rd_fd(char *fd1);
@@ -118,8 +118,7 @@ void					ft_cd(char *path);
 char					*get_env(char *input);
 void					replace_oldpwd(char *oldpath);
 void	change_pwd_env(char *oldpath, char *path);
-char					*result_path(char *env_var, char *path_env,
-							bool oldpwd);
+char					*result_path(char *env_var, bool oldpwd);
 
 // ENV
 char					**ft_cpy_env(char **list);

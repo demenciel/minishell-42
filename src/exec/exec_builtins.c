@@ -67,12 +67,12 @@ char	*ft_strtrim_echo(char const *s1, char const *set)
 		return (NULL);
 	start = 0;
 	end = ft_strlen(s1);
-	while (s1[start] && ft_strchr(set, s1[start]))
+	while (s1[start])
 		start++;
 	new_str = (char *)malloc((end - start) + 1 * sizeof(char));
 	if (!new_str)
 		return (NULL);
-	ft_strlcpy(new_str, s1 + start, end - start + 1);
+	ft_strlcpy(new_str, s1 + start, ((end - start) + 1));
 	return (new_str);
 }
 
@@ -84,18 +84,16 @@ int iterate_over_echo_flag(t_comand *node, int i)
 
 	j = i;
 	temp = node;
-	while (node->com[j])
+	trim = NULL;
+	while (temp->com[j])
 	{
-		trim = ft_strtrim_echo(node->com[j], "-");
+		trim = ft_strtrim_echo(temp->com[j], "-");
 		if (!(ft_strchr(trim, '-')))
 		{
 			if (ft_strcmp("n", trim) == 0)
 				i++;
 			else
-			{
-				free(trim);	
 				break;
-			}
 		}
 		j++;
 	}

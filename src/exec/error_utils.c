@@ -9,7 +9,11 @@ void	print_error(char *cmd)
 
 void	cd_error(char *input)
 {
-	printf("cd: %s: No such file or directory\n", input);
+	write(2, "minishell: cd: ", 16);
+	write(2, input, ft_strlen(input));
+	write(2, ": no such file or directory\n", 29);
+	mt()->exit_status = 1;
+	mt()->error_flag = 1;
 }
 
 void	fd_error(char *fd)

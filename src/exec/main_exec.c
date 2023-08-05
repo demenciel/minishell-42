@@ -72,9 +72,9 @@ void	wait_free_pid(int nb_node)
 	{
 		waitpid(g()->pid[i], &mt()->exit_status, 0);
 		close(g()->in_fd);
-		clean_fd();
 		i++;
 	}
+	clean_fd();
 	g()->pid_index = 0;
 	free(g()->pid);
 }
@@ -133,6 +133,7 @@ void	exec_multi_node(t_comand *node)
 	while (node)
 	{
 		out_fd = redirect_nodes(pipe_end, node);
+		
 		if (out_fd < 0)
 			return ;
 		else if (out_fd == HEREDOC_ERROR)
