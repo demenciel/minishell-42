@@ -1,0 +1,10 @@
+Makefile
+inc
+libs
+minishell
+minishell.dSYM
+obj
+outfile1
+src
+supp.txt
+ outfile

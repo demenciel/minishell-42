@@ -71,6 +71,50 @@ void ft_print_details(t_meta *ms)
 	}
 }
 
+int	check_comand(t_comand *com)
+{
+	t_comand *node;
+	int		i;
+	int		flag;
+	char	*search_cmd;
+	char	**paths;
+	char 	*error_node;
+
+	node = com;
+	i = -1;
+	if (node->com[0] == NULL)
+		return (0);
+	paths = get_env_path();
+	while (paths[++i])
+		paths[i] = ft_strjoin(paths[i], "/");
+	while (node)
+	{
+		i = -1;
+		while (paths[++i])
+		{
+			flag = 0;
+			search_cmd = ft_strjoin(paths[i], node->com[0]);
+			if (access(search_cmd, 0) != 0)
+				flag++;
+			else
+				break ;
+			free(search_cmd);
+		}
+		if (flag > 0)
+			error_node = ft_strdup(node->com[0]);
+		node = node->next;
+	}
+	ft_2darr_free(paths);
+	if (flag > 0)
+	{
+		printf("minishell: %s: command not found\n", error_node);
+		return (-1);
+	}
+	else
+		return (0);
+	return (0);
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_meta *ms;
@@ -88,26 +132,26 @@ int	main(int ac, char **av, char **env)
 		if (ms->line == NULL)
 			f_all_clean(ms, NULL);
 		add_history(ms->line);
-		// f_check_line(ms);
-		// f_check_node(ms);
-		// f_split_pipes(ms);
-		// if (!ms->comand || ms->comand->com[0] == 0)
-		// 	ms->exit_status = 2;
 		ft_print_details(ms);
-		if (ms->comand && ms->comand->com[0] != NULL &&
-			ft_strncmp(ms->comand->com[0], "exit", 4) == 0)
-				f_exit(ms);
-		else if (ms->error_flag == 0)
+		if (ms->comand != NULL)
 		{
-			node = ms->comand;
-			exec_multi_node(node);
-			ms->exit_status = 0;
-		}
-		else
-		{
-			temp = ft_strdup(f_error_message(ms->exit_status));
-			printf("%s\n", temp);
-			temp = f_freenull(temp);
+			if (ft_strncmp(ms->comand->com[0], "exit", 4) == 0)
+						f_exit(ms);
+			if (ft_check_builtins(ms->comand->com) || check_comand(ms->comand) == 0)
+			{
+				if (ms->error_flag == 0)
+				{
+					node = ms->comand;
+					exec_multi_node(node);
+					ms->exit_status = 0;
+				}
+				else
+				{
+					temp = ft_strdup(f_error_message(ms->exit_status));
+					printf("%s\n", temp);
+					temp = f_freenull(temp);
+				}
+			}
 		}
 		f_free_null_meta(ms);
 	}
