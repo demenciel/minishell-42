@@ -52,7 +52,7 @@ int redirect_in(t_comand *node, int *pipe)
 	}
 	else
 	{
-		in_fd = open_rd_fd(fd[1]);
+		in_fd = open_rd_fd(ft_strtrim(fd[1], "<"));
 		if (in_fd < 0)
 		{
 			ft_2darr_free(fd);

@@ -30,7 +30,7 @@
 
 // STRUCTURE-------------------------------------------------------------------
 
-# define DEBUG 1
+# define DEBUG 0
 # define HEREDOC_SUCCESS 11
 # define HEREDOC_ERROR -2
 # define FD_ERROR -3

@@ -164,7 +164,8 @@ int	main(int ac, char **av, char **env)
 			if (ft_check_builtins(ms->comand->com) || check_comand(ms->comand) == 0)
 			{
 				node = ms->comand;
-				exec_multi_node(node);
+				if (node->com != NULL)
+					exec_multi_node(node);
 				ms->exit_status = 0;
 			}
 		}

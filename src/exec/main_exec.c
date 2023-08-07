@@ -128,13 +128,11 @@ void	exec_multi_node(t_comand *node)
 		return ;
 	if (pipe(pipe_end) != 0)
 		return ;
-	
 	nb_node = init_pid_and_nb_node(node);
 	g()->in_fd = pipe_end[0];
 	while (node)
 	{
 		out_fd = redirect_nodes(pipe_end, node);
-		
 		if (out_fd < 0)
 			return ;
 		else if (out_fd == HEREDOC_ERROR)

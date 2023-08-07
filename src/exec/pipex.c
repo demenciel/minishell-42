@@ -155,7 +155,7 @@ void	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
 		return ;
 	if (get_env("PATH") == NULL)
 		return ;
-	if (g()->pid[g()->pid_index] == -1)
+	if (g()->pid[g()->pid_index] == -1 && node->stin == NULL)
 		input_fd = 0;
 	g()->pid[g()->pid_index] = fork();
 	if (g()->pid[g()->pid_index] == 0)
