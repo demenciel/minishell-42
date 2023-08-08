@@ -150,7 +150,7 @@ int	main(int ac, char **av, char **env)
 	ms = f_init_meta();
     init_exec_struct();
     init_env(env);
-	f_signals(1);
+	f_signals();
 	while (1)
 	{
 		ms->line = readline("minishell > ");
@@ -158,11 +158,13 @@ int	main(int ac, char **av, char **env)
 			f_all_clean(ms, NULL);
 		add_history(ms->line);
 		ft_print_details(ms);
-		if (ft_strncmp(ms->comand->com[0], "exit", 4) == 0)
+		if (ms->comand && ft_strncmp(ms->comand->com[0], "exit", 4) == 0)
 			f_exit(ms);
+		// printf (" exit satus =%d=\n", ms->exit_status);
+		// printf (" exit satus =%d=\n", ms->error_flag);
 		if (ms->error_flag == 0)
 		{
-			if (ft_check_builtins(ms->comand->com) || check_comand(ms->comand) == 0)
+			if (ms->comand && (ft_check_builtins(ms->comand->com) || check_comand(ms->comand) == 0))
 			{
 				node = ms->comand;
 				if (node->com != NULL)

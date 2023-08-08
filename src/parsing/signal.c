@@ -18,17 +18,9 @@ void	f_sighandler_com(int sig)
 }
 
 
-void	f_signals(int nb)
+void	f_signals(void)
 {
-	if (nb == 1)
-	{
 		signal(SIGQUIT, f_sighandler);
 		signal(SIGINT, f_sighandler);
 		signal(SIGQUIT, SIG_IGN);
-	}
-	if (nb == 2)
-	{
-		signal(SIGQUIT, f_sighandler_com);
-		signal(SIGINT, f_sighandler_com);
-	}
 }

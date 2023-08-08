@@ -245,11 +245,12 @@ int						find_exit(t_comand *node, t_meta *ms);
 int						f_size_table(char **table);
 int						f_arg_is_num(char *txt);
 char					*f_error_message(int nb);
+int						f_exit(t_meta *ms);
 
 // SIGNAL----------------------------------------------------------------------
 
 void	f_sighandler(int sig);
 void	f_sighandler_com(int sig);
-void	f_signals(int nb);
+void	f_signals(void);
 
 #endif

@@ -151,6 +151,8 @@ void	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
 {
 	int 	pipe_end[2];
 
+
+	signal(SIGINT, f_sighandler_com);
 	if (pipe(pipe_end) != 0)
 		return ;
 	if (get_env("PATH") == NULL)
@@ -160,10 +162,13 @@ void	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
 	g()->pid[g()->pid_index] = fork();
 	if (g()->pid[g()->pid_index] == 0)
 	{
+		signal(SIGQUIT, SIG_DFL);
 		close(pipe_end[0]);
 		dup2(input_fd, STDIN_FILENO);
 		if (!multi || g()->redir_flag)
+		{
 			dup2(out_fd, STDOUT_FILENO);
+		}
 		else
 			dup2(pipe_end[1], STDOUT_FILENO);
 		exec_cmd(node->com);

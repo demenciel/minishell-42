@@ -1,9 +1,0 @@
-Makefile
-inc
-libs
-minishell
-minishell.dSYM
-obj
-src
-supp.txt
- outfile
