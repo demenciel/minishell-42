@@ -15,7 +15,7 @@ int	heredocs(char *limiter, int input_fd)
 	while (1)
 	{
 		rl_line = readline("heredoc > ");
-		if (ft_strncmp(rl_line, limiter, ft_strlen(limiter)) == 0)
+		if (ft_strncmp(limiter, rl_line, (ft_strlen(limiter) + 1)) == 0)
 		{
 			free(rl_line);
 			break ;
