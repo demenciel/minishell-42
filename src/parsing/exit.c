@@ -7,30 +7,33 @@ int	find_exit(t_comand *node, t_meta *ms)
 
 
 	i = 0;
-	if (node->com)
-		i = f_size_table(node->com);
-	if (i > 2)
+	if (ft_strcmp(node->com[0], "exit") == 0)
 	{
-		ft_putendl_fd("exit", 2);
-		ft_putendl_fd("exit: too many arguments", 2);
-		ms->exit_status = 1;
-		return (0);
+		if (node->com)
+			i = f_size_table(node->com);
+		if (i > 2)
+		{
+			ft_putendl_fd("exit", 2);
+			ft_putendl_fd("exit: too many arguments", 2);
+			ms->exit_status = 1;
+			return (0);
+		}
+		else if (i == 2 && f_arg_is_num(node->com[1]) == -1)
+		{
+			ft_putendl_fd("exit", 2);
+			ft_putstr_fd("exit: ", 2);
+			ft_putstr_fd(node->com[1], 1);
+			f_all_clean(ms, ": numeric argument required");
+		}
+		else if (i == 2)
+		{
+			nb = ft_atoi(node->com[1]);
+			if (nb > 256)
+				nb = nb % 256;
+			f_all_clean_exit(ms, nb);
+		}
+		f_all_clean(ms, NULL);
 	}
-	else if (i == 2 && f_arg_is_num(node->com[1]) == -1)
-	{
-		ft_putendl_fd("exit", 2);
-		ft_putstr_fd("exit: ", 2);
-		ft_putstr_fd(node->com[1], 1);
-		f_all_clean(ms, ": numeric argument required");
-	}
-	else if (i == 2)
-	{
-		nb = ft_atoi(node->com[1]);
-		if (nb > 256)
-			nb = nb % 256;
-		f_all_clean_exit(ms, nb);
-	}
-	f_all_clean(ms, NULL);
 	return (0);
 }
 
@@ -108,4 +111,25 @@ int	f_exit(t_meta *ms)
 	}
 	f_all_clean(ms, NULL);
 	return (0);
+}
+
+void	f_recup_error(t_meta *ms)
+{
+	int status;
+
+	status = 0;
+	if (WIFEXITED(status) && ms->error_flag == 0)
+		ms->exit_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == 2)
+			ms->exit_status = 130;
+		else if (WTERMSIG(status) == 3)
+		{
+			ft_putstr_fd("Quit : 3\n", STDOUT_FILENO);
+			ms->exit_status = 131;
+		}
+		else
+			ms->exit_status = WTERMSIG(status);
+	}
 }

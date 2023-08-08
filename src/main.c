@@ -158,8 +158,8 @@ int	main(int ac, char **av, char **env)
 			f_all_clean(ms, NULL);
 		add_history(ms->line);
 		ft_print_details(ms);
-		if (ms->comand && ft_strncmp(ms->comand->com[0], "exit", 4) == 0)
-			f_exit(ms);
+		// if (ms->comand && ft_strncmp(ms->comand->com[0], "exit", 4) == 0)
+		// 	f_exit(ms);
 		// printf (" exit satus =%d=\n", ms->exit_status);
 		// printf (" exit satus =%d=\n", ms->error_flag);
 		if (ms->error_flag == 0)

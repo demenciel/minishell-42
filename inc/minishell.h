@@ -246,6 +246,7 @@ int						f_size_table(char **table);
 int						f_arg_is_num(char *txt);
 char					*f_error_message(int nb);
 int						f_exit(t_meta *ms);
+void					f_recup_error(t_meta *ms);
 
 // SIGNAL----------------------------------------------------------------------
 

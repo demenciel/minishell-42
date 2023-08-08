@@ -157,6 +157,7 @@ void	find_builtins(t_comand *node, int input_fd)
 	find_export_unset_env(node, input_fd);
 	find_cd_pwd(node, input_fd);
 	find_echo(node, input_fd);
+	find_exit(node, mt());
 }
 
 /**
