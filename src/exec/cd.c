@@ -1,12 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/08 14:02:34 by acouture          #+#    #+#             */
+/*   Updated: 2023/08/08 14:02:35 by acouture         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 /**
  * @brief Depending on the input, finds the ENV VAR
-*/
+ */
 char	*get_env(char *input)
 {
-	bool 	found;
+	bool	found;
 	char	*path;
 	char	*new_path;
 	int		i;
@@ -33,15 +44,21 @@ char	*get_env(char *input)
 	return (new_path);
 }
 
+/**
+ * @brief Function to replace the OLDPWD in the env
+ * @param oldpath The OLDPATH path
+ */
 void	replace_oldpwd(char *oldpath)
 {
-	int	i;
-	bool found;
+	int		i;
+	bool	found;
+	t_exec	*p;
 
 	i = 0;
-	while (g()->env_list[i])
+	p = g();
+	while (p->env_list[i])
 	{
-		if (ft_strncmp("OLDPWD", g()->env_list[i], 6) == 0)
+		if (ft_strncmp("OLDPWD", p->env_list[i], 6) == 0)
 		{
 			found = true;
 			break ;
@@ -52,33 +69,38 @@ void	replace_oldpwd(char *oldpath)
 	}
 	if (false)
 	{
-		free(g()->env_list[i]);
-		g()->env_list[i] = ft_strjoin("OLDPWD=", oldpath);
+		free(p->env_list[i]);
+		p->env_list[i] = ft_strjoin("OLDPWD=", oldpath);
 		free(oldpath);
 	}
 }
 
+/**
+ * @brief Function to change the PWD in the env
+ */
 void	change_pwd_env(char *oldpath, char *path)
 {
 	int		i;
+	t_exec	*p;
 	char	*chpwd;
 	char	*pwd;
-	char buf[PATH_MAX];
+	char	buf[PATH_MAX];
 
 	i = 0;
-	while (g()->env_list[i])
+	p = g();
+	while (p->env_list[i])
 	{
-		if (ft_strncmp("PWD", g()->env_list[i], 3) == 0)
+		if (ft_strncmp("PWD", p->env_list[i], 3) == 0)
 			break ;
 		i++;
 	}
-	free(g()->env_list[i]);
+	free(p->env_list[i]);
 	chpwd = ft_strjoin("/", path);
 	if (getcwd(buf, sizeof(buf)))
 		pwd = ft_strdup(buf);
 	else
 		pwd = ft_strjoin(oldpath, chpwd);
-	g()->env_list[i] = ft_strjoin("PWD=", pwd);
+	p->env_list[i] = ft_strjoin("PWD=", pwd);
 	free(pwd);
 	free(chpwd);
 }
@@ -86,7 +108,7 @@ void	change_pwd_env(char *oldpath, char *path)
 char	*result_path(char *env_var, bool oldpwd)
 {
 	char	*result;
-	char 	*path_env;
+	char	*path_env;
 
 	result = NULL;
 	path_env = get_env(env_var);
@@ -105,10 +127,10 @@ char	*result_path(char *env_var, bool oldpwd)
  * @brief Based on the input, iterates over the env and gets the path needed
  * @param path Input of cd
  * @return Returns NULL if path is not find, otherwise, returns the path found
-*/
-char *path_to_cd(char *path)
+ */
+char	*path_to_cd(char *path)
 {
-	char *result;
+	char	*result;
 
 	result = NULL;
 	if (!path || *path == '\0')
@@ -118,33 +140,4 @@ char *path_to_cd(char *path)
 	else
 		result = ft_strdup(path);
 	return (result);
-}
-
-/**
- * @brief Reproduce the cd builtin command (cd)
- * @param path The directory to go to
-*/
-void	ft_cd(char *path)
-{
-	char *result;
-	char *oldpath;
-
-	oldpath = NULL;	
-	oldpath = ft_pwd();
-	result = path_to_cd(path);
-	if (result == NULL)
-	{
-		free(oldpath);
-		mt()->exit_status = 127;
-		mt()->error_flag = 2;
-		return ;
-	}
-	if (oldpath == NULL)
-		return ;
-	if (chdir(result) == -1)
-		cd_error(result);
-	change_pwd_env(oldpath, path);
-	replace_oldpwd(oldpath);
-	free(oldpath);
-	free(result);
 }

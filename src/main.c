@@ -142,7 +142,7 @@ int	main(int ac, char **av, char **env)
 {
 	t_meta *ms;
 	t_comand *node;
-	char	*temp;
+	// char	*temp;
 
 	f_check_arg(ac, av);
 	ms = f_init_meta();
@@ -156,10 +156,6 @@ int	main(int ac, char **av, char **env)
 			f_all_clean(ms, NULL);
 		add_history(ms->line);
 		ft_print_details(ms);
-		// if (ms->comand && ft_strncmp(ms->comand->com[0], "exit", 4) == 0)
-		// 	f_exit(ms);
-		// printf (" exit satus =%d=\n", ms->exit_status);
-		// printf (" exit satus =%d=\n", ms->error_flag);
 		if (ms->error_flag == 0)
 		{
 			if (ms->comand && (ft_check_builtins(ms->comand->com) || check_comand(ms->comand) == 0))
@@ -170,12 +166,12 @@ int	main(int ac, char **av, char **env)
 				ms->exit_status = 0;
 			}
 		}
-		else
-		{
-			temp = ft_strdup(f_error_message(ms->exit_status));
-			printf("%s\n", temp);
-			temp = f_freenull(temp);
-		}
+		// else
+		// {
+		// 	temp = ft_strdup(f_error_message(ms->exit_status));
+		// 	printf("%s\n", temp);
+		// 	temp = f_freenull(temp);
+		// }
 		f_free_null_meta(ms);
 	}
 	return (0);

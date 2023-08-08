@@ -168,9 +168,7 @@ void	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
 		close(pipe_end[0]);
 		dup2(input_fd, STDIN_FILENO);
 		if (!multi || g()->redir_flag)
-		{
 			dup2(out_fd, STDOUT_FILENO);
-		}
 		else
 			dup2(pipe_end[1], STDOUT_FILENO);
 		exec_cmd(node->com);
