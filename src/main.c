@@ -8,13 +8,6 @@ t_exec	*g(void)
 	return (&data);
 }
 
-void    ft_reset_exec()
-{
-    t_exec *exec;
-
-    exec = g();
-}
-
 t_meta	*mt(void)
 {
 	static t_meta	data;
@@ -45,6 +38,15 @@ void    init_env(char **env)
     g()->env_list[size] = NULL;
 }
 
+void	clean_fd()
+{
+	int i;
+
+	i = 2;
+	while (++i < 200)
+		close(i);
+}
+
 void ft_print_details(t_meta *ms)
 {
 	if (DEBUG == 1)
@@ -70,6 +72,74 @@ void ft_print_details(t_meta *ms)
 	}
 }
 
+char	*ft_strjoin_path(char *s1, char *s2)
+{
+	char			*join_str;
+	unsigned int	i;
+	unsigned int	j;
+
+	i = -1;
+	j = 0;
+	if ((!s1 && s2) || s1 == NULL)
+		return((char*)s2);
+	join_str = malloc(((ft_strlen(s1) + 1) + ft_strlen(s2)) * sizeof(char));
+	if (!join_str)
+		return (NULL);
+	while (s1[++i])
+		join_str[i] = s1[i];
+	free(s1);
+	while (s2[j])
+		join_str[i++] = s2[j++];
+	join_str[i] = '\0';
+	return (join_str);
+}
+
+int	check_comand(t_comand *com)
+{
+	int		i;
+	int		flag;
+	char	*search_cmd;
+	char	**paths;
+	char 	*error_node;
+
+	i = -1;
+
+	paths = get_env_path();
+	while (paths[++i])
+		paths[i] = ft_strjoin_path(paths[i], "/");
+	while (com)
+	{
+		// if (!com->com && (com->stin || com->stout))
+		// 	com = com->next;
+		i = -1;
+		while (paths[++i])
+		{
+			flag = 0;
+			search_cmd = ft_strjoin(paths[i], com->com[0]);
+			if (access(search_cmd, 0) != 0)
+				flag++;
+			else
+			{
+				free(search_cmd);
+				break ;
+			}
+			free(search_cmd);
+		}
+		if (flag > 0)
+			error_node = ft_strdup(com->com[0]);
+		com = com->next;
+	}
+	ft_2darr_free(paths);
+	if (flag > 0)
+	{
+		printf("minishell: %s: command not found\n", error_node);
+		free(error_node);
+		return (-1);
+	}
+	else
+		return (0);
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_meta *ms;
@@ -87,20 +157,18 @@ int	main(int ac, char **av, char **env)
 		if (ms->line == NULL)
 			f_all_clean(ms, NULL);
 		add_history(ms->line);
-		// f_check_line(ms);
-		// f_check_node(ms);
-		// f_split_pipes(ms);
-		// if (!ms->comand || ms->comand->com[0] == 0)
-		// 	ms->exit_status = 2;
 		ft_print_details(ms);
-		// if (ms->comand && ms->comand->com[0] != NULL &&
-		// 	ft_strncmp(ms->comand->com[0], "exit", 4) == 0)
-		// 		f_exit(ms);
+		if (ft_strncmp(ms->comand->com[0], "exit", 4) == 0)
+			f_exit(ms);
 		if (ms->error_flag == 0)
 		{
-			node = ms->comand;
-			exec_multi_node(node);
-			ms->exit_status = 0;
+			if (ft_check_builtins(ms->comand->com) || check_comand(ms->comand) == 0)
+			{
+				node = ms->comand;
+				if (node->com != NULL)
+					exec_multi_node(node);
+				ms->exit_status = 0;
+			}
 		}
 		else
 		{

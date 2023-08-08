@@ -67,6 +67,7 @@ typedef struct s_meta
 typedef struct s_exec
 {
 	pid_t				*pid;
+	bool				redir_flag;
 	int					pid_index;
 	int					in_fd;
 	int					old_fd;
@@ -86,7 +87,7 @@ int						redirect_in(t_comand *node, int *pipe);
 int						heredocs(char *limiter, int input_fd);
 
 // PIPEX
-pid_t	pipex(t_comand *node, bool multi, int input_fd, int out_fd);
+void					pipex(t_comand *node, bool multi, int input_fd, int out_fd);
 int						open_rd_fd(char *fd1);
 int						create_rd_fd(char *fd1);
 int						append_rd_fd(char *fd1);
@@ -97,6 +98,7 @@ void					exec_multi_node(t_comand *node);
 void					init_exec_struct(void);
 int	lst_size(t_comand *lst);
 char	**get_env_path(void);
+void	clean_fd();
 
 // EXEC BUILTINS
 bool					ft_check_builtins(char **cmd);
@@ -116,8 +118,7 @@ void					ft_cd(char *path);
 char					*get_env(char *input);
 void					replace_oldpwd(char *oldpath);
 void	change_pwd_env(char *oldpath, char *path);
-char					*result_path(char *env_var, char *path_env,
-							bool oldpwd);
+char					*result_path(char *env_var, bool oldpwd);
 
 // ENV
 char					**ft_cpy_env(char **list);

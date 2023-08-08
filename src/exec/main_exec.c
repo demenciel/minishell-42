@@ -14,6 +14,8 @@ void	init_exec_struct(void)
 	p->env_list = NULL;
 	p->export_list = NULL;
 	p->pid = 0;
+	p->pid_index = 0;
+	p->redir_flag = false;
 }
 
 int	lst_size(t_comand *lst)
@@ -56,6 +58,7 @@ int redirect_nodes(int *pipe, t_comand *node)
 		out_fd = redirect_out(node);
 		if (out_fd < 0)
 			return (FD_ERROR);
+		g()->redir_flag = true;
 	}
 	return (out_fd);
 }
@@ -69,11 +72,10 @@ void	wait_free_pid(int nb_node)
 	{
 		waitpid(g()->pid[i], &mt()->exit_status, 0);
 		close(g()->in_fd);
-		for (int i = 3; i < 200; i++) {
-			close(i);
-		}
 		i++;
 	}
+	clean_fd();
+	g()->pid_index = 0;
 	free(g()->pid);
 }
 
@@ -94,6 +96,7 @@ int	init_pid_and_nb_node(t_comand *node)
 {
 	int 	nb_node;
 	int i;
+	int j = -1;
 
 	i = 0;
 	nb_node = lst_size(node);
@@ -102,8 +105,9 @@ int	init_pid_and_nb_node(t_comand *node)
 		f_all_clean_exit(mt(), MALLOC_ERROR);
 	while (i < nb_node)
 	{
-		g()->pid[i] = -1;
+		g()->pid[i] = j;
 		i++;
+		j--;
 	}
 	return (nb_node);
 }
@@ -149,6 +153,7 @@ void	exec_multi_node(t_comand *node)
 			}
 		}
 		node = node->next;
+		g()->pid_index++;
 	}
 	wait_free_pid(nb_node);
 }

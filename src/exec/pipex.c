@@ -23,6 +23,7 @@ void	execute_absolute(char **cmd)
 char	**get_env_path(void)
 {
 	char	**path;
+	bool	found;
 	int		i;
 
 	path = NULL;
@@ -30,10 +31,16 @@ char	**get_env_path(void)
 	while (g()->env_list[i])
 	{
 		if (ft_strncmp("PATH", g()->env_list[i], 4) == 0)
+		{
+			found = true;
 			break ;
+		}
+		else
+			found = false;
 		i++;
 	}
-	path = ft_split(g()->env_list[i], ':');
+	if (found)
+		path = ft_split(g()->env_list[i], ':');
 	return (path);
 }
 
@@ -64,11 +71,8 @@ void	exec_cmd(char **cmd)
 		search_cmd = ft_strjoin(paths[i], cmd[0]);
 		if (access(search_cmd, 0) == 0)
 		{
-			for (int i = 3; i < 200; i++) {
-				close(i);
-			}
-			if (execve(search_cmd, cmd, g()->env_list) != 0)
-				exit(mt()->exit_status);
+			clean_fd();
+			execve(search_cmd, cmd, g()->env_list);
 		}
 		else
 			flag++;
@@ -76,10 +80,7 @@ void	exec_cmd(char **cmd)
 	}
 	ft_2darr_free(paths);
 	if (flag > 0)
-	{
 		print_error(cmd[0]);
-		// f_free_exit_child(mt(), 127);
-	}
 }
 
 /**
@@ -146,48 +147,34 @@ int	append_rd_fd(char *fd1)
  * @brief Reproduce the effect of a pipe in shell ( | )
  * @param cmd The commands to be executed
 */
-pid_t	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
+void	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
 {
 	int 	pipe_end[2];
-	int i = 0;
 
-	if (multi)
+	if (pipe(pipe_end) != 0)
+		return ;
+	if (get_env("PATH") == NULL)
+		return ;
+	if (g()->pid[g()->pid_index] == -1 && node->stin == NULL)
+		input_fd = 0;
+	g()->pid[g()->pid_index] = fork();
+	if (g()->pid[g()->pid_index] == 0)
 	{
-		if (pipe(pipe_end) != 0)
-			return (-1);
-		g()->pid[i] = fork();
-		if (g()->pid[i] == 0)
-		{
-			close(pipe_end[0]);
-			dup2(input_fd, STDIN_FILENO);
-			dup2(pipe_end[1], STDOUT_FILENO);
-			exec_cmd(node->com);
-			for (int i = 3; i < 200; i++) {
-				close(i);
-			}
-			exit(1);
-		}
+		close(pipe_end[0]);
+		dup2(input_fd, STDIN_FILENO);
+		if (!multi || g()->redir_flag)
+			dup2(out_fd, STDOUT_FILENO);
 		else
-		{
-			close(pipe_end[1]);
-			dup2(pipe_end[0], g()->in_fd);
-			close(pipe_end[0]);
-		}
-		i++;
+			dup2(pipe_end[1], STDOUT_FILENO);
+		exec_cmd(node->com);
+		clean_fd();
+		f_free_exit_child(mt(), 2);
 	}
 	else
 	{
-		g()->pid[i] = fork();
-		if (g()->pid[i] == 0)
-		{
-			dup2(g()->in_fd, STDIN_FILENO);
-			dup2(out_fd, STDOUT_FILENO);
-			exec_cmd(node->com);
-			for (int i = 3; i < 200; i++) {
-				close(i);
-			}
-			exit(1);
-		}
+		g()->redir_flag = false;
+		close(pipe_end[1]);
+		dup2(pipe_end[0], g()->in_fd);
+		close(pipe_end[0]);
 	}
-	return (0);
 }

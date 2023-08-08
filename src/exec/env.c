@@ -7,7 +7,6 @@
 */
 void	change_var_content_env(char *var, int index)
 {
-	g()->env_list[index] = NULL;
 	free(g()->env_list[index]);
 	g()->env_list[index] = ft_strdup(var);
 }

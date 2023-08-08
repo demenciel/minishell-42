@@ -67,12 +67,12 @@ char	*ft_strtrim_echo(char const *s1, char const *set)
 		return (NULL);
 	start = 0;
 	end = ft_strlen(s1);
-	while (s1[start] && ft_strchr(set, s1[start]))
+	while (s1[start])
 		start++;
 	new_str = (char *)malloc((end - start) + 1 * sizeof(char));
 	if (!new_str)
 		return (NULL);
-	ft_strlcpy(new_str, s1 + start, end - start + 1);
+	ft_strlcpy(new_str, s1 + start, ((end - start) + 1));
 	return (new_str);
 }
 
@@ -84,9 +84,10 @@ int iterate_over_echo_flag(t_comand *node, int i)
 
 	j = i;
 	temp = node;
-	while (node->com[j])
+	trim = NULL;
+	while (temp->com[j])
 	{
-		trim = ft_strtrim_echo(node->com[j], "-");
+		trim = ft_strtrim_echo(temp->com[j], "-");
 		if (!(ft_strchr(trim, '-')))
 		{
 			if (ft_strcmp("n", trim) == 0)
@@ -95,11 +96,10 @@ int iterate_over_echo_flag(t_comand *node, int i)
 			{
 				free(trim);
 				break;
-			}
 		}
 		j++;
-		free(trim);
 	}
+	free(trim);
 	return (i);
 }
 
@@ -167,19 +167,19 @@ void	find_builtins(t_comand *node, int input_fd)
 */
 bool	ft_check_builtins(char **cmd)
 {
-	if (ft_strncmp(cmd[0], "export", 6) == 0)
+	if (ft_strncmp(cmd[0], "export", ft_strlen(cmd[0])) == 0)
 		return (true);
-	else if (ft_strncmp(cmd[0], "unset", 5) == 0)
+	else if (ft_strncmp(cmd[0], "unset", ft_strlen(cmd[0])) == 0)
 		return (true);
-	else if (ft_strncmp(cmd[0], "env", 3) == 0)
+	else if (ft_strncmp(cmd[0], "env", ft_strlen(cmd[0])) == 0)
 		return (true);
-	else if (ft_strncmp(cmd[0], "echo", 4) == 0)
+	else if (ft_strncmp(cmd[0], "echo", ft_strlen(cmd[0])) == 0)
 		return (true);
-	else if (ft_strncmp(cmd[0], "cd", 2) == 0)
+	else if (ft_strncmp(cmd[0], "cd", ft_strlen(cmd[0])) == 0)
 		return (true);
-	else if (ft_strncmp(cmd[0], "pwd", 3) == 0)
+	else if (ft_strncmp(cmd[0], "pwd", ft_strlen(cmd[0])) == 0)
 		return (true);
-	else if (ft_strncmp(cmd[0], "exit", 4) == 0)
+	else if (ft_strncmp(cmd[0], "exit", ft_strlen(cmd[0])) == 0)
 		return (true);
 	return (false);
 }
