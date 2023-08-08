@@ -25,7 +25,6 @@ void	f_free_null_meta(t_meta *ms)
 		ms->comand = NULL;
 	}
 	ms->error_flag = 0;
-
 	if (DEBUG == 1)
 		printf("" GRE "---f_free_null_meta out---\n" WHT ""); // TODO Supprimer
 }
@@ -42,10 +41,10 @@ void	f_free_comand(t_comand **list)
 	while (*list)
 	{
 		temp = (*list)->next;
-		free((*list)->stin);
-		free((*list)->stout);
 		if ((*list)->com)
 			ft_free_tab_char((*list)->com);
+		free((*list)->stin);
+		free((*list)->stout);
 		free(*list);
 		(*list) = temp;
 	}
@@ -86,26 +85,16 @@ void	*f_freenull(void *str)
 
 void	f_all_clean(t_meta *ms, char *msg)
 {
-	if (ms->line)
-		free(ms->line);
-	if (ms->comand)
-		f_free_comand(&ms->comand);
-	if (ms->com_temp)
-		free(ms->com_temp);
-	if (ms->in)
-		free(ms->in);
-	if (ms->out)
-		free(ms->out);
-	if (ms->list)
-		f_free_list(&ms->list);
+	if (ms)
+		f_free_null_meta(ms);
 	if (g()->export_list)
         ft_2darr_free(g()->export_list);
     if (g()->env_list)
         ft_2darr_free(g()->env_list);
 	if (g()->in_fd > 2)
 		close(g()->in_fd);
-	// if (ms)
-		// free(ms);
+	if (g()->pid)
+		free(g()->pid);
 	if (msg)
 	{
 		printf("%s\n", msg);
@@ -132,10 +121,16 @@ void	f_all_clean_exit(t_meta *ms, int nb)
 		free(ms->out);
 	if (ms->list)
 		f_free_list(&ms->list);
+	if (ms)
+		free(ms);
+	if (g()->export_list)
+        ft_2darr_free(g()->export_list);
+    if (g()->env_list)
+        ft_2darr_free(g()->env_list);
 	if (g()->in_fd > 2)
 		close(g()->in_fd);
-	// if (ms)
-		// free(ms);
+	if (g()->pid)
+		free(g()->pid);
 	exit(i);
 }
 

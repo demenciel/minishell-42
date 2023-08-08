@@ -165,19 +165,19 @@ void	find_builtins(t_comand *node, int input_fd)
 */
 bool	ft_check_builtins(char **cmd)
 {
-	if (ft_strncmp(cmd[0], "export", ft_strlen(cmd[0])) == 0)
+	if (mt()->comand && ft_strncmp(cmd[0], "export", ft_strlen(cmd[0])) == 0)
 		return (true);
-	else if (ft_strncmp(cmd[0], "unset", ft_strlen(cmd[0])) == 0)
+	else if (mt()->comand && ft_strncmp(cmd[0], "unset", ft_strlen(cmd[0])) == 0)
 		return (true);
-	else if (ft_strncmp(cmd[0], "env", ft_strlen(cmd[0])) == 0)
+	else if (mt()->comand && ft_strncmp(cmd[0], "env", ft_strlen(cmd[0])) == 0)
 		return (true);
-	else if (ft_strncmp(cmd[0], "echo", ft_strlen(cmd[0])) == 0)
+	else if (mt()->comand && ft_strncmp(cmd[0], "echo", ft_strlen(cmd[0])) == 0)
 		return (true);
-	else if (ft_strncmp(cmd[0], "cd", ft_strlen(cmd[0])) == 0)
+	else if (mt()->comand && ft_strncmp(cmd[0], "cd", ft_strlen(cmd[0])) == 0)
 		return (true);
-	else if (ft_strncmp(cmd[0], "pwd", ft_strlen(cmd[0])) == 0)
+	else if (mt()->comand && ft_strncmp(cmd[0], "pwd", ft_strlen(cmd[0])) == 0)
 		return (true);
-	else if (ft_strncmp(cmd[0], "exit", ft_strlen(cmd[0])) == 0)
+	else if (mt()->comand && ft_strncmp(cmd[0], "exit", ft_strlen(cmd[0])) == 0)
 		return (true);
 	return (false);
 }

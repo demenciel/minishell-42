@@ -66,17 +66,34 @@ int redirect_nodes(int *pipe, t_comand *node)
 void	wait_free_pid(int nb_node)
 {
 	int i;
+	int status;
 
+	status = 0;
 	i = 0;
 	while (i < nb_node)
 	{
-		waitpid(g()->pid[i], &mt()->exit_status, 0);
+		waitpid(g()->pid[i], &status, 0);
 		close(g()->in_fd);
 		i++;
 	}
 	clean_fd();
 	g()->pid_index = 0;
 	free(g()->pid);
+	if (WIFEXITED(status) && mt()->error_flag == 0)
+		mt()->exit_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == 2)
+			mt()->exit_status = 130;
+		else if (WTERMSIG(status) == 3)
+		{
+			ft_putstr_fd("Quit : 3\n", STDOUT_FILENO);
+			mt()->exit_status = 131;
+		}
+		else
+			mt()->exit_status = WTERMSIG(status);
+	}
+	// printf("exit status =%d=\n", mt()->exit_status);
 }
 
 /**
