@@ -93,8 +93,6 @@ int iterate_over_echo_flag(t_comand *node, int i)
 			if (ft_strcmp("n", trim) == 0)
 				i++;
 			else
-			{
-				free(trim);
 				break;
 		}
 		j++;
@@ -159,7 +157,6 @@ void	find_builtins(t_comand *node, int input_fd)
 	find_export_unset_env(node, input_fd);
 	find_cd_pwd(node, input_fd);
 	find_echo(node, input_fd);
-	find_exit(node, mt());
 }
 
 /**
