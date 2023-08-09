@@ -6,12 +6,12 @@
 #    By: acouture <acouture@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/09 07:40:10 by acouture          #+#    #+#              #
-#    Updated: 2023/08/09 09:41:57 by acouture         ###   ########.fr        #
+#    Updated: 2023/08/09 10:06:21 by acouture         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	:= minishell
-CFLAGS	:= -g -Wextra -Wall -Werror #-fsanitize=address
+CFLAGS	:= -g -Wextra -Wall -Werror -fsanitize=address
 #
 SRC_PATH = src/
 
@@ -31,10 +31,10 @@ LIBRLINE	= readline-8.2
 
 
 SRC		:=  main.c \
-			exec/exectubales/main_exec.c \
-			exec/exectubales/pipex.c \
-			exec/exectubales/redirect.c \
-			exec/exectubales/error_utils.c \
+			exec/executables/main_exec.c \
+			exec/executables/pipex.c \
+			exec/executables/redirect.c \
+			exec/executables/error_utils.c \
 			exec/builtins/env.c \
 			exec/builtins/builtin.c \
 			exec/builtins/exec_builtins.c \

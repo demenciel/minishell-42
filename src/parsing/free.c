@@ -104,8 +104,6 @@ void	f_all_clean(t_meta *ms, char *msg)
         ft_2darr_free(g()->env_list);
 	if (g()->in_fd > 2)
 		close(g()->in_fd);
-	if (g()->pid)
-		free(g()->pid);
 	// if (ms)
 		// free(ms);
 	if (msg)

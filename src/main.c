@@ -104,38 +104,42 @@ int	check_comand(t_comand *com)
 
 	i = -1;
 
-	paths = get_env_path();
-	while (paths[++i])
-		paths[i] = ft_strjoin_path(paths[i], "/");
-	while (com)
+	if (mt()->comand)
 	{
-		i = -1;
+		paths = get_env_path();
 		while (paths[++i])
+			paths[i] = ft_strjoin_path(paths[i], "/");
+		while (com)
 		{
-			flag = 0;
-			search_cmd = ft_strjoin(paths[i], com->com[0]);
-			if (access(search_cmd, 0) != 0)
-				flag++;
-			else
+			i = -1;
+			while (paths[++i])
 			{
+				flag = 0;
+				search_cmd = ft_strjoin(paths[i], com->com[0]);
+				if (access(search_cmd, 0) != 0)
+					flag++;
+				else
+				{
+					free(search_cmd);
+					break ;
+				}
 				free(search_cmd);
-				break ;
 			}
-			free(search_cmd);
+			if (flag > 0)
+				error_node = ft_strdup(com->com[0]);
+			com = com->next;
 		}
+		ft_2darr_free(paths);
 		if (flag > 0)
-			error_node = ft_strdup(com->com[0]);
-		com = com->next;
+		{
+			printf("minishell: %s: command not found\n", error_node);
+			free(error_node);
+			return (-1);
+		}
+		else
+			return (0);
 	}
-	ft_2darr_free(paths);
-	if (flag > 0)
-	{
-		printf("minishell: %s: command not found\n", error_node);
-		free(error_node);
-		return (-1);
-	}
-	else
-		return (0);
+	return (0);
 }
 
 int	main(int ac, char **av, char **env)
