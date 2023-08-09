@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_builtins.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/09 07:43:03 by acouture          #+#    #+#             */
+/*   Updated: 2023/08/09 07:43:33 by acouture         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 /**
@@ -57,101 +69,10 @@ void	find_cd_pwd(t_comand *node, int input_fd)
 		free(pwd);
 	}
 }
-char	*ft_strtrim_echo(char const *s1, char const *set)
-{
-	char	*new_str;
-	size_t	start;
-	size_t	end;
-
-	if (!s1 || !set)
-		return (NULL);
-	start = 0;
-	end = ft_strlen(s1);
-	while (s1[start])
-		start++;
-	new_str = (char *)malloc((end - start) + 1 * sizeof(char));
-	if (!new_str)
-		return (NULL);
-	ft_strlcpy(new_str, s1 + start, ((end - start) + 1));
-	return (new_str);
-}
-
-int iterate_over_echo_flag(t_comand *node, int i)
-{
-	t_comand *temp;
-	char *trim;
-	int j;
-
-	j = i;
-	temp = node;
-	trim = NULL;
-	while (temp->com[j])
-	{
-		trim = ft_strtrim_echo(temp->com[j], "-");
-		if (!(ft_strchr(trim, '-')))
-		{
-			if (ft_strcmp("n", trim) == 0)
-				i++;
-			else
-				break;
-		}
-		j++;
-	}
-	free(trim);
-	return (i);
-}
-
-
-/**
- * @brief Checks the content of the node,
-	and executes the builtin depending of the content of the node
-*/
-void	find_echo(t_comand *node, int input_fd)
-{
-	char	*echo_string;
-	int		i = 1;
-	int 	flag = 0;
-	char 	*trim;
-
-	if (ft_strcmp(node->com[0], "echo") == 0)
-	{
-		if (!node->com[1])
-		{
-			ft_putchar_fd('\n', input_fd);
-			return ;
-		}
-		if (ft_strcmp("-n", node->com[1]) == 0)
-		{
-			trim = ft_strtrim_echo(node->com[1], "-");
-			if (!(ft_strchr(trim, '-')))
-			{
-				i = 2;
-				i = iterate_over_echo_flag(node, i);
-				flag = 1;
-			}
-			free(trim);
-		}
-		echo_string = NULL;
-		while (node->com[i])
-		{
-			if (ft_strncmp(node->com[1], "-n", ft_strlen(node->com[1])) == 0 && !node->com[2])
-				break ;
-			if (node->next == NULL && node == NULL )
-				echo_string = ft_strdup(node->com[i]);
-			else
-				echo_string = ft_strjoin(node->com[i], " ");
-			ft_echo(echo_string, input_fd);
-			free(echo_string);
-			i++;
-		}
-		if (!(flag > 0))
-			ft_putchar_fd('\n', input_fd);
-	}
-}
 
 /**
  * @brief A function to separate the execution of the builtins
-*/
+ */
 void	find_builtins(t_comand *node, int input_fd)
 {
 	find_exit(node, mt());
@@ -162,7 +83,7 @@ void	find_builtins(t_comand *node, int input_fd)
 
 /**
  * @brief Iterates in the comand linked list to find the builtins to execute
-*/
+ */
 bool	ft_check_builtins(char **cmd)
 {
 	if (ft_strncmp(cmd[0], "export", ft_strlen(cmd[0])) == 0)
