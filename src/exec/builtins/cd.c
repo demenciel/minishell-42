@@ -6,11 +6,11 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 14:02:34 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/08 14:02:35 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/09 09:37:51 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../../../inc/minishell.h"
 
 /**
  * @brief Depending on the input, finds the ENV VAR

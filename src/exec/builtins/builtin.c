@@ -6,11 +6,11 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 13:54:59 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/08 13:55:59 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/09 09:37:55 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../../../inc/minishell.h"
 
 /**
  * @brief Reproduce the env builtin command (env)

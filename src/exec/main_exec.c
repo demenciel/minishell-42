@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main_exec.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/09 09:34:54 by acouture          #+#    #+#             */
+/*   Updated: 2023/08/09 09:34:55 by acouture         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 /**
  * @brief Initialize the content of the exec struct
-*/
+ */
 void	init_exec_struct(void)
 {
 	t_exec	*p;
@@ -20,10 +32,10 @@ void	init_exec_struct(void)
 
 int	lst_size(t_comand *lst)
 {
-	int i;
-	t_comand *node;
-	i = 0;
+	int			i;
+	t_comand	*node;
 
+	i = 0;
 	node = lst;
 	if (!node)
 		return (0);
@@ -37,9 +49,9 @@ int	lst_size(t_comand *lst)
 	return (i);
 }
 
-int redirect_nodes(int *pipe, t_comand *node)
+int	redirect_nodes(int *pipe, t_comand *node)
 {
-	int out_fd;
+	int	out_fd;
 
 	if (node->next == NULL)
 		out_fd = 1;
@@ -65,7 +77,7 @@ int redirect_nodes(int *pipe, t_comand *node)
 
 void	wait_free_pid(int nb_node)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < nb_node)
@@ -83,7 +95,7 @@ void	wait_free_pid(int nb_node)
  * @brief Executes a single node in the program
  * @param node The node to be executed
  * @param fd The fd into which to write the execution
-*/
+ */
 void	exec_one_node(t_comand *node, int fd, int out_fd)
 {
 	if (ft_check_builtins(node->com))
@@ -94,10 +106,11 @@ void	exec_one_node(t_comand *node, int fd, int out_fd)
 
 int	init_pid_and_nb_node(t_comand *node)
 {
-	int 	nb_node;
-	int i;
-	int j = -1;
+	int	nb_node;
+	int	i;
+	int	j;
 
+	j = -1;
 	i = 0;
 	nb_node = lst_size(node);
 	g()->pid = malloc(sizeof(pid_t) * (nb_node + 1));
@@ -112,17 +125,16 @@ int	init_pid_and_nb_node(t_comand *node)
 	return (nb_node);
 }
 
-
 /**
  * @brief Iterates over all the nodes in the program,
  * 			assigns the appropriate fd, and executes the node
  * @param node The node to be executed
-*/
+ */
 void	exec_multi_node(t_comand *node)
 {
-	int 	pipe_end[2];
-	int 	out_fd;
-	int 	nb_node;
+	int	pipe_end[2];
+	int	out_fd;
+	int	nb_node;
 
 	if (!node || pipe(pipe_end) != 0)
 		return ;

@@ -113,6 +113,10 @@ void					ft_export(char *new_env, int fd);
 void					ft_unset_env(char *var);
 void					ft_unset_export(char *var);
 
+// ECHO
+void					find_echo(t_comand *node, int input_fd);
+int						iterate_over_echo_flag(t_comand *node, int i);
+char					*ft_strtrim_echo(char const *s1, char const *set);
 // CD
 void					ft_cd(char *path);
 char					*get_env(char *input);
@@ -138,12 +142,10 @@ int						check_var(char *var);
 void					ft_swap_char(char **a, char **b);
 void					order_export(int *size);
 
-// ERROR -----------------------------------------------------------------------
-void					ft_exit(char *msg, char *builtin, int error);
-
 // UTILS-----------------------------------------------------------------------
 
 t_exec					*g(void);
+t_meta					*mt(void);
 void					exec_cmd(char **cmd);
 
 // ERROR UTILS
@@ -151,8 +153,8 @@ void					print_error(char *cmd);
 void					fd_error(char *fd);
 void					pipex_fail(char *s);
 void					cd_error(char *input);
+void					export_error(char *id);
 
-t_meta					*mt(void);
 
 //PARSING-MINISHELL
 

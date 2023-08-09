@@ -6,11 +6,11 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 07:42:47 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/09 08:21:41 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/09 09:38:01 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../../../inc/minishell.h"
 
 /**
  * @brief This function is for the echo flags

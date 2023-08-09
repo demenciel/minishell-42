@@ -6,11 +6,11 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 14:02:55 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/08 14:05:09 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/09 09:39:51 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../../../inc/minishell.h"
 
 /**
  * @brief Goes at index position in the list and change its content by var
