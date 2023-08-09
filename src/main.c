@@ -38,15 +38,6 @@ void    init_env(char **env)
     g()->env_list[size] = NULL;
 }
 
-void	clean_fd()
-{
-	int i;
-
-	i = 2;
-	while (++i < 200)
-		close(i);
-}
-
 void ft_print_details(t_meta *ms)
 {
 	if (DEBUG == 1)
@@ -103,50 +94,45 @@ int	check_comand(t_comand *com)
 	char 	*error_node;
 
 	i = -1;
-
-	if (mt()->comand)
+	paths = get_env_path();
+	while (paths[++i])
+		paths[i] = ft_strjoin_path(paths[i], "/");
+	while (com)
 	{
-		paths = get_env_path();
+		i = -1;
 		while (paths[++i])
-			paths[i] = ft_strjoin_path(paths[i], "/");
-		while (com)
 		{
-			i = -1;
-			while (paths[++i])
+			flag = 0;
+			search_cmd = ft_strjoin(paths[i], com->com[0]);
+			if (access(search_cmd, 0) != 0)
+				flag++;
+			else
 			{
-				flag = 0;
-				search_cmd = ft_strjoin(paths[i], com->com[0]);
-				if (access(search_cmd, 0) != 0)
-					flag++;
-				else
-				{
-					free(search_cmd);
-					break ;
-				}
 				free(search_cmd);
+				break ;
 			}
-			if (flag > 0)
-				error_node = ft_strdup(com->com[0]);
-			com = com->next;
+			free(search_cmd);
 		}
-		ft_2darr_free(paths);
 		if (flag > 0)
-		{
-			printf("minishell: %s: command not found\n", error_node);
-			free(error_node);
-			return (-1);
-		}
-		else
-			return (0);
+			error_node = ft_strdup(com->com[0]);
+		com = com->next;
 	}
-	return (0);
+	ft_2darr_free(paths);
+	if (flag > 0)
+	{
+		printf("minishell: %s: command not found\n", error_node);
+		free(error_node);
+		return (-1);
+	}
+	else
+		return (0);
 }
 
 int	main(int ac, char **av, char **env)
 {
 	t_meta *ms;
 	t_comand *node;
-	// char	*temp;
+	char	*temp;
 
 	f_check_arg(ac, av);
 	ms = f_init_meta();
@@ -165,17 +151,16 @@ int	main(int ac, char **av, char **env)
 			if (ms->comand && (ft_check_builtins(ms->comand->com) || check_comand(ms->comand) == 0))
 			{
 				node = ms->comand;
-				if (node->com != NULL)
-					exec_multi_node(node);
+				exec_multi_node(node);
 				ms->exit_status = 0;
 			}
 		}
-		// else
-		// {
-		// 	temp = ft_strdup(f_error_message(ms->exit_status));
-		// 	printf("%s\n", temp);
-		// 	temp = f_freenull(temp);
-		// }
+		else
+		{
+			temp = ft_strdup(f_error_message(ms->exit_status));
+			printf("%s\n", temp);
+			temp = f_freenull(temp);
+		}
 		f_free_null_meta(ms);
 	}
 	return (0);

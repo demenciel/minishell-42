@@ -1,6 +1,42 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirect.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/09 13:40:16 by acouture          #+#    #+#             */
+/*   Updated: 2023/08/09 13:41:04 by acouture         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../../inc/minishell.h"
+
+int	redirect_nodes(int *pipe, t_comand *node)
+{
+	int	out_fd;
+
+	if (node->next == NULL)
+		out_fd = 1;
+	else
+		out_fd = pipe[1];
+	if (node->stin != NULL)
+	{
+		g()->in_fd = redirect_in(node, pipe);
+		if (g()->in_fd == FD_ERROR)
+			return (FD_ERROR);
+		else if (g()->in_fd == HEREDOC_ERROR)
+			return (HEREDOC_ERROR);
+	}
+	if (node->stout != NULL)
+	{
+		out_fd = redirect_out(node);
+		if (out_fd < 0)
+			return (FD_ERROR);
+		g()->redir_flag = true;
+	}
+	return (out_fd);
+}
 
 /**
  * @brief Loops readline and add each line to rl history until limiter is found

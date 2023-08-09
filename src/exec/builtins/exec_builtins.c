@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 07:43:03 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/09 10:06:56 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/09 13:43:23 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ void	find_builtins(t_comand *node, int input_fd)
  */
 bool	ft_check_builtins(char **cmd)
 {
-	if (mt()->comand)
-	{
+	// if (mt()->comand)
+	// {
 		if (ft_strncmp(cmd[0], "export", ft_strlen(cmd[0])) == 0)
 			return (true);
 		else if (ft_strncmp(cmd[0], "unset", ft_strlen(cmd[0])) == 0)
@@ -102,6 +102,6 @@ bool	ft_check_builtins(char **cmd)
 			return (true);
 		else if (ft_strncmp(cmd[0], "exit", ft_strlen(cmd[0])) == 0)
 			return (true);
-	}
+	// }
 	return (false);
 }

@@ -80,7 +80,7 @@ typedef struct s_exec
 }						t_exec;
 
 // REDIRECT
-
+int						redirect_nodes(int *pipe, t_comand *node);
 int						redirect_out(t_comand *node);
 int						redirect_in(t_comand *node, int *pipe);
 int						heredocs(char *limiter, int input_fd);
@@ -90,14 +90,17 @@ void					pipex(t_comand *node, bool multi, int input_fd, int out_fd);
 int						open_rd_fd(char *fd1);
 int						create_rd_fd(char *fd1);
 int						append_rd_fd(char *fd1);
+
+// MAIN EXEC UTILS
 void					wait_free_pid(int nb_node);
+int						lst_size(t_comand *lst);
+void					init_exec_struct(void);
+void					clean_fd();
 
 // MAIN EXEC
 void					exec_multi_node(t_comand *node);
-void					init_exec_struct(void);
-int	lst_size(t_comand *lst);
-char	**get_env_path(void);
-void	clean_fd();
+char					**get_env_path(void);
+int						lst_size(t_comand *lst);
 
 // EXEC BUILTINS
 bool					ft_check_builtins(char **cmd);
@@ -141,7 +144,7 @@ int						check_var(char *var);
 void					ft_swap_char(char **a, char **b);
 void					order_export(int *size);
 
-// UTILS-----------------------------------------------------------------------
+// UTILS
 
 t_exec					*g(void);
 t_meta					*mt(void);

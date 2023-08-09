@@ -6,104 +6,17 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 09:34:54 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/09 09:49:04 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/09 13:49:27 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/minishell.h"
 
 /**
- * @brief Initialize the content of the exec struct
+ * @brief Creates an array to store PID for each nodes
+ * @param node Pointer to the nodes
+ * @return The number of nodes in the list
  */
-void	init_exec_struct(void)
-{
-	t_exec	*p;
-
-	p = g();
-	p->in_fd = 0;
-	p->old_fd = 0;
-	p->out_fd = 0;
-	p->env_list = NULL;
-	p->export_list = NULL;
-	p->pid = 0;
-	p->pid_index = 0;
-	p->redir_flag = false;
-}
-
-int	lst_size(t_comand *lst)
-{
-	int			i;
-	t_comand	*node;
-
-	i = 0;
-	node = lst;
-	if (!node)
-		return (0);
-	while (node->next)
-	{
-		i++;
-		node = node->next;
-	}
-	if (node->next == NULL)
-		i++;
-	return (i);
-}
-
-int	redirect_nodes(int *pipe, t_comand *node)
-{
-	int	out_fd;
-
-	if (node->next == NULL)
-		out_fd = 1;
-	else
-		out_fd = pipe[1];
-	if (node->stin != NULL)
-	{
-		g()->in_fd = redirect_in(node, pipe);
-		if (g()->in_fd == FD_ERROR)
-			return (FD_ERROR);
-		else if (g()->in_fd == HEREDOC_ERROR)
-			return (HEREDOC_ERROR);
-	}
-	if (node->stout != NULL)
-	{
-		out_fd = redirect_out(node);
-		if (out_fd < 0)
-			return (FD_ERROR);
-		g()->redir_flag = true;
-	}
-	return (out_fd);
-}
-
-void	wait_free_pid(int nb_node)
-{
-	int	i;
-
-	i = 0;
-	while (i < nb_node)
-	{
-		waitpid(g()->pid[i], &mt()->exit_status, 0);
-		close(g()->in_fd);
-		i++;
-	}
-	clean_fd();
-	g()->pid_index = 0;
-	free(g()->pid);
-}
-
-/**
- * @brief Executes a single node in the program
- * @param node The node to be executed
- * @param fd The fd into which to write the execution
- */
-void	exec_one_node(t_comand *node, int fd, int out_fd)
-{
-	if (ft_check_builtins(node->com))
-		find_builtins(node, out_fd);
-	else
-		pipex(node, false, fd, out_fd);
-}
-
 int	init_pid_and_nb_node(t_comand *node)
 {
 	int	nb_node;
@@ -123,6 +36,46 @@ int	init_pid_and_nb_node(t_comand *node)
 		j--;
 	}
 	return (nb_node);
+}
+
+/**
+ * @brief Executes a single node in the program
+ * @param node The node to be executed
+ * @param fd The fd into which to write the execution
+ */
+void	exec_one_node(t_comand *node, int fd, int out_fd)
+{
+	if (ft_check_builtins(node->com))
+		find_builtins(node, out_fd);
+	else
+		pipex(node, false, fd, out_fd);
+}
+
+/**
+ * @brief The execute function for exec_multi_node
+ * @param out_fd The fd to write in
+ * @param node The node containing the command to be executed
+ * @param nb_node The number of nodes
+ */
+void	exec_nodes(int out_fd, t_comand *node, int nb_node)
+{
+	if (node->com == NULL || node->com[0] == NULL)
+	{
+		wait_free_pid(nb_node);
+		return ;
+	}
+	if (node->next == NULL)
+		exec_one_node(node, g()->in_fd, out_fd);
+	else
+	{
+		if (!ft_check_builtins(node->com))
+			pipex(node, true, g()->in_fd, out_fd);
+		else
+		{
+			find_builtins(node, out_fd);
+			close(out_fd);
+		}
+	}
 }
 
 /**
@@ -147,23 +100,7 @@ void	exec_multi_node(t_comand *node)
 			return ;
 		else if (out_fd == HEREDOC_ERROR)
 			break ;
-		if (node->com == NULL || node->com[0] == NULL)
-		{
-			wait_free_pid(nb_node);
-			return ;
-		}
-		if (node->next == NULL)
-			exec_one_node(node, g()->in_fd, out_fd);
-		else
-		{
-			if (!ft_check_builtins(node->com))
-				pipex(node, true, g()->in_fd, out_fd);
-			else
-			{
-				find_builtins(node, out_fd);
-				close(out_fd);
-			}
-		}
+		exec_nodes(out_fd, node, nb_node);
 		node = node->next;
 		g()->pid_index++;
 	}

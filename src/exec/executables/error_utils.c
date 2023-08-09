@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 07:42:16 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/09 09:41:27 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/09 13:34:29 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@ void	fd_error(char *fd)
 
 void	pipex_fail(char *s)
 {
-	perror(s);
-	exit(1);
+	write(2, "minishell: ", 12);
+	write(2, s, ft_strlen(s));
+	write(2, ": pipe failed\n", 29);
+	mt()->exit_status = 1;
+	mt()->error_flag = 1;
 }
