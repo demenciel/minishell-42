@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 07:43:03 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/09 15:33:34 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/09 17:41:35 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ bool	ft_check_builtins(t_meta *ms)
 {
 	if (ms->comand)
 	{
-		if (ft_strncmp(ms->comand->com[0], "export", ft_strlen(ms->comand->com[0]) == 0))
+		if (ft_strncmp(ms->comand->com[0], "unset", ft_strlen(ms->comand->com[0])) == 0)
 			return (true);
-		else if (ft_strncmp(ms->comand->com[0], "unset", ft_strlen(ms->comand->com[0])) == 0)
+		else if (ft_strncmp(ms->comand->com[0], "export", ft_strlen(ms->comand->com[0])) == 0)
 			return (true);
 		else if (ft_strncmp(ms->comand->com[0], "env", ft_strlen(ms->comand->com[0])) == 0)
 			return (true);
@@ -103,5 +103,6 @@ bool	ft_check_builtins(t_meta *ms)
 		else if (ft_strncmp(ms->comand->com[0], "exit", ft_strlen(ms->comand->com[0])) == 0)
 			return (true);
 	}
+
 	return (false);
 }

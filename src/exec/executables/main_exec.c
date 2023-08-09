@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 09:34:54 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/09 15:34:52 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/09 17:26:14 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	exec_one_node(t_meta *ms, int fd, int out_fd)
 	if (ft_check_builtins(ms))
 		find_builtins(ms, out_fd);
 	else
-		pipex(ms->comand, false, fd, out_fd);
+		pipex(ms, false, fd, out_fd);
 }
 
 /**
@@ -70,14 +70,14 @@ void	exec_nodes(int out_fd, t_meta *ms, int nb_node)
 		return ;
 	}
 	if (node->next == NULL)
-		exec_one_node(node, g()->in_fd, out_fd);
+		exec_one_node(ms, g()->in_fd, out_fd);
 	else
 	{
-		if (!ft_check_builtins(node->com))
-			pipex(node, true, g()->in_fd, out_fd);
+		if (!ft_check_builtins(ms))
+			pipex(ms, true, g()->in_fd, out_fd);
 		else
 		{
-			find_builtins(node, out_fd);
+			find_builtins(ms, out_fd);
 			close(out_fd);
 		}
 	}
@@ -100,7 +100,7 @@ void	exec_multi_node(t_meta *ms)
 	g()->in_fd = pipe_end[0];
 	while (ms->comand)
 	{
-		out_fd = redirect_nodes(pipe_end, ms->comand);
+		out_fd = redirect_nodes(pipe_end, ms);
 		if (out_fd < 0)
 			return ;
 		else if (out_fd == HEREDOC_ERROR)
