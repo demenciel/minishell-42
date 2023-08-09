@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 07:43:03 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/09 10:06:56 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/09 12:37:54 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,34 +73,35 @@ void	find_cd_pwd(t_comand *node, int input_fd)
 /**
  * @brief A function to separate the execution of the builtins
  */
-void	find_builtins(t_comand *node, int input_fd)
+void	find_builtins(t_meta *ms, int input_fd)
 {
-	find_exit(node, mt());
-	find_export_unset_env(node, input_fd);
-	find_cd_pwd(node, input_fd);
-	find_echo(node, input_fd);
+	find_export_unset_env(ms->comand, input_fd);
+	find_cd_pwd(ms->comand, input_fd);
+	find_echo(ms->comand, input_fd);
+	find_exit(ms, input_fd);
 }
+
 
 /**
  * @brief Iterates in the comand linked list to find the builtins to execute
  */
-bool	ft_check_builtins(char **cmd)
+bool	ft_check_builtins(t_meta *ms)
 {
-	if (mt()->comand)
+	if (ms->comand)
 	{
-		if (ft_strncmp(cmd[0], "export", ft_strlen(cmd[0])) == 0)
+		if (ft_strncmp(ms->comand->com[0], "export", ft_strlen(ms->comand->com[0]) == 0))
 			return (true);
-		else if (ft_strncmp(cmd[0], "unset", ft_strlen(cmd[0])) == 0)
+		else if (ft_strncmp(ms->comand->com[0], "unset", ft_strlen(ms->comand->com[0])) == 0)
 			return (true);
-		else if (ft_strncmp(cmd[0], "env", ft_strlen(cmd[0])) == 0)
+		else if (ft_strncmp(ms->comand->com[0], "env", ft_strlen(ms->comand->com[0])) == 0)
 			return (true);
-		else if (ft_strncmp(cmd[0], "echo", ft_strlen(cmd[0])) == 0)
+		else if (ft_strncmp(ms->comand->com[0], "echo", ft_strlen(ms->comand->com[0])) == 0)
 			return (true);
-		else if (ft_strncmp(cmd[0], "cd", ft_strlen(cmd[0])) == 0)
+		else if (ft_strncmp(ms->comand->com[0], "cd", ft_strlen(ms->comand->com[0])) == 0)
 			return (true);
-		else if (ft_strncmp(cmd[0], "pwd", ft_strlen(cmd[0])) == 0)
+		else if (ft_strncmp(ms->comand->com[0], "pwd", ft_strlen(ms->comand->com[0])) == 0)
 			return (true);
-		else if (ft_strncmp(cmd[0], "exit", ft_strlen(cmd[0])) == 0)
+		else if (ft_strncmp(ms->comand->com[0], "exit", ft_strlen(ms->comand->com[0])) == 0)
 			return (true);
 	}
 	return (false);

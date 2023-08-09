@@ -90,18 +90,18 @@ void					pipex(t_comand *node, bool multi, int input_fd, int out_fd);
 int						open_rd_fd(char *fd1);
 int						create_rd_fd(char *fd1);
 int						append_rd_fd(char *fd1);
-void					wait_free_pid(int nb_node);
+void					wait_free_pid(t_meta *ms, int nb_node);
 
 // MAIN EXEC
-void					exec_multi_node(t_comand *node);
+void					exec_multi_node(t_meta *ms);
 void					init_exec_struct(void);
 int	lst_size(t_comand *lst);
 char	**get_env_path(void);
 void	clean_fd();
 
 // EXEC BUILTINS
-bool					ft_check_builtins(char **cmd);
-void					find_builtins(t_comand *node, int input_fd);
+bool					ft_check_builtins(t_meta *ms);
+void					find_builtins(t_meta *ms, int input_fd);
 void					find_export_unset_env(t_comand *node, int input_fd);
 
 // BUILTINS
@@ -189,7 +189,7 @@ int						f_check_env(char c);
 int						f_check_env_dol(char c);
 int						f_som_quote_double(char *txt);
 char					*f_join_char(const char *s1, const char s2);
-char					**f_check_command(char *str);
+// char					**f_check_command(char *str);
 int						f_exec_cmd(char **cmd);
 int						f_search_dollar(char *str);
 
@@ -231,7 +231,7 @@ void					f_print(char **cou);
 
 // EXIT------------------------------------------------------------------------
 
-int						find_exit(t_comand *node, t_meta *ms);
+int						find_exit(t_meta *ms, int fd);
 int						f_size_table(char **table);
 int						f_arg_is_num(char *txt);
 char					*f_error_message(int nb);

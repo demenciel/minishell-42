@@ -134,21 +134,21 @@ char	*f_join_char(const char *s1, const char s2)
 	return (join_str);
 }
 
-char	**f_check_command(char *str)
-{
-	char	**temp;
+// char	**f_check_command(char *str)
+// {
+// 	char	**temp;
 
-	temp = ft_split(str, 29);
-	if (ft_check_builtins(temp) == false)
-	{
-		if (f_exec_cmd(temp) != 0)
-		{
-			ft_free_tab_char(temp);
-			return (NULL);
-		}
-	}
-	return (temp);
-}
+// 	temp = ft_split(str, 29);
+// 	if (ft_check_builtins(temp) == false)
+// 	{
+// 		if (f_exec_cmd(temp) != 0)
+// 		{
+// 			ft_free_tab_char(temp);
+// 			return (NULL);
+// 		}
+// 	}
+// 	return (temp);
+// }
 
 int	f_exec_cmd(char **cmd)
 {

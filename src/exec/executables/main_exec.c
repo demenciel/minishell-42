@@ -6,7 +6,7 @@
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 09:34:54 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/09 10:36:16 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/09 12:36:01 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,14 @@ int	redirect_nodes(int *pipe, t_comand *node)
 	return (out_fd);
 }
 
-void	wait_free_pid(int nb_node)
+void	wait_free_pid(t_meta *ms, int nb_node)
 {
 	int	i;
 
 	i = 0;
 	while (i < nb_node)
 	{
-		waitpid(g()->pid[i], &mt()->exit_status, 0);
+		waitpid(g()->pid[i], &ms->exit_status, 0);
 		close(g()->in_fd);
 		i++;
 	}
@@ -96,15 +96,15 @@ void	wait_free_pid(int nb_node)
  * @param node The node to be executed
  * @param fd The fd into which to write the execution
  */
-void	exec_one_node(t_comand *node, int fd, int out_fd)
+void	exec_one_node(t_meta *ms, int fd, int out_fd)
 {
-	if (ft_check_builtins(node->com))
-		find_builtins(node, out_fd);
+	if (ft_check_builtins(ms))
+		find_builtins(ms, out_fd);
 	else
-		pipex(node, false, fd, out_fd);
+		pipex(ms->comand, false, fd, out_fd);
 }
 
-int	init_pid_and_nb_node(t_comand *node)
+int	init_pid_and_nb_node(t_meta *ms)
 {
 	int	nb_node;
 	int	i;
@@ -112,10 +112,10 @@ int	init_pid_and_nb_node(t_comand *node)
 
 	j = -1;
 	i = 0;
-	nb_node = lst_size(node);
+	nb_node = lst_size(ms->comand);
 	g()->pid = malloc(sizeof(pid_t) * (nb_node + 1));
 	if (!g()->pid)
-		f_all_clean_exit(mt(), MALLOC_ERROR);
+		f_all_clean_exit(ms, MALLOC_ERROR);
 	while (i < nb_node)
 	{
 		g()->pid[i] = j;
@@ -130,42 +130,42 @@ int	init_pid_and_nb_node(t_comand *node)
  * 			assigns the appropriate fd, and executes the node
  * @param node The node to be executed
  */
-void	exec_multi_node(t_comand *node)
+void	exec_multi_node(t_meta *ms)
 {
 	int	pipe_end[2];
 	int	out_fd;
 	int	nb_node;
 
-	if (!node || pipe(pipe_end) != 0)
+	if (!ms->comand || pipe(pipe_end) != 0)
 		return ;
-	nb_node = init_pid_and_nb_node(node);
+	nb_node = init_pid_and_nb_node(ms);
 	g()->in_fd = pipe_end[0];
-	while (node)
+	while (ms->comand)
 	{
-		out_fd = redirect_nodes(pipe_end, node);
+		out_fd = redirect_nodes(pipe_end, ms->comand);
 		if (out_fd < 0)
 			return ;
 		else if (out_fd == HEREDOC_ERROR)
 			break ;
-		if (node->com == NULL || node->com[0] == NULL)
+		if (ms->comand->com == NULL || ms->comand->com[0] == NULL)
 		{
-			wait_free_pid(nb_node);
+			wait_free_pid(ms, nb_node);
 			return ;
 		}
-		if (node->next == NULL)
-			exec_one_node(node, g()->in_fd, out_fd);
+		if (ms->comand->next == NULL)
+			exec_one_node(ms, g()->in_fd, out_fd);
 		else
 		{
-			if (!ft_check_builtins(node->com))
-				pipex(node, true, g()->in_fd, out_fd);
+			if (!ft_check_builtins(ms))
+				pipex(ms->comand, true, g()->in_fd, out_fd);
 			else
 			{
-				find_builtins(node, out_fd);
+				find_builtins(ms, out_fd);
 				close(out_fd);
 			}
 		}
-		node = node->next;
+		ms->comand = ms->comand->next;
 		g()->pid_index++;
 	}
-	wait_free_pid(nb_node);
+	wait_free_pid(ms, nb_node);
 }

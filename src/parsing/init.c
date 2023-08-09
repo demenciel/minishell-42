@@ -23,8 +23,20 @@ t_meta	*f_init_meta(void)
 
 void	f_all_clean(t_meta *ms, char *msg)
 {
+	if (ms->line)
+		free(ms->line);
+	if (ms->comand)
+		f_free_comand(&ms->comand);
+	if (ms->com_temp)
+		free(ms->com_temp);
+	if (ms->in)
+		free(ms->in);
+	if (ms->out)
+		free(ms->out);
+	if (ms->list)
+		f_free_list(&ms->list);
 	if (ms)
-		f_free_null_meta(ms);
+		free(ms);
 	if (g()->export_list)
 		ft_2darr_free(g()->export_list);
 	if (g()->env_list)
@@ -33,6 +45,7 @@ void	f_all_clean(t_meta *ms, char *msg)
 		close(g()->in_fd);
 	if (g()->pid)
 		free(g()->pid);
+	clean_fd();
 	if (msg)
 	{
 		printf("%s\n", msg);
