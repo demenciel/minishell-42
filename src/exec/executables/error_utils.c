@@ -6,11 +6,11 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 07:42:16 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/09 09:28:16 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/09 09:41:27 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../../../inc/minishell.h"
 
 void	print_error(char *cmd)
 {

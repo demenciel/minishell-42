@@ -73,7 +73,6 @@ typedef struct s_exec
 	int					old_fd;
 	int					out_fd;
 	int					pipe_end[2];
-	int					exec_flag;
 	int					env_length;
 	int					export_length;
 	char				**env_list;

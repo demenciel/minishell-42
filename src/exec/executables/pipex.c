@@ -1,6 +1,6 @@
 
 
-#include "../../inc/minishell.h"
+#include "../../../inc/minishell.h"
 
 /**
  * @brief Executes a command with its absolute path.

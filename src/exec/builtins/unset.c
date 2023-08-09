@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 09:38:33 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/09 09:38:34 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/09 09:43:27 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,24 @@ void	ft_unset_env(char *var)
 {
 	int		i;
 	int		j;
+	t_exec	*p;
 
 	i = 0;
 	j = 0;
-	while (g()->env_list[i])
+	p = g();
+	while (p->env_list[i])
 	{
-		if (ft_strncmp(var, g()->env_list[i], ft_strlen(var)) == 0)
+		if (ft_strncmp(var, p->env_list[i], ft_strlen(var)) == 0)
 		{
-			free(g()->env_list[i]);
+			free(p->env_list[i]);
 			j = i;
-			while (g()->env_list[j])
+			while (p->env_list[j])
 			{
-				g()->env_list[j] = g()->env_list[j + 1];
+				p->env_list[j] = p->env_list[j + 1];
 				j++;
 			}
-			g()->env_list = ft_realloc(g()->env_list, j * sizeof(char *),
-					(j + 1) * sizeof(char *));
+			p->env_list = ft_realloc(p->env_list, j * sizeof(char *), (j + 1)
+				* sizeof(char *));
 			break ;
 		}
 		i++;
@@ -53,8 +55,9 @@ void	ft_unset_export(char *var)
 	int		i;
 	int		j;
 	char	*trimmed;
-	char	set[12] = "declare -x ";
+	char	set[12];
 
+	set[12] = "declare -x ";
 	i = 0;
 	j = 0;
 	if (g()->export_list == NULL)
@@ -74,7 +77,7 @@ void	ft_unset_export(char *var)
 				j++;
 			}
 			g()->export_list = ft_realloc(g()->export_list, j * sizeof(char *),
-					(j + 1) * sizeof(char *));
+				(j + 1) * sizeof(char *));
 			free(trimmed);
 			break ;
 		}
