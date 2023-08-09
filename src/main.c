@@ -111,8 +111,6 @@ int	check_comand(t_comand *com)
 			paths[i] = ft_strjoin_path(paths[i], "/");
 		while (com)
 		{
-			// if (!com->com && (com->stin || com->stout))
-			// 	com = com->next;
 			i = -1;
 			while (paths[++i])
 			{

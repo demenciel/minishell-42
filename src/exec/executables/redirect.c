@@ -1,6 +1,6 @@
 
 
-#include "../../inc/minishell.h"
+#include "../../../inc/minishell.h"
 
 /**
  * @brief Loops readline and add each line to rl history until limiter is found

@@ -1,6 +1,6 @@
 
 
-#include "../../inc/minishell.h"
+#include "../../../inc/minishell.h"
 
 /**
  * @brief Executes a command with its absolute path.
@@ -79,8 +79,6 @@ void	exec_cmd(char **cmd)
 		free(search_cmd);
 	}
 	ft_2darr_free(paths);
-	if (flag > 0)
-		print_error(cmd[0]);
 }
 
 /**
@@ -150,13 +148,17 @@ int	append_rd_fd(char *fd1)
 void	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
 {
 	int 	pipe_end[2];
+	char 	*path;
 
 
 	signal(SIGINT, f_sighandler_com);
 	if (pipe(pipe_end) != 0)
 		return ;
-	if (get_env("PATH") == NULL)
+	path = get_env("PATH");
+	if (path == NULL)
 		return ;
+	else
+		free(path);
 	if (g()->pid[g()->pid_index] == -1 && node->stin == NULL)
 		input_fd = 0;
 	g()->pid[g()->pid_index] = fork();
@@ -166,9 +168,7 @@ void	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
 		close(pipe_end[0]);
 		dup2(input_fd, STDIN_FILENO);
 		if (!multi || g()->redir_flag)
-		{
 			dup2(out_fd, STDOUT_FILENO);
-		}
 		else
 			dup2(pipe_end[1], STDOUT_FILENO);
 		exec_cmd(node->com);

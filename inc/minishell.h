@@ -73,7 +73,6 @@ typedef struct s_exec
 	int					old_fd;
 	int					out_fd;
 	int					pipe_end[2];
-	int					exec_flag;
 	int					env_length;
 	int					export_length;
 	char				**env_list;
@@ -113,12 +112,17 @@ void					ft_export(char *new_env, int fd);
 void					ft_unset_env(char *var);
 void					ft_unset_export(char *var);
 
+// ECHO
+void					find_echo(t_comand *node, int input_fd);
+int						iterate_over_echo_flag(t_comand *node, int i);
+char					*ft_strtrim_echo(char const *s1, char const *set);
 // CD
 void					ft_cd(char *path);
 char					*get_env(char *input);
 void					replace_oldpwd(char *oldpath);
-void	change_pwd_env(char *oldpath, char *path);
+void					change_pwd_env(char *oldpath, char *path);
 char					*result_path(char *env_var, bool oldpwd);
+char 					*path_to_cd(char *path);
 
 // ENV
 char					**ft_cpy_env(char **list);
@@ -140,6 +144,7 @@ void					order_export(int *size);
 // UTILS-----------------------------------------------------------------------
 
 t_exec					*g(void);
+t_meta					*mt(void);
 void					exec_cmd(char **cmd);
 
 // ERROR UTILS
@@ -147,8 +152,8 @@ void					print_error(char *cmd);
 void					fd_error(char *fd);
 void					pipex_fail(char *s);
 void					cd_error(char *input);
+void					export_error(char *id);
 
-t_meta					*mt(void);
 
 //PARSING-MINISHELL
 
@@ -230,6 +235,7 @@ int						find_exit(t_comand *node, t_meta *ms);
 int						f_size_table(char **table);
 int						f_arg_is_num(char *txt);
 char					*f_error_message(int nb);
+int						f_exit(t_meta *ms);
 void					f_recup_error(t_meta *ms);
 
 // SIGNAL----------------------------------------------------------------------

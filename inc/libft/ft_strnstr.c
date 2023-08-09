@@ -6,18 +6,18 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 13:50:11 by acouture          #+#    #+#             */
-/*   Updated: 2023/04/23 13:39:11 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/09 09:30:47 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /**
- * @brief Searches a string for a substring of a given length,
+ * @brief Searches a string  a substring of a given length,
  	up to a maximum length, and returns a pointer to the first occurrence of
 	the substring in the string. If the substring is not found, returns NULL.
  * @param haystack The string to search in.
- * @param needle The substring to search for.
+ * @param needle The substring to search .
  * @param len The maximum length to search up to.
  * @return A pointer to the first occurrence of the substring in the string, 
  	or NULL if not found.
