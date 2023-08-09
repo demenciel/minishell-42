@@ -50,7 +50,7 @@ void	replace_oldpwd(char *oldpath)
 			found = false;
 		i++;
 	}
-	if (false)
+	if (found == false)
 	{
 		free(g()->env_list[i]);
 		g()->env_list[i] = ft_strjoin("OLDPWD=", oldpath);
@@ -129,7 +129,7 @@ void	ft_cd(char *path)
 	char *result;
 	char *oldpath;
 
-	oldpath = NULL;	
+	oldpath = NULL;
 	oldpath = ft_pwd();
 	result = path_to_cd(path);
 	if (result == NULL)

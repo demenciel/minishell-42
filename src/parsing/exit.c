@@ -2,15 +2,13 @@
 
 int	find_exit(t_comand *node, t_meta *ms)
 {
-	int i;
-	int nb;
-
+	int	i;
+	int	nb;
 
 	i = 0;
 	if (ft_strcmp(node->com[0], "exit") == 0)
 	{
-		if (node->com)
-			i = f_size_table(node->com);
+		i = f_size_table(node->com);
 		if (i > 2)
 		{
 			ft_putendl_fd("exit", 2);
@@ -37,9 +35,9 @@ int	find_exit(t_comand *node, t_meta *ms)
 	return (0);
 }
 
-int f_size_table(char **table)
+int	f_size_table(char **table)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!table || *table == NULL)
@@ -51,7 +49,7 @@ int f_size_table(char **table)
 
 int	f_arg_is_num(char *txt)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (txt[i])
@@ -63,9 +61,8 @@ int	f_arg_is_num(char *txt)
 	return (0);
 }
 
-char	*f_error_message(int nb)
+char	*f_error_message(int nb) //TODO UTILS ?
 {
-
 	if (nb == 2)
 		return ("minishell: syntax error");
 	else if (nb == 8)
@@ -79,43 +76,9 @@ char	*f_error_message(int nb)
 	return (NULL);
 }
 
-int	f_exit(t_meta *ms)
-{
-	int i;
-	int nb;
-
-
-	i = 0;
-	if (ms->comand->com)
-		i = f_size_table(ms->comand->com);
-	if (i > 2)
-	{
-		ft_putendl_fd("exit", 2);
-		ft_putendl_fd("exit: too many arguments", 2);
-		ms->exit_status = 1;
-		return (0);
-	}
-	else if (i == 2 && f_arg_is_num(ms->comand->com[1]) == -1)
-	{
-		ft_putendl_fd("exit", 2);
-		ft_putstr_fd("exit: ", 2);
-		ft_putstr_fd(ms->comand->com[1], 1);
-		f_all_clean(ms, ": numeric argument required");
-	}
-	else if (i == 2)
-	{
-		nb = ft_atoi(ms->comand->com[1]);
-		if (nb > 256)
-			nb = nb % 256;
-		f_all_clean_exit(ms, nb);
-	}
-	f_all_clean(ms, NULL);
-	return (0);
-}
-
 void	f_recup_error(t_meta *ms)
 {
-	int status;
+	int	status;
 
 	status = 0;
 	if (WIFEXITED(status) && ms->error_flag == 0)

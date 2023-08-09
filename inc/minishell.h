@@ -137,9 +137,6 @@ int						check_var(char *var);
 void					ft_swap_char(char **a, char **b);
 void					order_export(int *size);
 
-// ERROR -----------------------------------------------------------------------
-void					ft_exit(char *msg, char *builtin, int error);
-
 // UTILS-----------------------------------------------------------------------
 
 t_exec					*g(void);
@@ -164,28 +161,16 @@ void					f_check_line(t_meta *ms);
 
 void					f_check_word(t_meta *ms);
 void					f_check_single_quote(t_meta *ms);
-void					f_check_double_quote(t_meta *ms);
-
-// UTILS-----------------------------------------------------------------------
-
-t_meta					*f_init_meta(void);
-void					f_all_clean(t_meta *ms, char *msg);
-void					f_zero_list(t_meta *ms);
-char					*f_trimstr(char *s1, char c);
-void					f_free_comand(t_comand **list);
-
-// PARS------------------------------------------------------------------------
-
-int						f_som_quote_simple(char *txt);
 char					*f_pars_simple_quote(t_meta *ms, char *txt);
+void					f_new_check_dollar(t_meta *ms);
 char					*f_pars_new_dollar(t_meta *ms, char *txt);
-void 					f_new_check_dollar(t_meta *ms);
 char					*f_pars_dollar(t_meta *ms, char *txt);
 void					f_check_double_quote(t_meta *ms);
 char					*f_pars_double_quote(t_meta *ms, char *txt);
 void					f_check_redir_left(t_meta *ms);
 void					f_check_redir_right(t_meta *ms);
 void					f_check_pipes(t_meta *ms);
+
 
 // UTILS-----------------------------------------------------------------------
 
@@ -196,9 +181,9 @@ int						f_check_metachar(char c);
 char					*f_trimstr(char *s1, char c);
 int						f_som_quote_simple(char *txt);
 int						f_check_env(char c);
+int						f_check_env_dol(char c);
 int						f_som_quote_double(char *txt);
 char					*f_join_char(const char *s1, const char s2);
-int						f_check_env_dol(char c);
 char					**f_check_command(char *str);
 int						f_exec_cmd(char **cmd);
 int						f_search_dollar(char *str);
@@ -221,6 +206,9 @@ void					f_check_node(t_meta *ms);
 // INIT------------------------------------------------------------------------
 
 t_meta					*f_init_meta(void);
+void					f_all_clean(t_meta *ms, char *msg);
+void					f_all_clean_exit(t_meta *ms, int nb);
+void					f_free_exit_child(t_meta *ms, int nb);
 
 // FREE------------------------------------------------------------------------
 
@@ -228,9 +216,6 @@ void					f_free_null_meta(t_meta *ms);
 void					f_free_comand(t_comand **list);
 void					f_free_list(t_pars **list);
 void					*f_freenull(void *str);
-void					f_all_clean(t_meta *ms, char *msg);
-void					f_all_clean_exit(t_meta *ms, int nb);
-void					f_free_exit_child(t_meta *ms, int nb);
 
 // A_SUPP----------------------------------------------------------------------
 
@@ -245,13 +230,12 @@ int						find_exit(t_comand *node, t_meta *ms);
 int						f_size_table(char **table);
 int						f_arg_is_num(char *txt);
 char					*f_error_message(int nb);
-int						f_exit(t_meta *ms);
 void					f_recup_error(t_meta *ms);
 
 // SIGNAL----------------------------------------------------------------------
 
-void	f_sighandler(int sig);
-void	f_sighandler_com(int sig);
-void	f_signals(void);
+void					f_sighandler(int sig);
+void					f_sighandler_com(int sig);
+void					f_signals(void);
 
 #endif

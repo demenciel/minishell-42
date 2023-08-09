@@ -90,7 +90,7 @@ clean:
 
 fclean: clean
 	@make fclean -C $(LIBFT_DIR)
-#	@rm -rf $(READ_PATH)
+	@rm -rf $(READ_PATH)
 	@rm -f $(NAME)
 
 re: fclean all
