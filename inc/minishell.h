@@ -73,7 +73,6 @@ typedef struct s_exec
 	int					old_fd;
 	int					out_fd;
 	int					pipe_end[2];
-	int					exec_flag;
 	int					env_length;
 	int					export_length;
 	char				**env_list;
@@ -87,7 +86,7 @@ int						redirect_in(t_comand *node, int *pipe);
 int						heredocs(char *limiter, int input_fd);
 
 // PIPEX
-pid_t	pipex(t_comand *node, bool multi, int input_fd, int out_fd);
+void					pipex(t_comand *node, bool multi, int input_fd, int out_fd);
 int						open_rd_fd(char *fd1);
 int						create_rd_fd(char *fd1);
 int						append_rd_fd(char *fd1);
@@ -98,6 +97,7 @@ void					exec_multi_node(t_comand *node);
 void					init_exec_struct(void);
 int	lst_size(t_comand *lst);
 char	**get_env_path(void);
+void	clean_fd();
 
 // EXEC BUILTINS
 bool					ft_check_builtins(char **cmd);
@@ -112,13 +112,17 @@ void					ft_export(char *new_env, int fd);
 void					ft_unset_env(char *var);
 void					ft_unset_export(char *var);
 
+// ECHO
+void					find_echo(t_comand *node, int input_fd);
+int						iterate_over_echo_flag(t_comand *node, int i);
+char					*ft_strtrim_echo(char const *s1, char const *set);
 // CD
 void					ft_cd(char *path);
 char					*get_env(char *input);
 void					replace_oldpwd(char *oldpath);
-void	change_pwd_env(char *oldpath, char *path);
-char					*result_path(char *env_var, char *path_env,
-							bool oldpwd);
+void					change_pwd_env(char *oldpath, char *path);
+char					*result_path(char *env_var, bool oldpwd);
+char 					*path_to_cd(char *path);
 
 // ENV
 char					**ft_cpy_env(char **list);
@@ -137,12 +141,10 @@ int						check_var(char *var);
 void					ft_swap_char(char **a, char **b);
 void					order_export(int *size);
 
-// ERROR -----------------------------------------------------------------------
-void					ft_exit(char *msg, char *builtin, int error);
-
 // UTILS-----------------------------------------------------------------------
 
 t_exec					*g(void);
+t_meta					*mt(void);
 void					exec_cmd(char **cmd);
 
 // ERROR UTILS
@@ -150,8 +152,8 @@ void					print_error(char *cmd);
 void					fd_error(char *fd);
 void					pipex_fail(char *s);
 void					cd_error(char *input);
+void					export_error(char *id);
 
-t_meta					*mt(void);
 
 //PARSING-MINISHELL
 
@@ -241,15 +243,17 @@ void					f_print(char **cou);
 
 // EXIT------------------------------------------------------------------------
 
-int						f_exit(t_meta *ms);
+int						find_exit(t_comand *node, t_meta *ms);
 int						f_size_table(char **table);
 int						f_arg_is_num(char *txt);
 char					*f_error_message(int nb);
+int						f_exit(t_meta *ms);
+void					f_recup_error(t_meta *ms);
 
 // SIGNAL----------------------------------------------------------------------
 
 void	f_sighandler(int sig);
 void	f_sighandler_com(int sig);
-void	f_signals(int nb);
+void	f_signals(void);
 
 #endif
