@@ -31,13 +31,11 @@ void	change_var_content_env(char *var, int index)
 int	checks_for_doubles_env(char *var)
 {
 	int		str;
-	int		j;
 	char	*check_var;
 	char	**var_tab;
 
 	check_var = NULL;
 	str = 0;
-	j = 0;
 	var_tab = ft_split(var, '=');
 	check_var = ft_strdup(var_tab[0]);
 	ft_2darr_free(var_tab);

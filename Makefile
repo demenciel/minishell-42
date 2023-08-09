@@ -6,7 +6,7 @@
 #    By: acouture <acouture@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/09 07:40:10 by acouture          #+#    #+#              #
-#    Updated: 2023/08/09 13:54:29 by acouture         ###   ########.fr        #
+#    Updated: 2023/08/09 15:24:14 by acouture         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,12 +23,6 @@ LIBFT	= $(LIBFT_DIR)/libft.a
 READ_PATH	= libs/readline
 RLINE		= $(READ_PATH)/libreadline.a
 LIBRLINE	= readline-8.2
-
-# LIBFT_A = 	libft.a
-# LIBF_DIR = 	inc/libft/
-# LIBFT  = 	$(addprefix $(LIBF_DIR), $(LIBFT_A))
-# HEADERS	:= -I ./include
-
 
 SRC		:=  main.c \
 			exec/executables/main_exec.c \
@@ -66,15 +60,13 @@ GREEN = \033[0;92m
 RED = \033[0;91m
 RESET = \033[0m
 
-all: readline $(NAME) #makelibft
+all: readline $(NAME)
 	@exec 2>/dev/null
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@ $(HEADERS)
 
-# makelibft:
-# 	@$(MAKE) -C $(LIBF_DIR)
 
 readline	:
 	@if [ ! -f ./libs/readline/libreadline.a ]; then \

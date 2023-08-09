@@ -1,4 +1,3 @@
-
 #include "../../inc/minishell.h"
 
 t_pars	*f_new_node(char *str)
@@ -41,7 +40,8 @@ void	f_addback_node(t_pars **cmd, t_pars *new)
 
 int	f_check_metachar(char c)
 {
-	if (c == 124 || c == 62 || c == 60 || c == 39 || c == 34 || c == 36 || c <= 32)
+	if (c == 124 || c == 62 || c == 60 || c == 39 || c == 34 || c == 36
+		|| c <= 32)
 		return (1);
 	else
 		return (0);
@@ -94,7 +94,7 @@ int	f_check_env(char c)
 
 int	f_check_env_dol(char c)
 {
-	if (ft_isalnum(c) == 1 || c == '_' || c == '?'|| c == '$')
+	if (ft_isalnum(c) == 1 || c == '_' || c == '?' || c == '$')
 		return (1);
 	else
 		return (0);
@@ -134,23 +134,21 @@ char	*f_join_char(const char *s1, const char s2)
 	return (join_str);
 }
 
+// char	**f_check_command(char *str)
+// {
+// 	char	**temp;
 
-char	**f_check_command(char *str)
-{
-	char **temp;
-
-	temp = ft_split(str, 29);
-
-	if (ft_check_builtins(temp) == false)
-	{
-		if (f_exec_cmd(temp) != 0)
-		{
-			ft_free_tab_char(temp);
-			return (NULL);
-		}
-	}
-	return (temp);
-}
+// 	temp = ft_split(str, 29);
+// 	if (ft_check_builtins(temp) == false)
+// 	{
+// 		if (f_exec_cmd(temp) != 0)
+// 		{
+// 			ft_free_tab_char(temp);
+// 			return (NULL);
+// 		}
+// 	}
+// 	return (temp);
+// }
 
 int	f_exec_cmd(char **cmd)
 {
@@ -181,9 +179,9 @@ int	f_exec_cmd(char **cmd)
 	return (flag);
 }
 
-int f_search_dollar(char *str)
+int	f_search_dollar(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])

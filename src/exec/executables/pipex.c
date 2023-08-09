@@ -81,7 +81,7 @@ void	exec_cmd(char **cmd)
  * @brief Reproduce the effect of a pipe in shell ( | )
  * @param cmd The commands to be executed
  */
-void	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
+void	pipex(t_meta *ms, bool multi, int input_fd, int out_fd)
 {
 	int		pipe_end[2];
 	char	*path;
@@ -94,7 +94,7 @@ void	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
 		return ;
 	else
 		free(path);
-	if (g()->pid[g()->pid_index] == -1 && node->stin == NULL)
+	if (g()->pid[g()->pid_index] == -1 && ms->comand->stin == NULL)
 		input_fd = 0;
 	g()->pid[g()->pid_index] = fork();
 	if (g()->pid[g()->pid_index] == 0)
@@ -106,7 +106,7 @@ void	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
 			dup2(out_fd, STDOUT_FILENO);
 		else
 			dup2(pipe_end[1], STDOUT_FILENO);
-		exec_cmd(node->com);
+		exec_cmd(ms->comand->com);
 		clean_fd();
 		f_free_exit_child(mt(), 2);
 	}

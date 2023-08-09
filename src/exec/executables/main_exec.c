@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 09:34:54 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/09 13:49:27 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/09 15:34:52 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@
  * @param node Pointer to the nodes
  * @return The number of nodes in the list
  */
-int	init_pid_and_nb_node(t_comand *node)
+int	init_pid_and_nb_node(t_meta *ms)
 {
+	t_comand *node;
 	int	nb_node;
 	int	i;
 	int	j;
 
+	node = ms->comand;
 	j = -1;
 	i = 0;
 	nb_node = lst_size(node);
@@ -43,12 +45,12 @@ int	init_pid_and_nb_node(t_comand *node)
  * @param node The node to be executed
  * @param fd The fd into which to write the execution
  */
-void	exec_one_node(t_comand *node, int fd, int out_fd)
+void	exec_one_node(t_meta *ms, int fd, int out_fd)
 {
-	if (ft_check_builtins(node->com))
-		find_builtins(node, out_fd);
+	if (ft_check_builtins(ms))
+		find_builtins(ms, out_fd);
 	else
-		pipex(node, false, fd, out_fd);
+		pipex(ms->comand, false, fd, out_fd);
 }
 
 /**
@@ -57,8 +59,11 @@ void	exec_one_node(t_comand *node, int fd, int out_fd)
  * @param node The node containing the command to be executed
  * @param nb_node The number of nodes
  */
-void	exec_nodes(int out_fd, t_comand *node, int nb_node)
+void	exec_nodes(int out_fd, t_meta *ms, int nb_node)
 {
+	t_comand *node;
+
+	node = ms->comand;
 	if (node->com == NULL || node->com[0] == NULL)
 	{
 		wait_free_pid(nb_node);
@@ -83,25 +88,25 @@ void	exec_nodes(int out_fd, t_comand *node, int nb_node)
  * 			assigns the appropriate fd, and executes the node
  * @param node The node to be executed
  */
-void	exec_multi_node(t_comand *node)
+void	exec_multi_node(t_meta *ms)
 {
 	int	pipe_end[2];
 	int	out_fd;
 	int	nb_node;
 
-	if (!node || pipe(pipe_end) != 0)
+	if (!ms->comand || pipe(pipe_end) != 0)
 		return ;
-	nb_node = init_pid_and_nb_node(node);
+	nb_node = init_pid_and_nb_node(ms);
 	g()->in_fd = pipe_end[0];
-	while (node)
+	while (ms->comand)
 	{
-		out_fd = redirect_nodes(pipe_end, node);
+		out_fd = redirect_nodes(pipe_end, ms->comand);
 		if (out_fd < 0)
 			return ;
 		else if (out_fd == HEREDOC_ERROR)
 			break ;
-		exec_nodes(out_fd, node, nb_node);
-		node = node->next;
+		exec_nodes(out_fd, ms, nb_node);
+		ms->comand = ms->comand->next;
 		g()->pid_index++;
 	}
 	wait_free_pid(nb_node);

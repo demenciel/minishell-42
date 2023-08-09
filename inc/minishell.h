@@ -80,13 +80,13 @@ typedef struct s_exec
 }						t_exec;
 
 // REDIRECT
-int						redirect_nodes(int *pipe, t_comand *node);
+int						redirect_nodes(int *pipe, t_meta *ms);
 int						redirect_out(t_comand *node);
 int						redirect_in(t_comand *node, int *pipe);
 int						heredocs(char *limiter, int input_fd);
 
 // PIPEX
-void					pipex(t_comand *node, bool multi, int input_fd, int out_fd);
+void					pipex(t_meta *ms, bool multi, int input_fd, int out_fd);
 int						open_rd_fd(char *fd1);
 int						create_rd_fd(char *fd1);
 int						append_rd_fd(char *fd1);
@@ -98,13 +98,12 @@ void					init_exec_struct(void);
 void					clean_fd();
 
 // MAIN EXEC
-void					exec_multi_node(t_comand *node);
+void					exec_multi_node(t_meta *ms);
 char					**get_env_path(void);
-int						lst_size(t_comand *lst);
 
 // EXEC BUILTINS
-bool					ft_check_builtins(char **cmd);
-void					find_builtins(t_comand *node, int input_fd);
+bool					ft_check_builtins(t_meta *ms);
+void					find_builtins(t_meta *ms, int input_fd);
 void					find_export_unset_env(t_comand *node, int input_fd);
 
 // BUILTINS
@@ -119,6 +118,7 @@ void					ft_unset_export(char *var);
 void					find_echo(t_comand *node, int input_fd);
 int						iterate_over_echo_flag(t_comand *node, int i);
 char					*ft_strtrim_echo(char const *s1, char const *set);
+
 // CD
 void					ft_cd(char *path);
 char					*get_env(char *input);
@@ -169,28 +169,16 @@ void					f_check_line(t_meta *ms);
 
 void					f_check_word(t_meta *ms);
 void					f_check_single_quote(t_meta *ms);
-void					f_check_double_quote(t_meta *ms);
-
-// UTILS-----------------------------------------------------------------------
-
-t_meta					*f_init_meta(void);
-void					f_all_clean(t_meta *ms, char *msg);
-void					f_zero_list(t_meta *ms);
-char					*f_trimstr(char *s1, char c);
-void					f_free_comand(t_comand **list);
-
-// PARS------------------------------------------------------------------------
-
-int						f_som_quote_simple(char *txt);
 char					*f_pars_simple_quote(t_meta *ms, char *txt);
+void					f_new_check_dollar(t_meta *ms);
 char					*f_pars_new_dollar(t_meta *ms, char *txt);
-void 					f_new_check_dollar(t_meta *ms);
 char					*f_pars_dollar(t_meta *ms, char *txt);
 void					f_check_double_quote(t_meta *ms);
 char					*f_pars_double_quote(t_meta *ms, char *txt);
 void					f_check_redir_left(t_meta *ms);
 void					f_check_redir_right(t_meta *ms);
 void					f_check_pipes(t_meta *ms);
+
 
 // UTILS-----------------------------------------------------------------------
 
@@ -201,10 +189,10 @@ int						f_check_metachar(char c);
 char					*f_trimstr(char *s1, char c);
 int						f_som_quote_simple(char *txt);
 int						f_check_env(char c);
+int						f_check_env_dol(char c);
 int						f_som_quote_double(char *txt);
 char					*f_join_char(const char *s1, const char s2);
-int						f_check_env_dol(char c);
-char					**f_check_command(char *str);
+// char					**f_check_command(char *str);
 int						f_exec_cmd(char **cmd);
 int						f_search_dollar(char *str);
 
@@ -226,6 +214,9 @@ void					f_check_node(t_meta *ms);
 // INIT------------------------------------------------------------------------
 
 t_meta					*f_init_meta(void);
+void					f_all_clean(t_meta *ms, char *msg);
+void					f_all_clean_exit(t_meta *ms, int nb);
+void					f_free_exit_child(t_meta *ms, int nb);
 
 // FREE------------------------------------------------------------------------
 
@@ -233,9 +224,6 @@ void					f_free_null_meta(t_meta *ms);
 void					f_free_comand(t_comand **list);
 void					f_free_list(t_pars **list);
 void					*f_freenull(void *str);
-void					f_all_clean(t_meta *ms, char *msg);
-void					f_all_clean_exit(t_meta *ms, int nb);
-void					f_free_exit_child(t_meta *ms, int nb);
 
 // A_SUPP----------------------------------------------------------------------
 
@@ -246,7 +234,7 @@ void					f_print(char **cou);
 
 // EXIT------------------------------------------------------------------------
 
-int						find_exit(t_comand *node, t_meta *ms);
+int						find_exit(t_meta *ms, int fd);
 int						f_size_table(char **table);
 int						f_arg_is_num(char *txt);
 char					*f_error_message(int nb);
@@ -255,8 +243,8 @@ void					f_recup_error(t_meta *ms);
 
 // SIGNAL----------------------------------------------------------------------
 
-void	f_sighandler(int sig);
-void	f_sighandler_com(int sig);
-void	f_signals(void);
+void					f_sighandler(int sig);
+void					f_sighandler_com(int sig);
+void					f_signals(void);
 
 #endif

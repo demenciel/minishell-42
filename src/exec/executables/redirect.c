@@ -5,32 +5,32 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/09 13:40:16 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/09 13:41:04 by acouture         ###   ########.fr       */
+/*   Created: 2023/08/09 15:32:03 by acouture          #+#    #+#             */
+/*   Updated: 2023/08/09 15:36:01 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/minishell.h"
 
-int	redirect_nodes(int *pipe, t_comand *node)
+int	redirect_nodes(int *pipe, t_meta *ms)
 {
 	int	out_fd;
 
-	if (node->next == NULL)
+	if (ms->comand->next == NULL)
 		out_fd = 1;
 	else
 		out_fd = pipe[1];
-	if (node->stin != NULL)
+	if (ms->comand->stin != NULL)
 	{
-		g()->in_fd = redirect_in(node, pipe);
+		g()->in_fd = redirect_in(ms->comand, pipe);
 		if (g()->in_fd == FD_ERROR)
 			return (FD_ERROR);
 		else if (g()->in_fd == HEREDOC_ERROR)
 			return (HEREDOC_ERROR);
 	}
-	if (node->stout != NULL)
+	if (ms->comand->stout != NULL)
 	{
-		out_fd = redirect_out(node);
+		out_fd = redirect_out(ms->comand);
 		if (out_fd < 0)
 			return (FD_ERROR);
 		g()->redir_flag = true;
@@ -130,4 +130,3 @@ int redirect_out(t_comand *node)
 	}
 	return (0);
 }
-	

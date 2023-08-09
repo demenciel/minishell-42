@@ -1,4 +1,3 @@
-
 #include "../../inc/minishell.h"
 
 void	f_sighandler(int sig)
@@ -9,6 +8,7 @@ void	f_sighandler(int sig)
 	rl_replace_line("", 0);
 	rl_redisplay();
 }
+
 void	f_sighandler_com(int sig)
 {
 	(void)sig;

@@ -12,9 +12,6 @@ void	f_check_arg(int ac, char **av)
 
 void	f_check_line(t_meta *ms)
 {
-	if (DEBUG == 1)
-		printf("" GRE "---f_check_line in---\n" WHT ""); // TODO Supprimer
-
 	while (ms->line[ms->i])
 	{
 		while (ms->line[ms->i] && ms->line[ms->i] <= 32)
@@ -35,7 +32,4 @@ void	f_check_line(t_meta *ms)
 			f_check_word(ms);
 	}
 	ms->i = 0;
-
-	if (DEBUG == 1)
-		printf("" RED "---f_check_line out---\n" WHT ""); // TODO Supprimer
 }
