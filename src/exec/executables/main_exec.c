@@ -6,7 +6,7 @@
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 09:34:54 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/10 13:06:29 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/10 16:14:31 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,14 @@ int	init_pid_and_nb_node(t_meta *ms)
 	return (nb_node);
 }
 
+void	free_ms_node(t_comand *ms)
+{
+	ft_free_tab_char(ms->com);
+	free(ms->stin);
+	free(ms->stout);
+	free(ms);
+}
+
 /**
  * @brief Iterates over all the nodes in the program,
  * 			assigns the appropriate fd, and executes the node
@@ -138,6 +146,8 @@ void	exec_multi_node(t_meta *ms)
 	int	pipe_end[2];
 	int	out_fd;
 	int	nb_node;
+	t_comand *next_node;
+
 
 	if (!ms->comand || pipe(pipe_end) != 0)
 		return ;
@@ -167,7 +177,9 @@ void	exec_multi_node(t_meta *ms)
 				close(out_fd);
 			}
 		}
-		ms->comand = ms->comand->next;
+		next_node = ms->comand->next;
+		free_ms_node(ms->comand);
+		ms->comand = next_node;
 		g()->pid_index++;
 	}
 	wait_free_pid(ms, nb_node);

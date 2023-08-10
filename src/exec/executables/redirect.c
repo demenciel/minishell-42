@@ -46,6 +46,7 @@ int redirect_in(t_meta *ms, int *pipe)
 			else
 			{
 				close(pipe[1]);
+				ft_2darr_free(fd);
 				return (pipe[0]);
 			}
 		}

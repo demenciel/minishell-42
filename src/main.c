@@ -148,12 +148,8 @@ int	main(int ac, char **av, char **env)
 		if (ms->error_flag == 0)
 		{
 			if (ms->comand && (ft_check_builtins(ms) || check_comand(ms) == 0))
-			{
-				if (ms->comand->com != NULL)
-					exec_multi_node(ms);
-			}
+				exec_multi_node(ms);
 		}
-
 		f_free_null_meta(ms);
 	}
 	return (0);
