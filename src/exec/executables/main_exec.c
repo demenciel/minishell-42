@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 09:34:54 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/10 15:27:22 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/10 16:09:01 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ void	exec_nodes(int out_fd, t_meta *ms)
 
 void	free_ms_node(t_comand *ms)
 {
-	ft_free_tab_char(ms->com);
+	if (ms)
+		ft_free_tab_char(ms->com);
 	free(ms->stin);
 	free(ms->stout);
 	free(ms);
