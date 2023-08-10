@@ -168,17 +168,20 @@ void					f_check_line(t_meta *ms);
 
 // CHECKING--------------------------------------------------------------------
 
-void					f_check_word(t_meta *ms);
-void					f_check_single_quote(t_meta *ms);
-char					*f_pars_simple_quote(t_meta *ms, char *txt);
-void					f_new_check_dollar(t_meta *ms);
 char					*f_pars_new_dollar(t_meta *ms, char *txt);
-char					*f_pars_dollar(t_meta *ms, char *txt);
 void					f_check_double_quote(t_meta *ms);
 char					*f_pars_double_quote(t_meta *ms, char *txt);
 void					f_check_redir_left(t_meta *ms);
 void					f_check_redir_right(t_meta *ms);
 void					f_check_pipes(t_meta *ms);
+
+// CHECKING_1------------------------------------------------------------------
+//ok
+void					f_check_word(t_meta *ms);
+void					f_check_single_quote(t_meta *ms);
+char					*f_pars_simple_quote(t_meta *ms, char *txt);
+void					f_new_check_dollar(t_meta *ms);
+char					*f_pars_dollar(t_meta *ms, char *txt);
 
 
 // UTILS-----------------------------------------------------------------------
@@ -214,11 +217,12 @@ void					f_check_node(t_meta *ms);
 int						f_search_dollar(char *str);
 
 // INIT------------------------------------------------------------------------
-
+//ok
 t_meta					*f_init_meta(void);
 void					f_all_clean(t_meta *ms, char *msg);
 void					f_all_clean_exit(t_meta *ms, int nb);
 void					f_free_exit_child(t_meta *ms, int nb);
+void					f_free_meta(t_meta *ms);
 
 // FREE------------------------------------------------------------------------
 //ok
@@ -227,18 +231,13 @@ void					f_free_comand(t_comand **list);
 void					f_free_list(t_pars **list);
 void					*f_freenull(void *str);
 
-// A_SUPP----------------------------------------------------------------------
-
-void					f_print_lst(t_pars *lst);
-void					f_print_lst_final(t_comand *lst);
-void					f_print(char **cou);
-
-
 // EXIT------------------------------------------------------------------------
-
+//ok
 int						find_exit(t_meta *ms, int fd);
 int						f_size_table(char **table);
 int						f_arg_is_num(char *txt);
+void					f_message(t_meta *ms, char *txt, int fd);
+void					f_message_short(int fd);
 
 // SIGNAL----------------------------------------------------------------------
 //ok

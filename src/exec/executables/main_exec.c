@@ -6,7 +6,7 @@
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 09:34:54 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/10 17:04:08 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/10 18:01:29 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	init_pid_and_nb_node(t_meta *ms)
 	nb_node = lst_size(ms->comand);
 	g()->pid = malloc(sizeof(pid_t) * (nb_node + 1));
 	if (!g()->pid)
-		f_all_clean_exit(mt(), MALLOC_ERROR);
+		f_all_clean_exit(ms, MALLOC_ERROR);
 	while (i < nb_node)
 	{
 		g()->pid[i] = j;

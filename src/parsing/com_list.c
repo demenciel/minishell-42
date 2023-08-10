@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   com_list.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/10 18:51:32 by rofontai          #+#    #+#             */
+/*   Updated: 2023/08/10 18:55:15 by rofontai         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 t_comand	*f_new_com(char *com, char *in, char *out)
@@ -95,10 +107,8 @@ void	f_split_pipes(t_meta *ms)
 				}
 			}
 			else
-			{
 				if (temp && temp->txt != NULL)
 					f_add_com(ms, temp->txt);
-			}
 			if (temp)
 				temp = temp->next;
 		}

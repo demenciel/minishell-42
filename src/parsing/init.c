@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/10 19:03:46 by rofontai          #+#    #+#             */
+/*   Updated: 2023/08/10 19:06:31 by rofontai         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 t_meta	*f_init_meta(void)
@@ -24,20 +36,7 @@ t_meta	*f_init_meta(void)
 
 void	f_all_clean(t_meta *ms, char *msg)
 {
-	if (ms->line)
-		free(ms->line);
-	if (ms->comand)
-		f_free_comand(&ms->comand);
-	if (ms->com_temp)
-		free(ms->com_temp);
-	if (ms->in)
-		free(ms->in);
-	if (ms->out)
-		free(ms->out);
-	if (ms->list)
-		f_free_list(&ms->list);
-	if (ms)
-		free(ms);
+	f_free_meta(ms);
 	if (g()->export_list)
 		ft_2darr_free(g()->export_list);
 	if (g()->env_list)
@@ -106,4 +105,22 @@ void	f_free_exit_child(t_meta *ms, int nb)
 	}
 	free(g()->pid);
 	exit(nb);
+}
+
+void	f_free_meta(t_meta *ms)
+{
+	if (ms->line)
+		free(ms->line);
+	if (ms->comand)
+		f_free_comand(&ms->comand);
+	if (ms->com_temp)
+		free(ms->com_temp);
+	if (ms->in)
+		free(ms->in);
+	if (ms->out)
+		free(ms->out);
+	if (ms->list)
+		f_free_list(&ms->list);
+	if (ms)
+		free(ms);
 }
