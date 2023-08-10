@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: romain <romain@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 09:34:54 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/09 12:36:01 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/09 20:13:42 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,16 @@ int	redirect_nodes(int *pipe, t_comand *node)
 void	wait_free_pid(t_meta *ms, int nb_node)
 {
 	int	i;
+	int status;
 
 	i = 0;
+	status = 0;
 	while (i < nb_node)
 	{
-		waitpid(g()->pid[i], &ms->exit_status, 0);
+		waitpid(g()->pid[i], &status, 0);
 		close(g()->in_fd);
 		i++;
+		f_signal_in(status, ms);
 	}
 	clean_fd();
 	g()->pid_index = 0;

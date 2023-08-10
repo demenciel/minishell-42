@@ -83,8 +83,6 @@ void	f_split_pipes(t_meta *ms)
 					if (temp && temp->txt != NULL)
 						f_add_out(ms, temp->txt);
 				}
-				if (DEBUG == 1)
-					printf("out =%s=\n", ms->out);
 			}
 			else if (temp && temp->txt[0] == 60)
 			{
@@ -95,23 +93,17 @@ void	f_split_pipes(t_meta *ms)
 					if (temp && temp->txt != NULL)
 						f_add_in(ms, temp->txt);
 				}
-				if (DEBUG == 1)
-					printf("in =%s=\n", ms->in);
 			}
 			else
 			{
 				if (temp && temp->txt != NULL)
 					f_add_com(ms, temp->txt);
-				if (DEBUG == 1)
-					printf("com_temp =%s=\n", ms->com_temp);
 			}
 			if (temp)
 				temp = temp->next;
 		}
 		f_addback_com(&ms->comand, f_new_com(ms->com_temp, ms->in, ms->out));
 		f_zero_new_com(ms);
-		if (DEBUG == 1)
-			printf("-----------------------------split com-----------\n");
 		if (temp == NULL)
 			break ;
 		temp = temp->next;

@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+         #
+#    By: romain <romain@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/09 07:40:10 by acouture          #+#    #+#              #
-#    Updated: 2023/08/09 12:21:23 by rofontai         ###   ########.fr        #
+#    Updated: 2023/08/09 20:53:59 by romain           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	:= minishell
-CFLAGS	:= -g -Wextra -Wall -Werror #-fsanitize=address
+CFLAGS	:= -g -Wextra -Wall  -fsanitize=address
 #
 SRC_PATH = src/
 
@@ -45,6 +45,7 @@ SRC		:=  main.c \
 			parsing/init.c \
 			parsing/parsing.c \
 			parsing/utils.c \
+			parsing/utils_1.c \
 			parsing/a_supp.c \
 			parsing/exit.c \
 			parsing/signal.c \

@@ -101,21 +101,22 @@ int	check_comand(t_meta *ms)
 	char	*search_cmd;
 	char	**paths;
 	char 	*error_node;
+	t_comand *node;
 
 	i = -1;
-
-	if (ms->comand)
+	node = ms->comand;
+	if (node->com)
 	{
 		paths = get_env_path();
 		while (paths[++i])
 			paths[i] = ft_strjoin_path(paths[i], "/");
-		while (ms->comand)
+		while (node)
 		{
 			i = -1;
 			while (paths[++i])
 			{
 				flag = 0;
-				search_cmd = ft_strjoin(paths[i], ms->comand->com[0]);
+				search_cmd = ft_strjoin(paths[i], node->com[0]);
 				if (access(search_cmd, 0) != 0)
 					flag++;
 				else
@@ -126,8 +127,8 @@ int	check_comand(t_meta *ms)
 				free(search_cmd);
 			}
 			if (flag > 0)
-				error_node = ft_strdup(ms->comand->com[0]);
-			ms->comand = ms->comand->next;
+				error_node = ft_strdup(node->com[0]);
+			node = node->next;
 		}
 		ft_2darr_free(paths);
 		if (flag > 0)
@@ -166,7 +167,7 @@ int	main(int ac, char **av, char **env)
 					exec_multi_node(ms);
 			}
 		}
-		
+
 		f_free_null_meta(ms);
 	}
 	return (0);

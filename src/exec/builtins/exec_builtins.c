@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: romain <romain@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 07:43:03 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/09 12:37:54 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/09 20:55:25 by romain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ void	find_builtins(t_meta *ms, int input_fd)
  */
 bool	ft_check_builtins(t_meta *ms)
 {
-	if (ms->comand)
+	if (ms->comand->com)
 	{
-		if (ft_strncmp(ms->comand->com[0], "export", ft_strlen(ms->comand->com[0]) == 0))
+		if (ft_strncmp(ms->comand->com[0], "export", ft_strlen(ms->comand->com[0])) == 0)
 			return (true);
 		else if (ft_strncmp(ms->comand->com[0], "unset", ft_strlen(ms->comand->com[0])) == 0)
 			return (true);
