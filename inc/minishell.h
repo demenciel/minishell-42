@@ -79,6 +79,11 @@ typedef struct s_exec
 	char				**export_list;
 }						t_exec;
 
+// MAIN CHECK
+char					*ft_strjoin_path(char *s1, char *s2);
+int						check_absolute_path(char **cmd);
+int						check_comand(t_meta *ms);
+
 // REDIRECT
 int						redirect_nodes(int *pipe, t_meta *ms);
 int						redirect_out(t_meta *ms);

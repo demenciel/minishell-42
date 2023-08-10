@@ -6,12 +6,12 @@
 #    By: acouture <acouture@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/09 07:40:10 by acouture          #+#    #+#              #
-#    Updated: 2023/08/10 16:04:43 by acouture         ###   ########.fr        #
+#    Updated: 2023/08/10 16:57:23 by acouture         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	:= minishell
-CFLAGS	:= -g -Wextra -Wall -Werror -fsanitize=address
+CFLAGS	:= -g -Wextra -Wall -Werror #-fsanitize=address
 #
 SRC_PATH = src/
 
@@ -25,6 +25,7 @@ RLINE		= $(READ_PATH)/libreadline.a
 LIBRLINE	= readline-8.2
 
 SRC		:=  main.c \
+			check_main.c \
 			exec/executables/main_exec.c \
 			exec/executables/main_exec_utils.c \
 			exec/executables/pipex.c \
