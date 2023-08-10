@@ -81,12 +81,12 @@ typedef struct s_exec
 
 // REDIRECT
 
-int						redirect_out(t_comand *node);
-int						redirect_in(t_comand *node, int *pipe);
+int						redirect_out(t_meta *ms);
+int						redirect_in(t_meta *ms, int *pipe);
 int						heredocs(char *limiter, int input_fd);
 
 // PIPEX
-void					pipex(t_comand *node, bool multi, int input_fd, int out_fd);
+void					pipex(t_meta *ms, bool multi, int input_fd, int out_fd);
 int						open_rd_fd(char *fd1);
 int						create_rd_fd(char *fd1);
 int						append_rd_fd(char *fd1);
@@ -102,7 +102,7 @@ void	clean_fd();
 // EXEC BUILTINS
 bool					ft_check_builtins(t_meta *ms);
 void					find_builtins(t_meta *ms, int input_fd);
-void					find_export_unset_env(t_comand *node, int input_fd);
+void					find_export_unset_env(t_meta *ms, int input_fd);
 
 // BUILTINS
 void					ft_echo(char *string, int input_fd);
@@ -113,11 +113,11 @@ void					ft_unset_env(char *var);
 void					ft_unset_export(char *var);
 
 // ECHO
-void					find_echo(t_comand *node, int input_fd);
-int						iterate_over_echo_flag(t_comand *node, int i);
+void					find_echo(t_meta *ms, int input_fd);
+int						iterate_over_echo_flag(t_meta *ms, int i);
 char					*ft_strtrim_echo(char const *s1, char const *set);
 // CD
-void					ft_cd(char *path);
+void					ft_cd(t_meta *ms, char *path);
 char					*get_env(char *input);
 void					replace_oldpwd(char *oldpath);
 void					change_pwd_env(char *oldpath, char *path);
@@ -145,7 +145,7 @@ void					order_export(int *size);
 
 t_exec					*g(void);
 t_meta					*mt(void);
-void					exec_cmd(char **cmd);
+void					exec_cmd(t_meta *ms, char **cmd);
 
 // ERROR UTILS
 void					print_error(char *cmd);
@@ -242,4 +242,5 @@ void					f_sighandler(int sig);
 void					f_sighandler_com(int sig);
 void					f_signals(void);
 void  					f_signal_in(int status, t_meta *ms);
+
 #endif

@@ -6,12 +6,12 @@
  * @brief Executes a command with its absolute path.
  * @param cmd Path and command to be executed
 */
-void	execute_absolute(char **cmd)
+void	execute_absolute(t_meta *ms, char **cmd)
 {
 	if (access(cmd[0], 0) == 0)
 	{
 		if (execve(cmd[0], cmd, g()->env_list) != 0)
-			exit(mt()->exit_status);
+			exit(ms->exit_status);
 	}
 	else
 		return ;
@@ -48,7 +48,7 @@ char	**get_env_path(void)
  * @brief By parsing the path, checks if the command exists, if yes, executes it
  * @param cmd The command to be executed
 */
-void	exec_cmd(char **cmd)
+void	exec_cmd(t_meta *ms, char **cmd)
 {
 	int		i;
 	int		flag;
@@ -62,7 +62,7 @@ void	exec_cmd(char **cmd)
 	i = -1;
 	if (ft_strchr(cmd[0], '/'))
 	{
-		execute_absolute(cmd);
+		execute_absolute(ms, cmd);
 		return ;
 	}
 	while (paths[++i])
@@ -145,7 +145,7 @@ int	append_rd_fd(char *fd1)
  * @brief Reproduce the effect of a pipe in shell ( | )
  * @param cmd The commands to be executed
 */
-void	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
+void	pipex(t_meta *ms, bool multi, int input_fd, int out_fd)
 {
 	int 	pipe_end[2];
 	char 	*path;
@@ -159,7 +159,7 @@ void	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
 		return ;
 	else
 		free(path);
-	if (g()->pid[g()->pid_index] == -1 && node->stin == NULL)
+	if (g()->pid[g()->pid_index] == -1 && ms->comand->stin == NULL)
 		input_fd = 0;
 	g()->pid[g()->pid_index] = fork();
 	if (g()->pid[g()->pid_index] == 0)
@@ -171,9 +171,9 @@ void	pipex(t_comand *node, bool multi, int input_fd, int out_fd)
 			dup2(out_fd, STDOUT_FILENO);
 		else
 			dup2(pipe_end[1], STDOUT_FILENO);
-		exec_cmd(node->com);
+		exec_cmd(ms, ms->comand->com);
 		clean_fd();
-		f_free_exit_child(mt(), 2);
+		f_free_exit_child(ms, 2);
 	}
 	else
 	{

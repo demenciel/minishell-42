@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 07:42:47 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/09 09:38:01 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/10 12:54:06 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ char	*ft_strtrim_echo(char const *s1, char const *set)
 	return (new_str);
 }
 
-int	iterate_over_echo_flag(t_comand *node, int i)
+int	iterate_over_echo_flag(t_meta *ms, int i)
 {
 	t_comand	*temp;
 	char		*trim;
 	int			j;
 
 	j = i;
-	temp = node;
+	temp = ms->comand;
 	trim = NULL;
 	while (temp->com[j])
 	{
@@ -59,24 +59,24 @@ int	iterate_over_echo_flag(t_comand *node, int i)
 	return (i);
 }
 
-void	print_echo_string(int i, t_comand *node, int flag, int input_fd)
+void	print_echo_string(int i, t_meta *ms, int flag, int input_fd)
 {
 	char	*echo_string;
 	int		len_com;
 
 	echo_string = NULL;
 	len_com = i;
-	while (node->com[len_com])
+	while (ms->comand->com[len_com])
 		len_com++;
-	while (node->com[i])
+	while (ms->comand->com[i])
 	{
-		if (ft_strncmp(node->com[1], "-n", ft_strlen(node->com[1])) == 0
-			&& !node->com[2])
+		if (ft_strncmp(ms->comand->com[1], "-n", ft_strlen(ms->comand->com[1])) == 0
+			&& !ms->comand->com[2])
 			break ;
 		if (i == (len_com - 1))
-			echo_string = ft_strdup(node->com[i]);
+			echo_string = ft_strdup(ms->comand->com[i]);
 		else
-			echo_string = ft_strjoin(node->com[i], " ");
+			echo_string = ft_strjoin(ms->comand->com[i], " ");
 		ft_echo(echo_string, input_fd);
 		free(echo_string);
 		i++;
@@ -85,9 +85,9 @@ void	print_echo_string(int i, t_comand *node, int flag, int input_fd)
 		ft_putchar_fd('\n', input_fd);
 }
 
-int	check_echo_args(t_comand *node, int input_fd)
+int	check_echo_args(t_meta *ms, int input_fd)
 {
-	if (!node->com[1])
+	if (!ms->comand->com[1])
 	{
 		ft_putchar_fd('\n', input_fd);
 		return (-1);
@@ -99,7 +99,7 @@ int	check_echo_args(t_comand *node, int input_fd)
  * @brief Checks the content of the node,
 	and executes the builtin depending of the content of the node
 */
-void	find_echo(t_comand *node, int input_fd)
+void	find_echo(t_meta *ms, int input_fd)
 {
 	int		i;
 	int		flag;
@@ -107,21 +107,21 @@ void	find_echo(t_comand *node, int input_fd)
 
 	i = 1;
 	flag = 0;
-	if (ft_strcmp(node->com[0], "echo") == 0)
+	if (ft_strcmp(ms->comand->com[0], "echo") == 0)
 	{
-		if (check_echo_args(node, input_fd) == -1)
+		if (check_echo_args(ms, input_fd) == -1)
 			return ;
-		if (ft_strcmp("-n", node->com[1]) == 0)
+		if (ft_strcmp("-n", ms->comand->com[1]) == 0)
 		{
-			trim = ft_strtrim_echo(node->com[1], "-");
+			trim = ft_strtrim_echo(ms->comand->com[1], "-");
 			if (!(ft_strchr(trim, '-')))
 			{
 				i = 2;
-				i = iterate_over_echo_flag(node, i);
+				i = iterate_over_echo_flag(ms, i);
 				flag = 1;
 			}
 			free(trim);
 		}
-		print_echo_string(i, node, flag, input_fd);
+		print_echo_string(i, ms, flag, input_fd);
 	}
 }

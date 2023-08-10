@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: romain <romain@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 09:34:54 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/09 20:13:42 by romain           ###   ########.fr       */
+/*   Updated: 2023/08/10 13:06:29 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,25 +49,25 @@ int	lst_size(t_comand *lst)
 	return (i);
 }
 
-int	redirect_nodes(int *pipe, t_comand *node)
+int	redirect_nodes(int *pipe, t_meta *ms)
 {
 	int	out_fd;
 
-	if (node->next == NULL)
+	if (ms->comand->next == NULL)
 		out_fd = 1;
 	else
 		out_fd = pipe[1];
-	if (node->stin != NULL)
+	if (ms->comand->stin != NULL)
 	{
-		g()->in_fd = redirect_in(node, pipe);
+		g()->in_fd = redirect_in(ms, pipe);
 		if (g()->in_fd == FD_ERROR)
 			return (FD_ERROR);
 		else if (g()->in_fd == HEREDOC_ERROR)
 			return (HEREDOC_ERROR);
 	}
-	if (node->stout != NULL)
+	if (ms->comand->stout != NULL)
 	{
-		out_fd = redirect_out(node);
+		out_fd = redirect_out(ms);
 		if (out_fd < 0)
 			return (FD_ERROR);
 		g()->redir_flag = true;
@@ -104,7 +104,7 @@ void	exec_one_node(t_meta *ms, int fd, int out_fd)
 	if (ft_check_builtins(ms))
 		find_builtins(ms, out_fd);
 	else
-		pipex(ms->comand, false, fd, out_fd);
+		pipex(ms, false, fd, out_fd);
 }
 
 int	init_pid_and_nb_node(t_meta *ms)
@@ -145,7 +145,7 @@ void	exec_multi_node(t_meta *ms)
 	g()->in_fd = pipe_end[0];
 	while (ms->comand)
 	{
-		out_fd = redirect_nodes(pipe_end, ms->comand);
+		out_fd = redirect_nodes(pipe_end, ms);
 		if (out_fd < 0)
 			return ;
 		else if (out_fd == HEREDOC_ERROR)
@@ -160,7 +160,7 @@ void	exec_multi_node(t_meta *ms)
 		else
 		{
 			if (!ft_check_builtins(ms))
-				pipex(ms->comand, true, g()->in_fd, out_fd);
+				pipex(ms, true, g()->in_fd, out_fd);
 			else
 			{
 				find_builtins(ms, out_fd);

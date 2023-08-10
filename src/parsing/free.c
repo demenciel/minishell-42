@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: romain <romain@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:40:17 by romain            #+#    #+#             */
-/*   Updated: 2023/08/09 20:57:00 by romain           ###   ########.fr       */
+/*   Updated: 2023/08/10 13:28:21 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ void	f_free_comand(t_comand **list)
 	while (*list)
 	{
 		temp = (*list)->next;
-		if ((*list)->com)
-			ft_free_tab_char((*list)->com);
+		ft_free_tab_char((*list)->com);
 		free((*list)->stin);
 		free((*list)->stout);
 		free(*list);
