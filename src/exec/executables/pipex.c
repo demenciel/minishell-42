@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/10 14:31:17 by acouture          #+#    #+#             */
+/*   Updated: 2023/08/10 16:01:17 by acouture         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../../inc/minishell.h"
 
@@ -6,11 +16,11 @@
  * @brief Executes a command with its absolute path.
  * @param cmd Path and command to be executed
  */
-void	execute_absolute(t_meta *ms)
+void	execute_absolute(t_meta *ms, char **cmd)
 {
-	if (access(cmd[0], 0) == 0)
+	if (access(ms->comand->com[0], 0) == 0)
 	{
-		if (execve(cmd[0], cmd, g()->env_list) != 0)
+		if (execve(ms->comand->com[0], cmd, g()->env_list) != 0)
 			exit(ms->exit_status);
 	}
 	else
@@ -47,7 +57,7 @@ char	**get_env_path(void)
 /**
  * @brief By parsing the path, checks if the command exists, if yes, executes it
  * @param cmd The command to be executed
-*/
+ */
 void	exec_cmd(t_meta *ms, char **cmd)
 {
 	int		i;
@@ -56,6 +66,8 @@ void	exec_cmd(t_meta *ms, char **cmd)
 
 	i = -1;
 	paths = get_env_path();
+	if (!paths)
+		return ;
 	while (paths[++i])
 		paths[i] = ft_strjoin(paths[i], "/");
 	i = -1;
@@ -77,25 +89,12 @@ void	exec_cmd(t_meta *ms, char **cmd)
 	ft_2darr_free(paths);
 }
 
-/**
- * @brief Reproduce the effect of a pipe in shell ( | )
- * @param cmd The commands to be executed
-*/
-void	pipex(t_meta *ms, bool multi, int input_fd, int out_fd)
+void	pipex_main(t_meta *ms, bool multi, int input_fd, int out_fd)
 {
-	int		pipe_end[2];
-	char	*path;
+	int	pipe_end[2];
 
-	signal(SIGINT, f_sighandler_com);
 	if (pipe(pipe_end) != 0)
 		return ;
-	path = get_env("PATH");
-	if (path == NULL)
-		return ;
-	else
-		free(path);
-	if (g()->pid[g()->pid_index] == -1 && ms->comand->stin == NULL)
-		input_fd = 0;
 	g()->pid[g()->pid_index] = fork();
 	if (g()->pid[g()->pid_index] == 0)
 	{
@@ -107,7 +106,6 @@ void	pipex(t_meta *ms, bool multi, int input_fd, int out_fd)
 		else
 			dup2(pipe_end[1], STDOUT_FILENO);
 		exec_cmd(ms, ms->comand->com);
-		clean_fd();
 		f_free_exit_child(ms, 2);
 	}
 	else
@@ -117,4 +115,18 @@ void	pipex(t_meta *ms, bool multi, int input_fd, int out_fd)
 		dup2(pipe_end[0], g()->in_fd);
 		close(pipe_end[0]);
 	}
+}
+
+/**
+ * @brief Reproduce the effect of a pipe in shell ( | )
+ * @param cmd The commands to be executed
+ */
+void	pipex(t_meta *ms, bool multi, int input_fd, int out_fd)
+{
+	signal(SIGINT, f_sighandler_com);
+	if (check_for_path() == -1)
+		return ;
+	if (g()->pid[g()->pid_index] == -1 && (ms->comand->stin == NULL))
+		input_fd = 0;
+	pipex_main(ms, multi, input_fd, out_fd);
 }

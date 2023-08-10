@@ -104,6 +104,7 @@ void	f_free_exit_child(t_meta *ms, int nb)
 		f_free_comand(&ms->comand);
 		ms->comand = NULL;
 	}
+	clean_fd();
 	free(g()->pid);
 	exit(nb);
 }

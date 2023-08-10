@@ -6,7 +6,7 @@
 #    By: acouture <acouture@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/09 07:40:10 by acouture          #+#    #+#              #
-#    Updated: 2023/08/10 14:19:01 by acouture         ###   ########.fr        #
+#    Updated: 2023/08/10 15:42:09 by acouture         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRC		:=  main.c \
 			exec/executables/pipex.c \
 			exec/executables/fd.c \
 			exec/executables/redirect.c \
+			exec/executables/redirect_in_out.c \
 			exec/executables/error_utils.c \
 			exec/builtins/env.c \
 			exec/builtins/builtin.c \

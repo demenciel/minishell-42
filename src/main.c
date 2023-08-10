@@ -38,15 +38,6 @@ void    init_env(char **env)
     g()->env_list[size] = NULL;
 }
 
-void	clean_fd()
-{
-	int i;
-
-	i = 2;
-	while (++i < 200)
-		close(i);
-}
-
 void f_main_pars(t_meta *ms)
 {
 	f_check_line(ms);
@@ -91,7 +82,6 @@ int	check_comand(t_meta *ms)
 	node = ms->comand;
 	if (node->com)
 	{
-		// f_print_lst_final(ms->comand);
 		paths = get_env_path();
 		if (!paths)
 			return (-1);

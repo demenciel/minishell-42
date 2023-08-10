@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 13:34:58 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/09 13:50:34 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/10 15:39:15 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,18 +70,34 @@ int	lst_size(t_comand *lst)
  * @brief Executes the waitpid for each items in the PID Array
  * and closes the in_fd finally frees the array
  */
-void	wait_free_pid(int nb_node)
+void	wait_free_pid(t_meta *ms, int nb_node)
 {
 	int	i;
+	int	status;
 
 	i = 0;
+	status = 0;
 	while (i < nb_node)
 	{
-		waitpid(g()->pid[i], &mt()->exit_status, 0);
+		if (g()->pid)
+			waitpid(g()->pid[i], &status, 0);
 		close(g()->in_fd);
 		i++;
+		f_signal_in(status, ms);
 	}
 	clean_fd();
 	g()->pid_index = 0;
 	free(g()->pid);
+}
+
+int	check_for_path(void)
+{
+	char	*path;
+
+	path = get_env("PATH");
+	if (path == NULL)
+		return (-1);
+	else
+		free(path);
+	return (0);
 }

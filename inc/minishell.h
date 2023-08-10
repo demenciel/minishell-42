@@ -80,7 +80,7 @@ typedef struct s_exec
 }						t_exec;
 
 // REDIRECT
-
+int						redirect_nodes(int *pipe, t_meta *ms);
 int						redirect_out(t_meta *ms);
 int						redirect_in(t_meta *ms, int *pipe);
 int						heredocs(char *limiter, int input_fd);
@@ -92,10 +92,11 @@ int						create_rd_fd(char *fd1);
 int						append_rd_fd(char *fd1);
 
 // MAIN EXEC UTILS
-void					wait_free_pid(int nb_node);
+void					wait_free_pid(t_meta *ms, int nb_node);
 int						lst_size(t_comand *lst);
 void					init_exec_struct(void);
 void					clean_fd();
+int						check_for_path(void);
 
 // MAIN EXEC
 void					exec_multi_node(t_meta *ms);
