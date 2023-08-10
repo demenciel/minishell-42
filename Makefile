@@ -6,7 +6,7 @@
 #    By: acouture <acouture@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/09 07:40:10 by acouture          #+#    #+#              #
-#    Updated: 2023/08/09 17:14:55 by acouture         ###   ########.fr        #
+#    Updated: 2023/08/10 14:19:01 by acouture         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ SRC		:=  main.c \
 			parsing/init.c \
 			parsing/parsing.c \
 			parsing/utils.c \
+			parsing/utils_1.c \
 			parsing/a_supp.c \
 			parsing/exit.c \
 			parsing/signal.c \

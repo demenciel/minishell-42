@@ -80,9 +80,9 @@ typedef struct s_exec
 }						t_exec;
 
 // REDIRECT
-int						redirect_nodes(int *pipe, t_meta *ms);
-int						redirect_out(t_comand *node);
-int						redirect_in(t_comand *node, int *pipe);
+
+int						redirect_out(t_meta *ms);
+int						redirect_in(t_meta *ms, int *pipe);
 int						heredocs(char *limiter, int input_fd);
 
 // PIPEX
@@ -104,7 +104,7 @@ char					**get_env_path(void);
 // EXEC BUILTINS
 bool					ft_check_builtins(t_meta *ms);
 void					find_builtins(t_meta *ms, int input_fd);
-void					find_export_unset_env(t_comand *node, int input_fd);
+void					find_export_unset_env(t_meta *ms, int input_fd);
 
 // BUILTINS
 void					ft_echo(char *string, int input_fd);
@@ -115,12 +115,12 @@ void					ft_unset_env(char *var);
 void					ft_unset_export(char *var);
 
 // ECHO
-void					find_echo(t_comand *node, int input_fd);
-int						iterate_over_echo_flag(t_comand *node, int i);
+void					find_echo(t_meta *ms, int input_fd);
+int						iterate_over_echo_flag(t_meta *ms, int i);
 char					*ft_strtrim_echo(char const *s1, char const *set);
 
 // CD
-void					ft_cd(char *path);
+void					ft_cd(t_meta *ms, char *path);
 char					*get_env(char *input);
 void					replace_oldpwd(char *oldpath);
 void					change_pwd_env(char *oldpath, char *path);
@@ -148,7 +148,7 @@ void					order_export(int *size);
 
 t_exec					*g(void);
 t_meta					*mt(void);
-void					exec_cmd(char **cmd);
+void					exec_cmd(t_meta *ms, char **cmd);
 
 // ERROR UTILS
 void					print_error(char *cmd);
@@ -161,7 +161,7 @@ void					export_error(char *id);
 //PARSING-MINISHELL
 
 // PARSING---------------------------------------------------------------------
-
+//ok
 void					f_check_arg(int ac, char **av);
 void					f_check_line(t_meta *ms);
 
@@ -181,20 +181,20 @@ void					f_check_pipes(t_meta *ms);
 
 
 // UTILS-----------------------------------------------------------------------
-
+//ok
 t_pars					*f_new_node(char *str);
 t_pars					*f_last_node(t_pars *list);
 void					f_addback_node(t_pars **cmd, t_pars *new);
 int						f_check_metachar(char c);
 char					*f_trimstr(char *s1, char c);
+
+// UTILS_1---------------------------------------------------------------------
+//ok
 int						f_som_quote_simple(char *txt);
 int						f_check_env(char c);
 int						f_check_env_dol(char c);
 int						f_som_quote_double(char *txt);
 char					*f_join_char(const char *s1, const char s2);
-// char					**f_check_command(char *str);
-int						f_exec_cmd(char **cmd);
-int						f_search_dollar(char *str);
 
 // COM_LIST--------------------------------------------------------------------
 
@@ -205,11 +205,12 @@ void					f_addback_com(t_comand **cmd, t_comand *new);
 void					f_split_pipes(t_meta *ms);
 
 // COM_UTILS-------------------------------------------------------------------
-
+//ok
 void					f_add_com(t_meta *ms, char *add);
 void					f_add_in(t_meta *ms, char *add);
 void					f_add_out(t_meta *ms, char *add);
 void					f_check_node(t_meta *ms);
+int						f_search_dollar(char *str);
 
 // INIT------------------------------------------------------------------------
 
@@ -219,7 +220,7 @@ void					f_all_clean_exit(t_meta *ms, int nb);
 void					f_free_exit_child(t_meta *ms, int nb);
 
 // FREE------------------------------------------------------------------------
-
+//ok
 void					f_free_null_meta(t_meta *ms);
 void					f_free_comand(t_comand **list);
 void					f_free_list(t_pars **list);
@@ -237,14 +238,12 @@ void					f_print(char **cou);
 int						find_exit(t_meta *ms, int fd);
 int						f_size_table(char **table);
 int						f_arg_is_num(char *txt);
-char					*f_error_message(int nb);
-int						f_exit(t_meta *ms);
-void					f_recup_error(t_meta *ms);
 
 // SIGNAL----------------------------------------------------------------------
-
+//ok
 void					f_sighandler(int sig);
 void					f_sighandler_com(int sig);
 void					f_signals(void);
+void  					f_signal_in(int status, t_meta *ms);
 
 #endif

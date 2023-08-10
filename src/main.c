@@ -38,29 +38,22 @@ void    init_env(char **env)
     g()->env_list[size] = NULL;
 }
 
-void ft_print_details(t_meta *ms)
+void	clean_fd()
 {
-	if (DEBUG == 1)
-		printf("\n=%s=\n\n", ms->line);
+	int i;
+
+	i = 2;
+	while (++i < 200)
+		close(i);
+}
+
+void f_main_pars(t_meta *ms)
+{
 	f_check_line(ms);
-	if (DEBUG == 1)
-	{
-		printf("\n");
-		f_print_lst(ms->list);
-		printf("\n");
-	}
 	f_check_node(ms);
-	if (DEBUG == 1)
-		printf("\n");
 	f_split_pipes(ms);
 	if (!ms->comand)
 		ms->exit_status = 1;
-	if (DEBUG == 1)
-	{
-		printf("\n");
-		f_print_lst_final(ms->comand);
-		printf("\n");
-	}
 }
 
 char	*ft_strjoin_path(char *s1, char *s2)
@@ -92,15 +85,16 @@ int	check_comand(t_meta *ms)
 	char	*search_cmd;
 	char	**paths;
 	char 	*error_node;
+	t_comand *node;
 
 	i = -1;
-	t_comand *node;
 	node = ms->comand;
-	printf("NODE CHECK %s\n", node->com[0]);
-	if (ms->comand)
+	if (node->com)
 	{
 		// f_print_lst_final(ms->comand);
 		paths = get_env_path();
+		if (!paths)
+			return (-1);
 		while (paths[++i])
 			paths[i] = ft_strjoin_path(paths[i], "/");
 		while (node)
@@ -151,13 +145,13 @@ int	main(int ac, char **av, char **env)
 		if (ms->line == NULL)
 			f_all_clean(ms, NULL);
 		add_history(ms->line);
-		ft_print_details(ms);
+		f_main_pars(ms);
 		if (ms->error_flag == 0)
 		{
 			if (ms->comand && (ft_check_builtins(ms) || check_comand(ms) == 0))
 				exec_multi_node(ms);
 		}
-		
+
 		f_free_null_meta(ms);
 	}
 	return (0);

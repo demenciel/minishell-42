@@ -63,12 +63,12 @@ int	heredocs(char *limiter, int input_fd)
 	return (0);
 }
 
-int redirect_in(t_comand *node, int *pipe)
+int redirect_in(t_meta *ms, int *pipe)
 {
 	char **fd;
 	int in_fd;
 
-	fd = ft_split(node->stin, 29);
+	fd = ft_split(ms->comand->stin, 29);
 	if (ft_strlen(fd[0]) == 2)
 	{
 		if (fd[1])
@@ -100,12 +100,12 @@ int redirect_in(t_comand *node, int *pipe)
 	return (0);
 }
 
-int redirect_out(t_comand *node)
+int redirect_out(t_meta *ms)
 {
 	char **fd;
 	int out_fd;
 
-	fd = ft_split(node->stout, 29);
+	fd = ft_split(ms->comand->stout, 29);
 	if (ft_strlen(fd[0]) == 2)
 	{
 		out_fd = append_rd_fd(fd[1]);

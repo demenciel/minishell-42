@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 09:34:54 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/09 17:26:14 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/10 14:17:42 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,17 @@ int	init_pid_and_nb_node(t_meta *ms)
 	t_comand *node;
 	int	nb_node;
 	int	i;
-	int	j;
+	int	status;
 
 	node = ms->comand;
-	j = -1;
 	i = 0;
-	nb_node = lst_size(node);
-	g()->pid = malloc(sizeof(pid_t) * (nb_node + 1));
-	if (!g()->pid)
-		f_all_clean_exit(mt(), MALLOC_ERROR);
+	status = 0;
 	while (i < nb_node)
 	{
-		g()->pid[i] = j;
+		waitpid(g()->pid[i], &status, 0);
+		close(g()->in_fd);
 		i++;
-		j--;
+		f_signal_in(status, ms);
 	}
 	return (nb_node);
 }

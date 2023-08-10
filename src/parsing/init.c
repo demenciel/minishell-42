@@ -17,6 +17,7 @@ t_meta	*f_init_meta(void)
 		new->line = NULL;
 		new->comand = NULL;
 		new->exit_status = 0;
+		new->error_flag = 0;
 	}
 	return (new);
 }
@@ -78,6 +79,7 @@ void	f_all_clean_exit(t_meta *ms, int nb)
 		close(g()->in_fd);
 	if (g()->pid)
 		free(g()->pid);
+	clean_fd();
 	exit(nb);
 }
 
