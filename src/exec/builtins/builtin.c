@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 13:54:59 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/09 09:37:55 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/10 12:47:11 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*ft_pwd(void)
  * @brief Reproduce the cd builtin command (cd)
  * @param path The directory to go to
  */
-void	ft_cd(char *path)
+void	ft_cd(t_meta *ms, char *path)
 {
 	char	*result;
 	char	*oldpath;
@@ -55,8 +55,8 @@ void	ft_cd(char *path)
 	if (result == NULL)
 	{
 		free(oldpath);
-		mt()->exit_status = 127;
-		mt()->error_flag = 2;
+		ms->exit_status = 127;
+		ms->error_flag = 1;
 		return ;
 	}
 	if (oldpath == NULL)
