@@ -6,7 +6,7 @@
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 13:54:59 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/10 17:10:52 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/10 12:47:11 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	ft_cd(t_meta *ms, char *path)
 
 	oldpath = NULL;
 	oldpath = ft_pwd();
-	result = path_to_cd(ms, path);
+	result = path_to_cd(path);
 	if (result == NULL)
 	{
 		free(oldpath);
@@ -62,7 +62,7 @@ void	ft_cd(t_meta *ms, char *path)
 	if (oldpath == NULL)
 		return ;
 	if (chdir(result) == -1)
-		cd_error(ms, result);
+		cd_error(result);
 	change_pwd_env(oldpath, path);
 	replace_oldpwd(oldpath);
 	free(oldpath);

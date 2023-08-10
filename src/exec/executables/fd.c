@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 13:51:47 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/10 17:08:29 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/10 14:30:43 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * @return The value of fd. Returns STDOUT if no file. Returns
 	-1 if error opening file
 */
-int	open_rd_fd(t_meta *ms, char *fd1)
+int	open_rd_fd(char *fd1)
 {
 	int	fd;
 
@@ -28,7 +28,7 @@ int	open_rd_fd(t_meta *ms, char *fd1)
 	fd = open(fd1, O_RDONLY);
 	if (fd < 0)
 	{
-		fd_error(ms, fd1);
+		fd_error(fd1);
 		return (-1);
 	}
 	return (fd);
@@ -40,7 +40,7 @@ int	open_rd_fd(t_meta *ms, char *fd1)
  * @return The value of fd. Returns STDOUT if no file. Returns
 	-1 if error opening file
 */
-int	create_rd_fd(t_meta *ms, char *fd1)
+int	create_rd_fd(char *fd1)
 {
 	int	fd;
 
@@ -50,7 +50,7 @@ int	create_rd_fd(t_meta *ms, char *fd1)
 	fd = open(fd1, O_RDWR | O_CREAT | O_TRUNC, 00644);
 	if (fd < 0)
 	{
-		fd_error(ms, fd1);
+		fd_error(fd1);
 		return (-1);
 	}
 	return (fd);
@@ -62,7 +62,7 @@ int	create_rd_fd(t_meta *ms, char *fd1)
  * @return The value of fd. Returns STDOUT if no file. Returns
 	-1 if error opening file
 */
-int	append_rd_fd(t_meta *ms, char *fd1)
+int	append_rd_fd(char *fd1)
 {
 	int	fd;
 
@@ -72,7 +72,7 @@ int	append_rd_fd(t_meta *ms, char *fd1)
 	fd = open(fd1, O_RDWR | O_CREAT | O_APPEND, 00644);
 	if (fd < 0)
 	{
-		fd_error(ms, fd1);
+		fd_error(fd1);
 		return (-1);
 	}
 	return (fd);
