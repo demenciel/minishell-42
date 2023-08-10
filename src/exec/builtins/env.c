@@ -6,11 +6,11 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 14:02:55 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/08 14:05:09 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/09 09:39:51 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../../../inc/minishell.h"
 
 /**
  * @brief Goes at index position in the list and change its content by var
@@ -31,13 +31,11 @@ void	change_var_content_env(char *var, int index)
 int	checks_for_doubles_env(char *var)
 {
 	int		str;
-	int		j;
 	char	*check_var;
 	char	**var_tab;
 
 	check_var = NULL;
 	str = 0;
-	j = 0;
 	var_tab = ft_split(var, '=');
 	check_var = ft_strdup(var_tab[0]);
 	ft_2darr_free(var_tab);

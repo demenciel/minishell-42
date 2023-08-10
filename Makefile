@@ -1,3 +1,14 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/08/09 07:40:10 by acouture          #+#    #+#              #
+#    Updated: 2023/08/10 17:25:39 by rofontai         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
 NAME	:= minishell
 CFLAGS	:= -g -Wextra -Wall -Werror #-fsanitize=address
@@ -13,24 +24,23 @@ READ_PATH	= libs/readline
 RLINE		= $(READ_PATH)/libreadline.a
 LIBRLINE	= readline-8.2
 
-# LIBFT_A = 	libft.a
-# LIBF_DIR = 	inc/libft/
-# LIBFT  = 	$(addprefix $(LIBF_DIR), $(LIBFT_A))
-# HEADERS	:= -I ./include
-
-
 SRC		:=  main.c \
-			exec/main_exec.c \
-			exec/pipex.c \
-			exec/redirect.c \
-			exec/error_utils.c \
-			exec/builtin.c \
-			exec/exec_builtins.c \
-			exec/env.c \
-			exec/cd.c \
-			exec/export.c \
-			exec/export2.c \
-			exec/unset.c \
+			exec/executables/main_exec.c \
+			exec/executables/main_exec_utils.c \
+			exec/executables/pipex.c \
+			exec/executables/fd.c \
+			exec/executables/redirect.c \
+			exec/executables/redirect_in_out.c \
+			exec/executables/error_utils.c \
+			exec/builtins/env.c \
+			exec/builtins/builtin.c \
+			exec/builtins/exec_builtins.c \
+			exec/builtins/echo.c \
+			exec/builtins/cd.c \
+			exec/builtins/unset.c \
+			exec/export/export.c \
+			exec/export/export2.c \
+			exec/export/export3.c \
 			parsing/checking.c \
 			parsing/com_list.c \
 			parsing/com_utils.c \
@@ -38,6 +48,7 @@ SRC		:=  main.c \
 			parsing/init.c \
 			parsing/parsing.c \
 			parsing/utils.c \
+			parsing/utils_1.c \
 			parsing/a_supp.c \
 			parsing/exit.c \
 			parsing/signal.c \
@@ -51,15 +62,13 @@ GREEN = \033[0;92m
 RED = \033[0;91m
 RESET = \033[0m
 
-all: readline $(NAME) #makelibft
+all: readline $(NAME)
 	@exec 2>/dev/null
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@ $(HEADERS)
 
-# makelibft:
-# 	@$(MAKE) -C $(LIBF_DIR)
 
 readline	:
 	@if [ ! -f ./libs/readline/libreadline.a ]; then \

@@ -1,75 +1,62 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/09 20:49:49 by romain            #+#    #+#             */
+/*   Updated: 2023/08/10 17:17:38 by rofontai         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_meta	*f_init_meta(void)
+t_pars	*f_new_node(char *str)
 {
-	static t_meta	*new;
+	t_pars	*new;
 
+	if (!str)
+		return (NULL);
+	new = ft_calloc(sizeof(t_pars), 1);
 	if (!new)
-	{
-		new = ft_calloc(sizeof(t_meta), 1);
-		if (!new)
-			exit(EXIT_FAILURE);
-		new->list = NULL;
-		new->com_temp = NULL;
-		new->in = NULL;
-		new->out = NULL;
-		new->i = 0;
-		new->line = NULL;
-		new->comand = NULL;
-	}
+		return (NULL);
+	new->txt = str;
+	new->next = NULL;
 	return (new);
 }
 
-void	f_all_clean(t_meta *ms, char *msg)
+t_pars	*f_last_node(t_pars *list)
 {
-	if (ms->line)
-		free(ms->line);
-	if (ms->comand)
-		f_free_comand(&ms->comand);
-	if (ms->com_temp)
-		free(ms->com_temp);
-	if (ms->in)
-		free(ms->in);
-	if (ms->out)
-		free(ms->out);
-	if (ms->list)
-		f_free_list(&ms->list);
-	free(ms);
-	if (msg)
-	{
-		printf("🚨 %s\n", msg);
-		exit(EXIT_FAILURE);
-	}
-	exit(EXIT_SUCCESS);
+	if (!list)
+		return (NULL);
+	while (list->next)
+		list = list->next;
+	return (list);
 }
 
-void	f_zero_list(t_meta *ms)
+void	f_addback_node(t_pars **cmd, t_pars *new)
 {
-	if (ms->list)
+	t_pars	*last;
+
+	if (!cmd || !new)
+		return ;
+	if (*cmd == NULL)
 	{
-		f_free_list(&ms->list);
-		ms->list = NULL;
+		*cmd = new;
+		return ;
 	}
-	if (ms->comand)
-	{
-		f_free_comand(&ms->comand);
-		ms->comand = NULL;
-	}
-	if (ms->com_temp)
-	{
-		free(ms->com_temp);
-		ms->com_temp = NULL;
-	}
-	if (ms->in)
-	{
-		free(ms->in);
-		ms->in = NULL;
-	}if (ms->out)
-	{
-		free(ms->out);
-		ms->out = NULL;
-	}
+	last = f_last_node(*cmd);
+	last->next = new;
+}
+
+int	f_check_metachar(char c)
+{
+	if (c == 124 || c == 62 || c == 60 || c == 39 || c == 34 || c == 36
+		|| c <= 32)
+		return (1);
+	else
+		return (0);
 }
 
 char	*f_trimstr(char *s1, char c)
@@ -88,24 +75,7 @@ char	*f_trimstr(char *s1, char c)
 		len_s1--;
 	dest = ft_calloc(sizeof(char), (len_s1 - i) + 1);
 	if (!dest)
-		return (0);
+		return (NULL);
 	ft_strlcpy(dest, &s1[i], (len_s1 - i) + 1);
 	return (dest);
-}
-void	f_free_comand(t_comand **list)
-{
-	t_comand	*temp;
-
-	if (!*list || !list)
-		return ;
-	while (*list)
-	{
-		temp = (*list)->next;
-		free((*list)->stin);
-		free((*list)->stout);
-		ft_free_tab_char((*list)->com);
-		free(*list);
-		(*list) = temp;
-	}
-	*list = NULL;
 }

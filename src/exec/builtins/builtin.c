@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 13:54:59 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/08 13:55:59 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/10 17:10:52 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../../../inc/minishell.h"
 
 /**
  * @brief Reproduce the env builtin command (env)
@@ -44,25 +44,25 @@ char	*ft_pwd(void)
  * @brief Reproduce the cd builtin command (cd)
  * @param path The directory to go to
  */
-void	ft_cd(char *path)
+void	ft_cd(t_meta *ms, char *path)
 {
 	char	*result;
 	char	*oldpath;
 
 	oldpath = NULL;
 	oldpath = ft_pwd();
-	result = path_to_cd(path);
+	result = path_to_cd(ms, path);
 	if (result == NULL)
 	{
 		free(oldpath);
-		mt()->exit_status = 127;
-		mt()->error_flag = 2;
+		ms->exit_status = 127;
+		ms->error_flag = 1;
 		return ;
 	}
 	if (oldpath == NULL)
 		return ;
 	if (chdir(result) == -1)
-		cd_error(result);
+		cd_error(ms, result);
 	change_pwd_env(oldpath, path);
 	replace_oldpwd(oldpath);
 	free(oldpath);

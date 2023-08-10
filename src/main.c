@@ -38,38 +38,13 @@ void    init_env(char **env)
     g()->env_list[size] = NULL;
 }
 
-void	clean_fd()
+void f_main_pars(t_meta *ms)
 {
-	int i;
-
-	i = 2;
-	while (++i < 200)
-		close(i);
-}
-
-void ft_print_details(t_meta *ms)
-{
-	if (DEBUG == 1)
-		printf("\n=%s=\n\n", ms->line);
 	f_check_line(ms);
-	if (DEBUG == 1)
-	{
-		printf("\n");
-		f_print_lst(ms->list);
-		printf("\n");
-	}
 	f_check_node(ms);
-	if (DEBUG == 1)
-		printf("\n");
 	f_split_pipes(ms);
 	if (!ms->comand)
 		ms->exit_status = 1;
-	if (DEBUG == 1)
-	{
-		printf("\n");
-		f_print_lst_final(ms->comand);
-		printf("\n");
-	}
 }
 
 char	*ft_strjoin_path(char *s1, char *s2)
@@ -94,55 +69,60 @@ char	*ft_strjoin_path(char *s1, char *s2)
 	return (join_str);
 }
 
-int	check_comand(t_comand *com)
+int	check_comand(t_meta *ms)
 {
 	int		i;
 	int		flag;
 	char	*search_cmd;
 	char	**paths;
 	char 	*error_node;
+	t_comand *node;
 
 	i = -1;
-
-	paths = get_env_path();
-	while (paths[++i])
-		paths[i] = ft_strjoin_path(paths[i], "/");
-	while (com)
+	node = ms->comand;
+	if (node->com)
 	{
-		i = -1;
+		paths = get_env_path();
+		if (!paths)
+			return (-1);
 		while (paths[++i])
+			paths[i] = ft_strjoin_path(paths[i], "/");
+		while (node)
 		{
-			flag = 0;
-			search_cmd = ft_strjoin(paths[i], com->com[0]);
-			if (access(search_cmd, 0) != 0)
-				flag++;
-			else
+			i = -1;
+			while (paths[++i])
 			{
+				flag = 0;
+				search_cmd = ft_strjoin(paths[i], node->com[0]);
+				if (access(search_cmd, 0) != 0)
+					flag++;
+				else
+				{
+					free(search_cmd);
+					break ;
+				}
 				free(search_cmd);
-				break ;
 			}
-			free(search_cmd);
+			if (flag > 0)
+				error_node = ft_strdup(node->com[0]);
+			node = node->next;
 		}
+		ft_2darr_free(paths);
 		if (flag > 0)
-			error_node = ft_strdup(com->com[0]);
-		com = com->next;
+		{
+			printf("minishell: %s: command not found\n", error_node);
+			free(error_node);
+			return (-1);
+		}
+		else
+			return (0);
 	}
-	ft_2darr_free(paths);
-	if (flag > 0)
-	{
-		printf("minishell: %s: command not found\n", error_node);
-		free(error_node);
-		return (-1);
-	}
-	else
-		return (0);
+	return (0);
 }
 
 int	main(int ac, char **av, char **env)
 {
 	t_meta *ms;
-	t_comand *node;
-	// char	*temp;
 
 	f_check_arg(ac, av);
 	ms = f_init_meta();
@@ -155,23 +135,12 @@ int	main(int ac, char **av, char **env)
 		if (ms->line == NULL)
 			f_all_clean(ms, NULL);
 		add_history(ms->line);
-		ft_print_details(ms);
+		f_main_pars(ms);
 		if (ms->error_flag == 0)
 		{
-			if (ms->comand && (ft_check_builtins(ms->comand->com) || check_comand(ms->comand) == 0))
-			{
-				node = ms->comand;
-				if (node->com != NULL)
-					exec_multi_node(node);
-				ms->exit_status = 0;
-			}
+			if (ms->comand && (ft_check_builtins(ms) || check_comand(ms) == 0))
+				exec_multi_node(ms);
 		}
-		// else
-		// {
-		// 	temp = ft_strdup(f_error_message(ms->exit_status));
-		// 	printf("%s\n", temp);
-		// 	temp = f_freenull(temp);
-		// }
 		f_free_null_meta(ms);
 	}
 	return (0);
