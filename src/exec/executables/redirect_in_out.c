@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_in_out.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 15:41:33 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/10 15:59:06 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/10 17:09:12 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	redirect_in(t_meta *ms, int *pipe)
 	}
 	else
 	{
-		in_fd = open_rd_fd(ft_strtrim(fd[1], "<"));
+		in_fd = open_rd_fd(ms, ft_strtrim(fd[1], "<"));
 		if (in_fd < 0)
 		{
 			ft_2darr_free(fd);
@@ -72,7 +72,7 @@ int	redirect_out(t_meta *ms)
 	fd = ft_split(ms->comand->stout, 29);
 	if (ft_strlen(fd[0]) == 2)
 	{
-		out_fd = append_rd_fd(fd[1]);
+		out_fd = append_rd_fd(ms, fd[1]);
 		if (out_fd < 0)
 		{
 			ft_2darr_free(fd);
@@ -83,7 +83,7 @@ int	redirect_out(t_meta *ms)
 	}
 	else
 	{
-		out_fd = create_rd_fd(fd[1]);
+		out_fd = create_rd_fd(ms, fd[1]);
 		if (out_fd < 0)
 		{
 			ft_2darr_free(fd);

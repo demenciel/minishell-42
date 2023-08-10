@@ -6,7 +6,7 @@
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 09:34:54 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/10 16:49:43 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/10 17:04:08 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	exec_nodes(int out_fd, t_meta *ms)
 
 void	free_ms_node(t_comand *ms)
 {
-	if (ms)
+	if (ms->com)
 		ft_free_tab_char(ms->com);
 	free(ms->stin);
 	free(ms->stout);

@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   export2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 08:41:13 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/09 09:35:51 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/10 17:11:23 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/minishell.h"
 
 /**
- * @brief Checks for the first value of the variable. If is not a letter 
+ * @brief Checks for the first value of the variable. If is not a letter
 	 or underscore exits program
  * @param var Var to check
 */
-int	check_var(char *var)
+int	check_var(t_meta *ms, char *var)
 {
 	int	i;
 
@@ -30,7 +30,7 @@ int	check_var(char *var)
 				&& !(ft_isalpha(var[i])) && var[i] != '=') || (ft_strncmp("=",
 					var, ft_strlen(var)) == 0) || (var[0] == '=' && var[1]))
 		{
-			export_error(var);
+			export_error(ms, var);
 			return (-1);
 		}
 		i++;

@@ -38,15 +38,6 @@ void    init_env(char **env)
     g()->env_list[size] = NULL;
 }
 
-void	clean_fd()
-{
-	int i;
-
-	i = 2;
-	while (++i < 200)
-		close(i);
-}
-
 void f_main_pars(t_meta *ms)
 {
 	f_check_line(ms);

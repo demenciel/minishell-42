@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 07:43:03 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/10 14:15:00 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/10 17:12:55 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void	find_export_unset_env(t_meta *ms, int input_fd)
 	{
 		i = 1;
 		if (!ms->comand->com[i])
-			ft_export("", input_fd);
+			ft_export(ms, "", input_fd);
 		while (ms->comand->com[i])
-			ft_export(ms->comand->com[i++], input_fd);
+			ft_export(ms, ms->comand->com[i++], input_fd);
 	}
 	else if (ft_strcmp(ms->comand->com[0], "unset") == 0)
 	{
