@@ -81,6 +81,7 @@ typedef struct s_exec
 
 // MAIN CHECK
 char					*ft_strjoin_path(char *s1, char *s2);
+char					*ft_strjoin_path(char *s1, char *s2);
 int						check_absolute_path(char **cmd);
 int						check_comand(t_meta *ms);
 char					**command_path(void);
