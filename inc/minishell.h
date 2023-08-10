@@ -83,6 +83,10 @@ typedef struct s_exec
 char					*ft_strjoin_path(char *s1, char *s2);
 int						check_absolute_path(char **cmd);
 int						check_comand(t_meta *ms);
+char					**command_path(void);
+int						check_comand_norm(t_comand *node, char **paths);
+int						search_cmd_path(t_comand *node, char *path, int flag);
+int						check_cmd_error(int flag, char *error_node);
 
 // REDIRECT
 int						redirect_nodes(int *pipe, t_meta *ms);

@@ -6,7 +6,7 @@
 #    By: acouture <acouture@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/09 07:40:10 by acouture          #+#    #+#              #
-#    Updated: 2023/08/10 16:57:23 by acouture         ###   ########.fr        #
+#    Updated: 2023/08/10 17:43:42 by acouture         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ LIBRLINE	= readline-8.2
 
 SRC		:=  main.c \
 			check_main.c \
+			check_main2.c \
 			exec/executables/main_exec.c \
 			exec/executables/main_exec_utils.c \
 			exec/executables/pipex.c \
