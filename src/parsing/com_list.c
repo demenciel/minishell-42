@@ -1,4 +1,3 @@
-
 #include "../../inc/minishell.h"
 
 t_comand	*f_new_com(char *com, char *in, char *out)
@@ -10,7 +9,6 @@ t_comand	*f_new_com(char *com, char *in, char *out)
 		return (NULL);
 	if (com)
 		new->com = ft_split(com, 29);
-		// new->com = f_check_command(com);
 	else
 		new->com = NULL;
 	if (in)
@@ -43,7 +41,6 @@ void	f_zero_new_com(t_meta *ms)
 	}
 }
 
-
 t_comand	*f_last_com(t_comand *list)
 {
 	if (!list)
@@ -67,12 +64,11 @@ void	f_addback_com(t_comand **cmd, t_comand *new)
 	last = f_last_com(*cmd);
 	last->next = new;
 }
+
 void	f_split_pipes(t_meta *ms)
 {
-	if (DEBUG == 1)
-		printf("" GRE "---f_split_pipes in---\n" WHT ""); // TODO Supprimer
+	t_pars	*temp;
 
-	t_pars *temp;
 	temp = ms->list;
 	while (temp)
 	{
@@ -87,8 +83,6 @@ void	f_split_pipes(t_meta *ms)
 					if (temp && temp->txt != NULL)
 						f_add_out(ms, temp->txt);
 				}
-				if (DEBUG == 1)
-					printf("out =%s=\n", ms->out);
 			}
 			else if (temp && temp->txt[0] == 60)
 			{
@@ -99,30 +93,21 @@ void	f_split_pipes(t_meta *ms)
 					if (temp && temp->txt != NULL)
 						f_add_in(ms, temp->txt);
 				}
-				if (DEBUG == 1)
-					printf("in =%s=\n", ms->in);
 			}
 			else
 			{
 				if (temp && temp->txt != NULL)
 					f_add_com(ms, temp->txt);
-				if (DEBUG == 1)
-					printf("com_temp =%s=\n", ms->com_temp);
 			}
 			if (temp)
 				temp = temp->next;
 		}
 		f_addback_com(&ms->comand, f_new_com(ms->com_temp, ms->in, ms->out));
 		f_zero_new_com(ms);
-		if (DEBUG == 1)
-			printf("-----------------------------split com-----------\n");
 		if (temp == NULL)
 			break ;
 		temp = temp->next;
 	}
 	f_free_list(&ms->list);
 	ms->list = NULL;
-
-	if (DEBUG == 1)
-		printf("" GRE "---f_split_pipes out---\n" WHT ""); // TODO Supprimer
 }

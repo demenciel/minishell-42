@@ -1,14 +1,10 @@
-
 #include "../../inc/minishell.h"
 
 void	f_check_word(t_meta *ms)
 {
-	int	start;
-	char *temp;
-	char *add;
-
-	if (DEBUG == 1)
-		printf("" GRE "---f_check_word in---\n" WHT ""); // TODO Supprimer
+	int		start;
+	char	*temp;
+	char	*add;
 
 	start = ms->i;
 	while (ms->line[ms->i] && f_check_metachar(ms->line[ms->i]) == 0)
@@ -16,7 +12,7 @@ void	f_check_word(t_meta *ms)
 	temp = ft_substr(ms->line, start, (ms->i - start));
 	if (temp == NULL)
 		return ;
-	else if (start > 1  && f_check_metachar(ms->line[start - 1]) == 0)
+	else if (start > 1 && f_check_metachar(ms->line[start - 1]) == 0)
 	{
 		add = ft_strjoin(f_last_node(ms->list)->txt, temp);
 		f_last_node(ms->list)->txt = f_freenull(f_last_node(ms->list)->txt);
@@ -26,18 +22,12 @@ void	f_check_word(t_meta *ms)
 	}
 	else
 		f_addback_node(&ms->list, f_new_node(temp));
-
-	if (DEBUG == 1)
-		printf("" RED "---f_check_word_ out---\n" WHT ""); // TODO Supprimer
 }
 
 void	f_check_single_quote(t_meta *ms)
 {
 	int		start;
 	char	*temp;
-
-	if (DEBUG == 1)
-		printf("" GRE "---f_check_single_quote in---\n" WHT ""); // TODO Supprimer
 
 	start = ms->i++;
 	while (ms->line[ms->i] && ms->line[ms->i] != 39)
@@ -51,19 +41,13 @@ void	f_check_single_quote(t_meta *ms)
 	}
 	f_addback_node(&ms->list, f_new_node(temp));
 	ms->i++;
-
-	if (DEBUG == 1)
-		printf("" RED "---f_check_single_quote out---\n" WHT ""); // TODO Supprimer
 }
 
 char	*f_pars_simple_quote(t_meta *ms, char *txt)
 {
 	char	*temp;
+
 	(void)ms;
-
-	if (DEBUG == 1)
-		printf("" GRE "---f_pars_simple_quote in---\n" WHT ""); // TODO Supprimer
-
 	if (f_som_quote_simple(txt) != 2)
 	{
 		ms->exit_status = 2;
@@ -73,19 +57,13 @@ char	*f_pars_simple_quote(t_meta *ms, char *txt)
 	temp = f_trimstr(txt, 39);
 	f_freenull(txt);
 	return (temp);
-
-	if (DEBUG == 1)
-		printf("" RED "---f_pars_simple_quote out---\n" WHT ""); // TODO Supprimer
 }
 
-void f_new_check_dollar(t_meta *ms)
+void	f_new_check_dollar(t_meta *ms)
 {
 	int		start;
 	char	*temp;
 	char	*add;
-
-	if (DEBUG == 1)
-		printf("" GRE "---f_new_check_dollar in---\n" WHT ""); // TODO Supprimer
 
 	start = ms->i++;
 	while (ms->line[ms->i] && f_check_env_dol(ms->line[ms->i]) == 1)
@@ -104,22 +82,17 @@ void f_new_check_dollar(t_meta *ms)
 	}
 	else
 		f_addback_node(&ms->list, f_new_node(temp));
-
-	if (DEBUG == 1)
-		printf("" RED "---f_new_check_dollar out---\n" WHT ""); // TODO Supprimer
 }
 
 char	*f_pars_new_dollar(t_meta *ms, char *txt)
 {
 	char	*temp;
 	char	*env;
-	char *prov;
-	int i;
-	int start;
-	(void)ms;
+	char	*prov;
+	int		i;
+	int		start;
 
-	if (DEBUG == 1)
-		printf("" GRE "---f_pars_new_dollar in---\n" WHT ""); // TODO Supprimer
+	(void)ms;
 	temp = ft_strdup(txt);
 	txt = f_freenull(txt);
 	i = 0;
@@ -141,7 +114,7 @@ char	*f_pars_new_dollar(t_meta *ms, char *txt)
 			txt = ft_strdup(prov);
 			prov = f_freenull(prov);
 		}
-		if (temp [i] && temp[i] == 36)
+		if (temp[i] && temp[i] == 36)
 		{
 			start = i++;
 			while (temp[i] && f_check_env(temp[i]) == 1)
@@ -160,11 +133,7 @@ char	*f_pars_new_dollar(t_meta *ms, char *txt)
 	}
 	temp = f_freenull(temp);
 	return (txt);
-
-	if (DEBUG == 1)
-		printf("" RED "---f_pars_new_dollar out---\n" WHT ""); // TODO Supprimer
 }
-
 
 char	*f_pars_dollar(t_meta *ms, char *txt)
 {
@@ -174,9 +143,6 @@ char	*f_pars_dollar(t_meta *ms, char *txt)
 	int		nb;
 
 	nb = ms->exit_status;
-	if (DEBUG == 1)
-		printf("" GRE "---f_pars_dollar in---\n" WHT ""); // TODO Supprimer
-
 	if (ft_strlen(txt) == 1)
 		return (txt);
 	else if (txt[1] == '?')
@@ -196,18 +162,12 @@ char	*f_pars_dollar(t_meta *ms, char *txt)
 		env = f_freenull(env);
 		return (prov);
 	}
-
-	if (DEBUG == 1)
-		printf("" RED "---f_pars_dollar out---\n" WHT ""); // TODO Supprimer
 }
 
 void	f_check_double_quote(t_meta *ms)
 {
 	int		start;
 	char	*temp;
-
-	if (DEBUG == 1)
-		printf("" GRE "---f_check_double_quote in---\n" WHT ""); // TODO Supprimer
 
 	start = ms->i++;
 	while (ms->line[ms->i] && ms->line[ms->i] != 34)
@@ -221,23 +181,17 @@ void	f_check_double_quote(t_meta *ms)
 	}
 	f_addback_node(&ms->list, f_new_node(temp));
 	ms->i++;
-
-	if (DEBUG == 1)
-		printf("" RED "---f_check_double_quote out---\n" WHT ""); // TODO Supprimer
 }
 
-char	*f_pars_double_quote(t_meta *ms, char *txt) //TODO a travailer
+char	*f_pars_double_quote(t_meta *ms, char *txt)
 {
 	char	*temp;
 	char	*env;
-	char *prov;
-	int i;
-	int start;
-	(void)ms;
+	char	*prov;
+	int		i;
+	int		start;
 
-	if (DEBUG == 1)
-		printf("" GRE "---f_pars_double_quote in---\n" WHT ""); // TODO Supprimer
-;
+	(void)ms;
 	if (f_som_quote_double(txt) != 2)
 	{
 		ms->exit_status = 2;
@@ -260,7 +214,7 @@ char	*f_pars_double_quote(t_meta *ms, char *txt) //TODO a travailer
 			txt = f_freenull(txt);
 			txt = prov;
 		}
-		if (temp [i] && temp[i] == 36)
+		if (temp[i] && temp[i] == 36)
 		{
 			start = i++;
 			while (temp[i] && f_check_env(temp[i]) == 1)
@@ -278,19 +232,13 @@ char	*f_pars_double_quote(t_meta *ms, char *txt) //TODO a travailer
 	}
 	temp = f_freenull(temp);
 	return (txt);
-
-	if (DEBUG == 1)
-		printf("" RED "---f_pars_double_quote out---\n" WHT ""); // TODO Supprimer
 }
 
 void	f_check_redir_left(t_meta *ms)
 {
-	int	start;
-	int	end;
-	char *temp;
-
-	if (DEBUG == 1)
-		printf("" GRE "---f_check_redir_left in---\n" WHT ""); // TODO Supprimer
+	int		start;
+	int		end;
+	char	*temp;
 
 	start = ms->i;
 	while (ms->line[ms->i] && ms->line[ms->i] == 60)
@@ -304,18 +252,13 @@ void	f_check_redir_left(t_meta *ms)
 	}
 	temp = ft_substr(ms->line, start, (end - start));
 	f_addback_node(&ms->list, f_new_node(temp));
-
-	if (DEBUG == 1)
-		printf("" RED "---f_check_redir_left out---\n" WHT ""); // TODO Supprimer
 }
 
 void	f_check_redir_right(t_meta *ms)
 {
-	int	start;
-	int	end;
-	char *temp;
-	if (DEBUG == 1)
-		printf("" GRE "---f_check_redir_right in---\n" WHT ""); // TODO Supprimer
+	int		start;
+	int		end;
+	char	*temp;
 
 	start = ms->i;
 	while (ms->line[ms->i] && ms->line[ms->i] == 62)
@@ -329,19 +272,13 @@ void	f_check_redir_right(t_meta *ms)
 	}
 	temp = ft_substr(ms->line, start, (end - start));
 	f_addback_node(&ms->list, f_new_node(temp));
-
-	if (DEBUG == 1)
-		printf("" RED "---f_check_redir_right out---\n" WHT ""); // TODO Supprimer
 }
 
 void	f_check_pipes(t_meta *ms)
 {
-	int	start;
-	int	end;
-	char *temp;
-
-	if (DEBUG == 1)
-		printf("" GRE "---f_check_pipes in---\n" WHT ""); // TODO Supprimer
+	int		start;
+	int		end;
+	char	*temp;
 
 	if (ms->i == 0)
 	{
@@ -362,8 +299,4 @@ void	f_check_pipes(t_meta *ms)
 	}
 	temp = ft_substr(ms->line, start, (end - start));
 	f_addback_node(&ms->list, f_new_node(temp));
-
-	if (DEBUG == 1)
-		printf("" RED "---f_check_pipes out---\n" WHT ""); // TODO Supprimer
 }
-
