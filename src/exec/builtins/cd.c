@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 14:02:34 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/09 09:37:51 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/09 17:46:59 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*get_env(char *input)
 	{
 		path = ft_strtrim(g()->env_list[i], input);
 		new_path = ft_strtrim(path, "=");
-		path = f_freenull(path);
+		free(path);
 	}
 	return (new_path);
 }
