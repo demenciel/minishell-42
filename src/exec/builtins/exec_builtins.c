@@ -6,7 +6,7 @@
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 07:43:03 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/10 12:56:48 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/11 07:17:49 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,19 +89,26 @@ bool	ft_check_builtins(t_meta *ms)
 {
 	if (ms->comand->com)
 	{
-		if (ft_strncmp(ms->comand->com[0], "export", ft_strlen(ms->comand->com[0])) == 0)
+		if (ft_strncmp(ms->comand->com[0], "unset",
+				ft_strlen("unset\n")) == 0)
 			return (true);
-		else if (ft_strncmp(ms->comand->com[0], "unset", ft_strlen(ms->comand->com[0])) == 0)
+		else if (ft_strncmp(ms->comand->com[0], "export",
+				ft_strlen("export\n")) == 0)
 			return (true);
-		else if (ft_strncmp(ms->comand->com[0], "env", ft_strlen(ms->comand->com[0])) == 0)
+		else if (ft_strncmp(ms->comand->com[0], "env",
+				ft_strlen("env\n")) == 0)
 			return (true);
-		else if (ft_strncmp(ms->comand->com[0], "echo", ft_strlen(ms->comand->com[0])) == 0)
+		else if (ft_strncmp(ms->comand->com[0], "echo",
+				ft_strlen("echo\n")) == 0)
 			return (true);
-		else if (ft_strncmp(ms->comand->com[0], "cd", ft_strlen(ms->comand->com[0])) == 0)
+		else if (ft_strncmp(ms->comand->com[0], "cd",
+				ft_strlen("cd\n")) == 0)
 			return (true);
-		else if (ft_strncmp(ms->comand->com[0], "pwd", ft_strlen(ms->comand->com[0])) == 0)
+		else if (ft_strncmp(ms->comand->com[0], "pwd",
+				ft_strlen("pwd\n")) == 0)
 			return (true);
-		else if (ft_strncmp(ms->comand->com[0], "exit", ft_strlen(ms->comand->com[0])) == 0)
+		else if (ft_strncmp(ms->comand->com[0], "exit",
+				ft_strlen("exit\n")) == 0)
 			return (true);
 	}
 	return (false);

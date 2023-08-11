@@ -6,7 +6,7 @@
 #    By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/09 07:40:10 by acouture          #+#    #+#              #
-#    Updated: 2023/08/10 16:10:37 by rofontai         ###   ########.fr        #
+#    Updated: 2023/08/11 07:22:49 by rofontai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,8 +26,11 @@ LIBRLINE	= readline-8.2
 
 SRC		:=  main.c \
 			exec/executables/main_exec.c \
+			exec/executables/main_exec_utils.c \
 			exec/executables/pipex.c \
+			exec/executables/fd.c \
 			exec/executables/redirect.c \
+			exec/executables/redirect_in_out.c \
 			exec/executables/error_utils.c \
 			exec/builtins/env.c \
 			exec/builtins/builtin.c \
@@ -39,6 +42,7 @@ SRC		:=  main.c \
 			exec/export/export2.c \
 			exec/export/export3.c \
 			parsing/checking.c \
+			parsing/checking_1.c \
 			parsing/com_list.c \
 			parsing/com_utils.c \
 			parsing/free.c \
@@ -46,10 +50,11 @@ SRC		:=  main.c \
 			parsing/parsing.c \
 			parsing/utils.c \
 			parsing/utils_1.c \
-			parsing/a_supp.c \
 			parsing/exit.c \
 			parsing/signal.c \
-
+			check_main.c \
+			check_main2.c \
+			parsing/a_supp.c \
 
 SRCS	= $(addprefix $(SRC_PATH), $(SRC))
 OBJ		= $(SRC:%.c=%.o)

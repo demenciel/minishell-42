@@ -6,7 +6,7 @@
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 07:42:47 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/10 14:25:23 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/11 07:17:16 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ void	print_echo_string(int i, t_meta *ms, int flag, int input_fd)
 		len_com++;
 	while (ms->comand->com[i])
 	{
-		if (ft_strncmp(ms->comand->com[1], "-n", ft_strlen(ms->comand->com[1])) == 0
-			&& !ms->comand->com[2])
+		if (ft_strncmp(ms->comand->com[1], "-n",
+				ft_strlen(ms->comand->com[1])) == 0 && !ms->comand->com[2])
 			break ;
 		if (i == (len_com - 1))
 			echo_string = ft_strdup(ms->comand->com[i]);

@@ -79,8 +79,18 @@ typedef struct s_exec
 	char				**export_list;
 }						t_exec;
 
-// REDIRECT
+// MAIN CHECK
+char					*ft_strjoin_path(char *s1, char *s2);
+char					*ft_strjoin_path(char *s1, char *s2);
+int						check_absolute_path(char **cmd);
+int						check_comand(t_meta *ms);
+char					**command_path(void);
+int						check_comand_norm(t_comand *node, char **paths);
+int						search_cmd_path(t_comand *node, char *path, int flag);
+int						check_cmd_error(int flag, char *error_node);
 
+// REDIRECT
+int						redirect_nodes(int *pipe, t_meta *ms);
 int						redirect_out(t_meta *ms);
 int						redirect_in(t_meta *ms, int *pipe);
 int						heredocs(char *limiter, int input_fd);
@@ -90,14 +100,17 @@ void					pipex(t_meta *ms, bool multi, int input_fd, int out_fd);
 int						open_rd_fd(char *fd1);
 int						create_rd_fd(char *fd1);
 int						append_rd_fd(char *fd1);
+
+// MAIN EXEC UTILS
 void					wait_free_pid(t_meta *ms, int nb_node);
+int						lst_size(t_comand *lst);
+void					init_exec_struct(void);
+void					clean_fd();
+int						check_for_path(void);
 
 // MAIN EXEC
 void					exec_multi_node(t_meta *ms);
-void					init_exec_struct(void);
-int	lst_size(t_comand *lst);
-char	**get_env_path(void);
-void	clean_fd();
+char					**get_env_path(void);
 
 // EXEC BUILTINS
 bool					ft_check_builtins(t_meta *ms);
@@ -116,6 +129,7 @@ void					ft_unset_export(char *var);
 void					find_echo(t_meta *ms, int input_fd);
 int						iterate_over_echo_flag(t_meta *ms, int i);
 char					*ft_strtrim_echo(char const *s1, char const *set);
+
 // CD
 void					ft_cd(t_meta *ms, char *path);
 char					*get_env(char *input);
@@ -141,7 +155,7 @@ int						check_var(char *var);
 void					ft_swap_char(char **a, char **b);
 void					order_export(int *size);
 
-// UTILS-----------------------------------------------------------------------
+// UTILS
 
 t_exec					*g(void);
 t_meta					*mt(void);
@@ -210,11 +224,12 @@ void					f_check_node(t_meta *ms);
 int						f_search_dollar(char *str);
 
 // INIT------------------------------------------------------------------------
-
+//ok
 t_meta					*f_init_meta(void);
 void					f_all_clean(t_meta *ms, char *msg);
 void					f_all_clean_exit(t_meta *ms, int nb);
 void					f_free_exit_child(t_meta *ms, int nb);
+void					f_free_meta(t_meta *ms);
 
 // FREE------------------------------------------------------------------------
 //ok
@@ -231,10 +246,12 @@ void					f_print(char **cou);
 
 
 // EXIT------------------------------------------------------------------------
-
+//ok
 int						find_exit(t_meta *ms, int fd);
 int						f_size_table(char **table);
 int						f_arg_is_num(char *txt);
+void					f_message(t_meta *ms, char *txt, int fd);
+void					f_message_short(int fd);
 
 // SIGNAL----------------------------------------------------------------------
 //ok

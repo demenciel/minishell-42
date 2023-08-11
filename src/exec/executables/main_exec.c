@@ -6,107 +6,17 @@
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 09:34:54 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/10 16:14:31 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/11 07:18:25 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/minishell.h"
 
 /**
- * @brief Initialize the content of the exec struct
+ * @brief Creates an array to store PID for each nodes
+ * @param node Pointer to the nodes
+ * @return The number of nodes in the list
  */
-void	init_exec_struct(void)
-{
-	t_exec	*p;
-
-	p = g();
-	p->in_fd = 0;
-	p->old_fd = 0;
-	p->out_fd = 0;
-	p->env_list = NULL;
-	p->export_list = NULL;
-	p->pid = 0;
-	p->pid_index = 0;
-	p->redir_flag = false;
-}
-
-int	lst_size(t_comand *lst)
-{
-	int			i;
-	t_comand	*node;
-
-	i = 0;
-	node = lst;
-	if (!node)
-		return (0);
-	while (node->next)
-	{
-		i++;
-		node = node->next;
-	}
-	if (node->next == NULL)
-		i++;
-	return (i);
-}
-
-int	redirect_nodes(int *pipe, t_meta *ms)
-{
-	int	out_fd;
-
-	if (ms->comand->next == NULL)
-		out_fd = 1;
-	else
-		out_fd = pipe[1];
-	if (ms->comand->stin != NULL)
-	{
-		g()->in_fd = redirect_in(ms, pipe);
-		if (g()->in_fd == FD_ERROR)
-			return (FD_ERROR);
-		else if (g()->in_fd == HEREDOC_ERROR)
-			return (HEREDOC_ERROR);
-	}
-	if (ms->comand->stout != NULL)
-	{
-		out_fd = redirect_out(ms);
-		if (out_fd < 0)
-			return (FD_ERROR);
-		g()->redir_flag = true;
-	}
-	return (out_fd);
-}
-
-void	wait_free_pid(t_meta *ms, int nb_node)
-{
-	int	i;
-	int status;
-
-	i = 0;
-	status = 0;
-	while (i < nb_node)
-	{
-		waitpid(g()->pid[i], &status, 0);
-		close(g()->in_fd);
-		i++;
-		f_signal_in(status, ms);
-	}
-	clean_fd();
-	g()->pid_index = 0;
-	free(g()->pid);
-}
-
-/**
- * @brief Executes a single node in the program
- * @param node The node to be executed
- * @param fd The fd into which to write the execution
- */
-void	exec_one_node(t_meta *ms, int fd, int out_fd)
-{
-	if (ft_check_builtins(ms))
-		find_builtins(ms, out_fd);
-	else
-		pipex(ms, false, fd, out_fd);
-}
-
 int	init_pid_and_nb_node(t_meta *ms)
 {
 	int	nb_node;
@@ -128,9 +38,50 @@ int	init_pid_and_nb_node(t_meta *ms)
 	return (nb_node);
 }
 
+/**
+ * @brief Executes a single node in the program
+ * @param node The node to be executed
+ * @param fd The fd into which to write the execution
+ */
+void	exec_one_node(t_meta *ms, int fd, int out_fd)
+{
+	if (ft_check_builtins(ms))
+		find_builtins(ms, out_fd);
+	else
+		pipex(ms, false, fd, out_fd);
+}
+
+/**
+ * @brief The execute function for exec_multi_node
+ * @param out_fd The fd to write in
+ * @param node The node containing the command to be executed
+ * @param nb_node The number of nodes
+ */
+void	exec_nodes(int out_fd, t_meta *ms)
+{
+	t_comand	*node;
+
+	node = ms->comand;
+	if (node->com == NULL || node->com[0] == NULL)
+		return ;
+	if (node->next == NULL)
+		exec_one_node(ms, g()->in_fd, out_fd);
+	else
+	{
+		if (!ft_check_builtins(ms))
+			pipex(ms, true, g()->in_fd, out_fd);
+		else
+		{
+			find_builtins(ms, out_fd);
+			close(out_fd);
+		}
+	}
+}
+
 void	free_ms_node(t_comand *ms)
 {
-	ft_free_tab_char(ms->com);
+	if (ms->com)
+		ft_free_tab_char(ms->com);
 	free(ms->stin);
 	free(ms->stout);
 	free(ms);
@@ -143,11 +94,10 @@ void	free_ms_node(t_comand *ms)
  */
 void	exec_multi_node(t_meta *ms)
 {
-	int	pipe_end[2];
-	int	out_fd;
-	int	nb_node;
-	t_comand *next_node;
-
+	int			pipe_end[2];
+	int			out_fd;
+	int			nb_node;
+	t_comand	*next_node;
 
 	if (!ms->comand || pipe(pipe_end) != 0)
 		return ;
@@ -160,23 +110,7 @@ void	exec_multi_node(t_meta *ms)
 			return ;
 		else if (out_fd == HEREDOC_ERROR)
 			break ;
-		if (ms->comand->com == NULL || ms->comand->com[0] == NULL)
-		{
-			wait_free_pid(ms, nb_node);
-			return ;
-		}
-		if (ms->comand->next == NULL)
-			exec_one_node(ms, g()->in_fd, out_fd);
-		else
-		{
-			if (!ft_check_builtins(ms))
-				pipex(ms, true, g()->in_fd, out_fd);
-			else
-			{
-				find_builtins(ms, out_fd);
-				close(out_fd);
-			}
-		}
+		exec_nodes(out_fd, ms);
 		next_node = ms->comand->next;
 		free_ms_node(ms->comand);
 		ms->comand = next_node;
