@@ -115,7 +115,7 @@ char					**get_env_path(void);
 // EXEC BUILTINS
 bool					ft_check_builtins(t_meta *ms);
 void					find_builtins(t_meta *ms, int input_fd);
-void					find_export_unset_env(t_meta *ms, int input_fd);
+void					find_export_env(t_meta *ms, int input_fd);
 
 // BUILTINS
 void					ft_echo(char *string, int input_fd);

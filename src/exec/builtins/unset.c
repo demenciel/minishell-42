@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 09:38:33 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/11 12:31:49 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/11 13:07:10 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_unset_env(char *var)
  * @param trimmed The var to delete
  * @param i The index of the var
  */
-void	ft_unset_realloc(char *trimmed, int i, int j)
+void	ft_unset_realloc_export(char *trimmed, int i, int j)
 {
 	t_exec	*p;
 
@@ -79,11 +79,11 @@ void	ft_unset_export(char *var)
 	char	*trimmed;
 	char	*set;
 
-	set = ft_strdup("declare -x ");
 	i = 0;
 	j = 0;
 	if (g()->export_list == NULL)
 		return ;
+	set = ft_strdup("declare -x ");
 	while (g()->export_list[i])
 	{
 		while (set[j] == g()->export_list[i][j])
@@ -91,7 +91,7 @@ void	ft_unset_export(char *var)
 		trimmed = ft_strdup(&g()->export_list[i][j]);
 		if (ft_strncmp(var, trimmed, ft_strlen(var)) == 0)
 		{
-			ft_unset_realloc(trimmed, i, j);
+			ft_unset_realloc_export(trimmed, i, j);
 			break ;
 		}
 		free(trimmed);

@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 14:02:34 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/11 12:26:07 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/11 12:45:09 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,12 +116,15 @@ char	*result_path(char *env_var, bool oldpwd)
 {
 	char	*result;
 	char	*path_env;
+	char	*error_var;
 
 	result = NULL;
 	path_env = get_env(env_var);
 	if (!path_env)
 	{
-		cd_error(env_var);
+		error_var = ft_strtrim(env_var, "=");
+		cd_error(error_var);
+		free(error_var);
 		return (NULL);
 	}
 	if (oldpwd)
