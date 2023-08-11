@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 16:50:34 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/11 17:15:55 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/11 18:07:13 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	check_comand_norm(t_meta *ms, t_comand *node, char **paths)
 	while (node)
 	{
 		i = -1;
+
 		if (check_absolute_path(node->com) == 0)
 			return (0);
 		while (paths[++i])
@@ -74,7 +75,7 @@ int	check_comand_norm(t_meta *ms, t_comand *node, char **paths)
 			error_node = ft_strdup(node->com[0]);
 		node = node->next;
 	}
-	ft_2darr_free(paths);
+	
 	return (check_cmd_error(ms, flag, error_node));
 }
 
@@ -82,6 +83,7 @@ int	check_comand(t_meta *ms)
 {
 	char		**paths;
 	t_comand	*node;
+	int 		return_norm;
 
 	node = ms->comand;
 	if (node->com)
@@ -92,7 +94,11 @@ int	check_comand(t_meta *ms)
 			return (-1);
 		}
 		paths = command_path();
-		return (check_comand_norm(ms, node, paths));
+		if (!paths)
+			return (-1);
+		return_norm = check_comand_norm(ms, node, paths);
+		ft_2darr_free(paths);
+		return (return_norm);
 	}
 	return (0);
 }

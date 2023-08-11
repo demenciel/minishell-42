@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 19:03:46 by rofontai          #+#    #+#             */
-/*   Updated: 2023/08/11 07:20:17 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/11 18:00:13 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	f_all_clean(t_meta *ms, char *msg)
 		ft_2darr_free(g()->env_list);
 	if (g()->in_fd > 2)
 		close(g()->in_fd);
-	if (g()->pid)
+	if (g()->pid != NULL)
 		free(g()->pid);
 	clean_fd();
 	if (msg)
