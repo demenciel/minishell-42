@@ -224,11 +224,12 @@ void					f_check_node(t_meta *ms);
 int						f_search_dollar(char *str);
 
 // INIT------------------------------------------------------------------------
-
+//ok
 t_meta					*f_init_meta(void);
 void					f_all_clean(t_meta *ms, char *msg);
 void					f_all_clean_exit(t_meta *ms, int nb);
 void					f_free_exit_child(t_meta *ms, int nb);
+void					f_free_meta(t_meta *ms);
 
 // FREE------------------------------------------------------------------------
 //ok
@@ -245,10 +246,12 @@ void					f_print(char **cou);
 
 
 // EXIT------------------------------------------------------------------------
-
+//ok
 int						find_exit(t_meta *ms, int fd);
 int						f_size_table(char **table);
 int						f_arg_is_num(char *txt);
+void					f_message(t_meta *ms, char *txt, int fd);
+void					f_message_short(int fd);
 
 // SIGNAL----------------------------------------------------------------------
 //ok
