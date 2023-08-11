@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 14:02:34 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/11 13:31:53 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/11 14:23:32 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	change_pwd_env(char *oldpath, char *path)
  * @return If the var is not find, returns NULL, if found,
 	returns the path to the var
  */
-char	*result_path(char *env_var, bool oldpwd)
+char	*result_path(t_meta *ms, char *env_var, bool oldpwd)
 {
 	char	*result;
 	char	*path_env;
@@ -123,7 +123,7 @@ char	*result_path(char *env_var, bool oldpwd)
 	if (!path_env)
 	{
 		error_var = ft_strtrim(env_var, "=");
-		cd_error(error_var);
+		cd_error(ms, error_var);
 		free(error_var);
 		return (NULL);
 	}
@@ -138,15 +138,15 @@ char	*result_path(char *env_var, bool oldpwd)
  * @param path Input of cd
  * @return Returns NULL if path is not find, otherwise, returns the path found
  */
-char	*path_to_cd(char *path)
+char	*path_to_cd(t_meta *ms, char *path)
 {
 	char	*result;
 
 	result = NULL;
 	if (!path || *path == '\0')
-		result = result_path("HOME=", false);
+		result = result_path(ms, "HOME=", false);
 	else if (ft_strcmp(path, "-") == 0)
-		result = result_path("OLDPWD=", true);
+		result = result_path(ms, "OLDPWD=", true);
 	else
 		result = ft_strdup(path);
 	return (result);

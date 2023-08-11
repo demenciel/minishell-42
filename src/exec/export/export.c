@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 08:40:57 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/09 09:46:55 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/11 14:25:28 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,12 +108,12 @@ bool	if_var_empty(char *new_var, int *list_size, int input_fd)
  * @brief Adds an element to the env list. Simulates what (export) cmd does
  * @param new_var New element to add to list
  */
-void	ft_export(char *new_var, int input_fd)
+void	ft_export(t_meta *ms, char *new_var, int input_fd)
 {
 	int	i;
 	int	list_size;
 
-	if (check_var(new_var) == -1)
+	if (check_var(ms, new_var) == -1)
 		return ;
 	if (g()->export_list == NULL)
 	{

@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 07:43:03 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/11 13:02:25 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/11 14:25:52 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	find_unset(t_meta *ms)
 			return ;
 		while (ms->comand->com[i])
 		{
+			if (check_var(ms, ms->comand->com[i]) != 0)
+				return ;
 			joined = ft_strjoin(ms->comand->com[i], "=");
 			ft_unset_export(joined);
 			ft_unset_env(joined);
@@ -49,9 +51,9 @@ void	find_export_env(t_meta *ms, int input_fd)
 	{
 		i = 1;
 		if (!ms->comand->com[i])
-			ft_export("", input_fd);
+			ft_export(ms, "", input_fd);
 		while (ms->comand->com[i])
-			ft_export(ms->comand->com[i++], input_fd);
+			ft_export(ms, ms->comand->com[i++], input_fd);
 	}
 	else if (ft_strcmp(ms->comand->com[0], "env") == 0)
 		ft_env(input_fd);

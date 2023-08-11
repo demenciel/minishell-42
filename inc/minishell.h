@@ -85,9 +85,9 @@ char					*ft_strjoin_path(char *s1, char *s2);
 int						check_absolute_path(char **cmd);
 int						check_comand(t_meta *ms);
 char					**command_path(void);
-int						check_comand_norm(t_comand *node, char **paths);
+int						check_comand_norm(t_meta *ms, t_comand *node, char **paths);
 int						search_cmd_path(t_comand *node, char *path, int flag);
-int						check_cmd_error(int flag, char *error_node);
+int						check_cmd_error(t_meta *ms, int flag, char *error_node);
 
 // REDIRECT
 int						redirect_nodes(int *pipe, t_meta *ms);
@@ -97,9 +97,9 @@ int						heredocs(char *limiter, int input_fd);
 
 // PIPEX
 void					pipex(t_meta *ms, bool multi, int input_fd, int out_fd);
-int						open_rd_fd(char *fd1);
-int						create_rd_fd(char *fd1);
-int						append_rd_fd(char *fd1);
+int						open_rd_fd(t_meta *ms, char *fd1);
+int						create_rd_fd(t_meta *ms, char *fd1);
+int						append_rd_fd(t_meta *ms, char *fd1);
 
 // MAIN EXEC UTILS
 void					wait_free_pid(t_meta *ms, int nb_node);
@@ -121,7 +121,7 @@ void					find_export_env(t_meta *ms, int input_fd);
 void					ft_echo(char *string, int input_fd);
 char					*ft_pwd(void);
 void					ft_env(int fd);
-void					ft_export(char *new_env, int fd);
+void					ft_export(t_meta *ms, char *new_env, int fd);
 void					ft_unset_env(char *var);
 void					ft_unset_export(char *var);
 
@@ -135,8 +135,8 @@ void					ft_cd(t_meta *ms, char *path);
 char					*get_env(char *input);
 void					replace_oldpwd(char *oldpath);
 void					change_pwd_env(char *oldpath, char *path);
-char					*result_path(char *env_var, bool oldpwd);
-char 					*path_to_cd(char *path);
+char					*result_path(t_meta *ms, char *env_var, bool oldpwd);
+char 					*path_to_cd(t_meta *ms, char *path);
 
 // ENV
 char					**ft_cpy_env(char **list);
@@ -151,7 +151,7 @@ void					change_var_content_export(char *var, int index);
 char					*detect_var_export(char *var);
 char					**ft_cpy_export(char **list);
 void					add_var_to_env(char *new_var, int i);
-int						check_var(char *var);
+int						check_var(t_meta *ms, char *var);
 void					ft_swap_char(char **a, char **b);
 void					order_export(int *size);
 
@@ -162,11 +162,11 @@ t_meta					*mt(void);
 void					exec_cmd(t_meta *ms, char **cmd);
 
 // ERROR UTILS
-void					print_error(char *cmd);
-void					fd_error(char *fd);
-void					pipex_fail(char *s);
-void					cd_error(char *input);
-void					export_error(char *id);
+void					print_error(t_meta *ms, char *cmd);
+void					fd_error(t_meta *ms, char *fd);
+void					pipex_fail(t_meta *ms, char *s);
+void					cd_error(t_meta *ms, char *input);
+void					export_error(t_meta *ms, char *id);
 
 
 //PARSING-MINISHELL

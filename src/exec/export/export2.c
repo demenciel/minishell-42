@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 08:41:13 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/11 13:48:50 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/11 14:24:36 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 	 or underscore exits program
  * @param var Var to check
 */
-int check_var(char *var)
+int check_var(t_meta *ms, char *var)
 {
 	int i;
 
@@ -26,7 +26,7 @@ int check_var(char *var)
 		return (-2);
 	if (!(ft_isalpha(var[i]) || var[i] == '_'))
 	{
-		export_error(var);
+		export_error(ms, var);
 		return (-1);
 	}
 	while (var[i])
@@ -37,7 +37,7 @@ int check_var(char *var)
 			i++;
 		else
 		{
-			export_error(var);
+			export_error(ms, var);
 			return (-1);
 		}
 	}
