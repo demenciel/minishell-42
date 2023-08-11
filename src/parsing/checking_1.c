@@ -6,7 +6,7 @@
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 18:17:50 by rofontai          #+#    #+#             */
-/*   Updated: 2023/08/11 11:42:47 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/11 15:10:49 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,25 @@ char	*f_pars_simple_quote(t_meta *ms, char *txt)
 	return (temp);
 }
 
+int	f_size_list(t_pars *lst)
+{
+	int		count;
+	t_pars	*temp;
+
+	count = 0;
+	temp = lst;
+	if (temp == NULL)
+		return (count);
+	while (temp->next != NULL)
+	{
+		count++;
+		temp = temp->next;
+	}
+	if (temp->next == NULL)
+		count++;
+	return (count);
+}
+
 void	f_new_check_dollar(t_meta *ms)
 {
 	int		start;
@@ -84,8 +103,10 @@ void	f_new_check_dollar(t_meta *ms)
 	temp = f_pars_new_dollar(ms, temp);
 	if (temp == NULL)
 		return ;
-	else if (f_search_dollar(ms->line) == -1)
+	else if (f_search_dollar(ms->line) == -1 && f_size_list(ms->list) > 1)
 	{
+		// printf ("node = %s\n", f_last_node(ms->list)->txt);
+		f_print_lst(ms->list);
 		add = ft_strjoin(f_last_node(ms->list)->txt, temp);
 		f_last_node(ms->list)->txt = f_freenull(f_last_node(ms->list)->txt);
 		f_last_node(ms->list)->txt = ft_strdup(add);
