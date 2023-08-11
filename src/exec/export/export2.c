@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 08:41:13 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/11 14:24:36 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/11 14:33:02 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 	 or underscore exits program
  * @param var Var to check
 */
-int check_var(t_meta *ms, char *var)
+int	check_var(t_meta *ms, char *var)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (*var == '\0')
@@ -43,7 +43,6 @@ int check_var(t_meta *ms, char *var)
 	}
 	return (0);
 }
-
 
 /**
  * @brief Swaps the two characters passed

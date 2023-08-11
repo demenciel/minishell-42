@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 15:41:33 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/11 14:21:51 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/11 14:32:43 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,17 @@ int	heredoc_exec(char **fd, int *pipe, int i)
 	}
 	return (0);
 }
+
 /**
- * @brief Checks if the token is a len of 2, if so, executes the heredoc function
- * 			and assigns its output to the return. If token is not len of 2, 
+ * @brief Checks if the token is a len of 2, if so,
+	executes the heredoc function
+ * 			and assigns its output to the return. If token is not len of 2,
  * 			open and reads the fd, then returns this new fd.
  * @param i The index of the list of fd
  * @param fd The list of fd
  * @param pipe The write end of the pipe
  * @return The fd for the redirection
-*/
+ */
 int	return_in_fd(t_meta *ms, int i, char **fd, int *pipe)
 {
 	int	in_fd;
@@ -68,13 +70,15 @@ int	return_in_fd(t_meta *ms, int i, char **fd, int *pipe)
 	}
 	return (in_fd);
 }
+
 /**
- * @brief Splits the input fds accompanying the command node, redirects the input
+ * @brief Splits the input fds accompanying the command node,
+	redirects the input
  * 		of the node to the right fd
  * @param ms The main structure with the nodes
  * @param pipe The write end of the pipe
  * @return The input fd of the command
-*/
+ */
 int	redirect_in(t_meta *ms, int *pipe)
 {
 	int		in_fd;
