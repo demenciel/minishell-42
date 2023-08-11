@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 08:41:13 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/09 09:35:51 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/11 13:25:56 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,7 @@ int	check_var(char *var)
 		return (-2);
 	while (var[i])
 	{
-		if (ft_isdigit(var[0]) || ((var[i] != '/') && !(var[i] == 95)
-				&& !(ft_isalpha(var[i])) && var[i] != '=') || (ft_strncmp("=",
-					var, ft_strlen(var)) == 0) || (var[0] == '=' && var[1]))
+		if (!(ft_isalpha(var[0])))
 		{
 			export_error(var);
 			return (-1);

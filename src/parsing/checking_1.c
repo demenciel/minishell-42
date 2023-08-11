@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checking_1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 18:17:50 by rofontai          #+#    #+#             */
-/*   Updated: 2023/08/10 18:22:37 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/11 13:33:42 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,17 @@ void	f_new_check_dollar(t_meta *ms)
 		f_addback_node(&ms->list, f_new_node(temp));
 }
 
+char	*get_env_dollar(char *temp)
+{
+	char *search_env;
+	char *result;
+
+	search_env = ft_strjoin(temp, "=");
+	result = get_env(search_env);
+	free(search_env);
+	return (result);
+}
+
 char	*f_pars_dollar(t_meta *ms, char *txt)
 {
 	char	*temp;
@@ -113,7 +124,7 @@ char	*f_pars_dollar(t_meta *ms, char *txt)
 	}
 	temp = f_trimstr(txt, 36);
 	txt = f_freenull(txt);
-	env = get_env(temp);
+	env = get_env_dollar(temp);
 	temp = f_freenull(temp);
 	if (env == NULL)
 		return (NULL);
