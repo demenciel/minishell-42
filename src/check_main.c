@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 16:50:34 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/10 17:31:56 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/11 14:03:44 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,13 @@ int	check_comand(t_meta *ms)
 	node = ms->comand;
 	if (node->com)
 	{
+		if (ft_strncmp(".\0)", node->com[0], 2) == 0)
+		{
+			printf("minishell: %s: command not found\n", node->com[0]);
+			ms->exit_status = 127;
+			ms->error_flag = 1;
+			return (-1);
+		}
 		paths = command_path();
 		return (check_comand_norm(node, paths));
 	}
