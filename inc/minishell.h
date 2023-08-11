@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 14:35:21 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/11 15:43:20 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/11 16:10:25 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ char					*ft_strjoin_path(char *s1, char *s2);
 int						check_absolute_path(char **cmd);
 int						check_comand(t_meta *ms);
 char					**command_path(void);
-int						check_comand_norm(t_meta *ms, t_comand *node, 
+int						check_comand_norm(t_meta *ms, t_comand *node,
 							char **paths);
 int						search_cmd_path(t_comand *node, char *path, int flag);
 int						check_cmd_error(t_meta *ms, int flag, char *error_node);
@@ -201,6 +201,11 @@ char					*f_pars_double_quote(t_meta *ms, char *txt);
 void					f_check_redir_left(t_meta *ms);
 void					f_check_redir_right(t_meta *ms);
 void					f_check_pipes(t_meta *ms);
+char					*f_cut(int *i, char *temp, t_meta *ms, char *txt);
+char					*f_cut_plus(int *start, int *i, char *temp, char *txt);
+char					*f_copy(char *temp, t_meta *ms);
+char					*f_copy_doll(int *i, char *temp, char *txt, t_meta *ms);
+
 
 // UTILS-----------------------------------------------------------------------
 //ok
@@ -225,7 +230,8 @@ void					f_zero_new_com(t_meta *ms);
 t_comand				*f_last_com(t_comand *list);
 void					f_addback_com(t_comand **cmd, t_comand *new);
 void					f_split_pipes(t_meta *ms);
-
+void					f_cut_add_out(t_meta *ms, t_pars **temp);
+void					f_cut_add_in(t_meta *ms, t_pars **temp);
 // COM_UTILS-------------------------------------------------------------------
 //ok
 void					f_add_com(t_meta *ms, char *add);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checking3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:10:33 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/11 15:10:47 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/11 15:25:16 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_strjoin_f(char *s1, const char *s2)
 	i = 0;
 	j = 0;
 	if ((!s1 && s2) || s1 == NULL)
-		return((char*)s2);
+		return ((char *)s2);
 	join_str = malloc(((ft_strlen(s1) + 1) + ft_strlen(s2)) * sizeof(char));
 	if (!join_str)
 		return (NULL);
@@ -41,12 +41,12 @@ char	*ft_strjoin_f(char *s1, const char *s2)
 	return (join_str);
 }
 
-char *f_copy(char *temp, t_meta *ms)
+char	*f_copy(char *temp, t_meta *ms)
 {
-	int start;
-	char *prov;
-	char *txt;
-	int i;
+	int		start;
+	char	*prov;
+	char	*txt;
+	int		i;
 
 	i = 0;
 	txt = NULL;
