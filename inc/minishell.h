@@ -6,7 +6,7 @@
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 14:35:21 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/11 16:10:25 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/11 17:05:40 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,7 @@ t_pars					*f_last_node(t_pars *list);
 void					f_addback_node(t_pars **cmd, t_pars *new);
 int						f_check_metachar(char c);
 char					*f_trimstr(char *s1, char c);
+void					f_print_error(t_meta *ms);
 
 // UTILS_1---------------------------------------------------------------------
 //ok
