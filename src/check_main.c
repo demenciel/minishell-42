@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 16:50:34 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/11 14:30:47 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/11 15:52:00 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ int	check_comand_norm(t_meta *ms, t_comand *node, char **paths)
 	int		i;
 	char	*error_node;
 
-	i = -1;
 	while (node)
 	{
+		i = -1;
 		if (check_absolute_path(node->com) == 0)
 			return (0);
 		while (paths[++i])
