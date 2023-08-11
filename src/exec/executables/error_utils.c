@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 07:42:16 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/11 12:33:21 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/11 13:38:37 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	print_error(char *cmd)
 		return ;
 	write(2, "minishell: ", 12);
 	write(2, cmd, ft_strlen(cmd));
-	write(2, ": command not found\n", 29);
+	write(2, ": command not found\n", 21);
 	mt()->exit_status = 1;
 	mt()->error_flag = 1;
 }
@@ -31,9 +31,9 @@ void	print_error(char *cmd)
 */
 void	export_error(char *id)
 {
-	write(2, "minishell: ", 16);
+	write(2, "minishell: ", 12);
 	write(2, id, ft_strlen(id));
-	write(2, ": not a valid identifier\n", 29);
+	write(2, ": not a valid identifier\n", 26);
 	mt()->exit_status = 1;
 	mt()->error_flag = 1;
 }
@@ -69,7 +69,7 @@ void	pipex_fail(char *s)
 {
 	write(2, "minishell: ", 12);
 	write(2, s, ft_strlen(s));
-	write(2, ": pipe failed\n", 29);
+	write(2, ": pipe failed\n", 15);
 	mt()->exit_status = 1;
 	mt()->error_flag = 1;
 }
