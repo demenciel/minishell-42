@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 08:41:13 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/11 13:25:56 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/11 13:48:50 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,33 @@
 	 or underscore exits program
  * @param var Var to check
 */
-int	check_var(char *var)
+int check_var(char *var)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	if (*var == '\0')
 		return (-2);
+	if (!(ft_isalpha(var[i]) || var[i] == '_'))
+	{
+		export_error(var);
+		return (-1);
+	}
 	while (var[i])
 	{
-		if (!(ft_isalpha(var[0])))
+		if (var[i] == '=')
+			break ;
+		if (ft_isalnum(var[i]) || var[i] == '_')
+			i++;
+		else
 		{
 			export_error(var);
 			return (-1);
 		}
-		i++;
 	}
 	return (0);
 }
+
 
 /**
  * @brief Swaps the two characters passed
