@@ -6,17 +6,17 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 16:50:34 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/11 14:03:44 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/11 14:30:47 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	check_cmd_error(int flag, char *error_node)
+int	check_cmd_error(t_meta *ms, int flag, char *error_node)
 {
 	if (flag > 0)
 	{
-		printf("minishell: %s: command not found\n", error_node);
+		print_error(ms, error_node);
 		free(error_node);
 		return (-1);
 	}
@@ -41,7 +41,7 @@ int	search_cmd_path(t_comand *node, char *path, int flag)
 	return (flag);
 }
 
-int	check_comand_norm(t_comand *node, char **paths)
+int	check_comand_norm(t_meta *ms, t_comand *node, char **paths)
 {
 	int		flag;
 	int		i;
@@ -63,7 +63,7 @@ int	check_comand_norm(t_comand *node, char **paths)
 		node = node->next;
 	}
 	ft_2darr_free(paths);
-	return (check_cmd_error(flag, error_node));
+	return (check_cmd_error(ms, flag, error_node));
 }
 
 int	check_comand(t_meta *ms)
@@ -76,13 +76,11 @@ int	check_comand(t_meta *ms)
 	{
 		if (ft_strncmp(".\0)", node->com[0], 2) == 0)
 		{
-			printf("minishell: %s: command not found\n", node->com[0]);
-			ms->exit_status = 127;
-			ms->error_flag = 1;
+			print_error(ms, node->com[0]);
 			return (-1);
 		}
 		paths = command_path();
-		return (check_comand_norm(node, paths));
+		return (check_comand_norm(ms, node, paths));
 	}
 	return (0);
 }

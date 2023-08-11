@@ -6,15 +6,15 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 13:33:13 by acouture          #+#    #+#             */
-/*   Updated: 2023/07/13 13:57:05 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/11 14:34:56 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int ft_strcmp(char *s1, char *s2)
+int	ft_strcmp(char *s1, char *s2)
 {
-    unsigned int	i;
+	unsigned int	i;
 
 	i = 0;
 	if (!s1 || !s2)

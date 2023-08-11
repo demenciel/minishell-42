@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 08:26:07 by acouture          #+#    #+#             */
-/*   Updated: 2023/07/15 13:07:46 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/11 14:34:17 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 size_t	ft_2darr_len(char **arr)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (arr[i])

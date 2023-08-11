@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 12:27:55 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/05 13:48:29 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/11 14:35:03 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * @param s1 String 1
  * @param s2 String 2
  * @return A pointer to the concatenated string
-*/
+ */
 char	*ft_strjoin(const char *s1, const char *s2)
 {
 	char			*join_str;
@@ -27,7 +27,7 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	i = 0;
 	j = 0;
 	if ((!s1 && s2) || s1 == NULL)
-		return((char*)s2);
+		return ((char *)s2);
 	join_str = malloc(((ft_strlen(s1) + 1) + ft_strlen(s2)) * sizeof(char));
 	if (!join_str)
 		return (NULL);

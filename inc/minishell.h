@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/11 14:35:21 by acouture          #+#    #+#             */
+/*   Updated: 2023/08/11 14:37:16 by acouture         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -85,7 +97,8 @@ char					*ft_strjoin_path(char *s1, char *s2);
 int						check_absolute_path(char **cmd);
 int						check_comand(t_meta *ms);
 char					**command_path(void);
-int						check_comand_norm(t_meta *ms, t_comand *node, char **paths);
+int						check_comand_norm(t_meta *ms, t_comand *node, 
+							char **paths);
 int						search_cmd_path(t_comand *node, char *path, int flag);
 int						check_cmd_error(t_meta *ms, int flag, char *error_node);
 
@@ -105,7 +118,7 @@ int						append_rd_fd(t_meta *ms, char *fd1);
 void					wait_free_pid(t_meta *ms, int nb_node);
 int						lst_size(t_comand *lst);
 void					init_exec_struct(void);
-void					clean_fd();
+void					clean_fd(void);
 int						check_for_path(void);
 
 // MAIN EXEC
@@ -136,7 +149,7 @@ char					*get_env(char *input);
 void					replace_oldpwd(char *oldpath);
 void					change_pwd_env(char *oldpath, char *path);
 char					*result_path(t_meta *ms, char *env_var, bool oldpwd);
-char 					*path_to_cd(t_meta *ms, char *path);
+char					*path_to_cd(t_meta *ms, char *path);
 
 // ENV
 char					**ft_cpy_env(char **list);
@@ -168,7 +181,6 @@ void					pipex_fail(t_meta *ms, char *s);
 void					cd_error(t_meta *ms, char *input);
 void					export_error(t_meta *ms, char *id);
 
-
 //PARSING-MINISHELL
 
 // PARSING---------------------------------------------------------------------
@@ -189,7 +201,6 @@ char					*f_pars_double_quote(t_meta *ms, char *txt);
 void					f_check_redir_left(t_meta *ms);
 void					f_check_redir_right(t_meta *ms);
 void					f_check_pipes(t_meta *ms);
-
 
 // UTILS-----------------------------------------------------------------------
 //ok
@@ -239,11 +250,9 @@ void					f_free_list(t_pars **list);
 void					*f_freenull(void *str);
 
 // A_SUPP----------------------------------------------------------------------
-
 void					f_print_lst(t_pars *lst);
 void					f_print_lst_final(t_comand *lst);
 void					f_print(char **cou);
-
 
 // EXIT------------------------------------------------------------------------
 //ok
@@ -258,6 +267,6 @@ void					f_message_short(int fd);
 void					f_sighandler(int sig);
 void					f_sighandler_com(int sig);
 void					f_signals(void);
-void  					f_signal_in(int status, t_meta *ms);
+void					f_signal_in(int status, t_meta *ms);
 
 #endif
