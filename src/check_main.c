@@ -6,17 +6,29 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 16:50:34 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/11 15:52:00 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/11 17:15:55 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
+/**
+ * @brief Function to print an error if the input of export is not valid
+*/
+void	cmd_error(t_meta *ms, char *id)
+{
+	write(2, "minishell: ", 12);
+	write(2, id, ft_strlen(id));
+	write(2, ": command not found\n", 21);
+	ms->exit_status = 127;
+	ms->error_flag = 1;
+}
+
 int	check_cmd_error(t_meta *ms, int flag, char *error_node)
 {
 	if (flag > 0)
 	{
-		print_error(ms, error_node);
+		cmd_error(ms, error_node);
 		free(error_node);
 		return (-1);
 	}
