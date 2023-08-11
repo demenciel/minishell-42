@@ -234,6 +234,9 @@ void					f_add_out(t_meta *ms, char *add);
 void					f_check_node(t_meta *ms);
 int						f_search_dollar(char *str);
 
+void f_cut_add_out(t_meta *ms, t_pars **temp);
+void f_cut_add_in(t_meta *ms, t_pars **temp);
+
 // INIT------------------------------------------------------------------------
 //ok
 t_meta					*f_init_meta(void);

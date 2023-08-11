@@ -6,7 +6,7 @@
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 18:16:36 by rofontai          #+#    #+#             */
-/*   Updated: 2023/08/11 15:21:12 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/11 15:24:00 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ char	*f_pars_new_dollar(t_meta *ms, char *txt)
 	int		start;
 
 	(void)ms;
+	i = 0;
 	temp = ft_strdup(txt);
 	txt = f_freenull(txt);
-	i = 0;
 	while (temp[i])
 	{
 		start = i;
@@ -40,11 +40,11 @@ char	*f_pars_new_dollar(t_meta *ms, char *txt)
 	return (txt);
 }
 
-char *f_cut(int *i, char *temp, t_meta *ms, char *txt)
+char	*f_cut(int *i, char *temp, t_meta *ms, char *txt)
 {
-	int start;
-	char *env;
-	char *prov;
+	int		start;
+	char	*env;
+	char	*prov;
 
 	start = *i;
 	*i += 1;
@@ -62,10 +62,11 @@ char *f_cut(int *i, char *temp, t_meta *ms, char *txt)
 	}
 	return (txt);
 }
-char *f_cut_plus(int *start, int *i, char *temp, char *txt)
+
+char	*f_cut_plus(int *start, int *i, char *temp, char *txt)
 {
-	char *env;
-	char *prov;
+	char	*env;
+	char	*prov;
 
 	env = ft_substr(temp, *start, (*i - *start));
 	prov = ft_strjoin(txt, env);
@@ -76,8 +77,7 @@ char *f_cut_plus(int *start, int *i, char *temp, char *txt)
 	return (txt);
 }
 
-
-int f_check_quote_double_ok(t_meta *ms, char *txt)
+int	f_check_quote_double_ok(t_meta *ms, char *txt)
 {
 	if (f_som_quote_double(txt) != 2)
 	{
@@ -89,27 +89,25 @@ int f_check_quote_double_ok(t_meta *ms, char *txt)
 	return (0);
 }
 
-
 char	*f_pars_double_quote(t_meta *ms, char *txt)
 {
 	char	*temp;
 	char	*prov;
+
 	if (f_check_quote_double_ok(ms, txt) == -1)
 		return (NULL);
 	temp = f_trimstr(txt, 34);
 	txt = f_freenull(txt);
 	prov = f_copy(temp, ms);
 	temp = f_freenull(temp);
-
 	return (prov);
 }
 
-
-char *f_copy_doll(int *i, char *temp, char *txt, t_meta *ms)
+char	*f_copy_doll(int *i, char *temp, char *txt, t_meta *ms)
 {
-	char *env;
-	int start;
-	char *prov;
+	char	*env;
+	int		start;
+	char	*prov;
 
 	prov = NULL;
 	start = *i;

@@ -6,7 +6,7 @@
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:42:40 by romain            #+#    #+#             */
-/*   Updated: 2023/08/11 14:59:54 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/11 15:26:05 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ void	f_check_node(t_meta *ms)
 			temp = temp->next;
 	}
 }
+
 int	f_search_dollar(char *str)
 {
 	int	i;

@@ -6,7 +6,7 @@
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 18:17:50 by rofontai          #+#    #+#             */
-/*   Updated: 2023/08/11 15:10:49 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/11 15:25:34 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,6 @@ void	f_new_check_dollar(t_meta *ms)
 		return ;
 	else if (f_search_dollar(ms->line) == -1 && f_size_list(ms->list) > 1)
 	{
-		// printf ("node = %s\n", f_last_node(ms->list)->txt);
-		f_print_lst(ms->list);
 		add = ft_strjoin(f_last_node(ms->list)->txt, temp);
 		f_last_node(ms->list)->txt = f_freenull(f_last_node(ms->list)->txt);
 		f_last_node(ms->list)->txt = ft_strdup(add);
