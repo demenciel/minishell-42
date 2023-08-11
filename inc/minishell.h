@@ -176,20 +176,29 @@ void					export_error(char *id);
 void					f_check_arg(int ac, char **av);
 void					f_check_line(t_meta *ms);
 
+
 // CHECKING--------------------------------------------------------------------
 
+char					*f_pars_dollar(t_meta *ms, char *txt);
+int						f_check_quote_double_ok(t_meta *ms, char *txt);
+char					*f_pars_double_quote(t_meta *ms, char *txt);
+char 					*f_copy(char *temp, t_meta *ms);
+char 					*f_copy_doll(int *i, char *temp, char *txt, t_meta *ms);
+
+// CHECKING_1------------------------------------------------------------------
+//ok
 void					f_check_word(t_meta *ms);
 void					f_check_single_quote(t_meta *ms);
 char					*f_pars_simple_quote(t_meta *ms, char *txt);
 void					f_new_check_dollar(t_meta *ms);
 char					*f_pars_new_dollar(t_meta *ms, char *txt);
-char					*f_pars_dollar(t_meta *ms, char *txt);
+
+//CHECKING_2-------------------------------------------------------------------
+//ok
 void					f_check_double_quote(t_meta *ms);
-char					*f_pars_double_quote(t_meta *ms, char *txt);
 void					f_check_redir_left(t_meta *ms);
 void					f_check_redir_right(t_meta *ms);
 void					f_check_pipes(t_meta *ms);
-
 
 // UTILS-----------------------------------------------------------------------
 //ok

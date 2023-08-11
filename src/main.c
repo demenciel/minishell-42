@@ -41,8 +41,12 @@ void    init_env(char **env)
 void f_main_pars(t_meta *ms)
 {
 	f_check_line(ms);
+	f_print_lst(ms->list); //TODO SUPPRIMER
+	printf("\n");
 	f_check_node(ms);
 	f_split_pipes(ms);
+	f_print_lst_final(ms->comand); //TODO SUPRIMER
+	printf("\n");
 	if (!ms->comand)
 		ms->exit_status = 1;
 }

@@ -6,7 +6,7 @@
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 18:17:50 by rofontai          #+#    #+#             */
-/*   Updated: 2023/08/10 18:22:37 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/11 11:42:47 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ char	*f_pars_dollar(t_meta *ms, char *txt)
 {
 	char	*temp;
 	char	*env;
-	char	*prov;
 	int		nb;
 
 	nb = ms->exit_status;
@@ -119,8 +118,8 @@ char	*f_pars_dollar(t_meta *ms, char *txt)
 		return (NULL);
 	else
 	{
-		prov = ft_strdup(env);
+		txt = ft_strdup(env);
 		env = f_freenull(env);
-		return (prov);
+		return (txt);
 	}
 }
