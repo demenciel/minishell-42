@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+         #
+#    By: acouture <acouture@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/09 07:40:10 by acouture          #+#    #+#              #
-#    Updated: 2023/08/11 11:35:48 by rofontai         ###   ########.fr        #
+#    Updated: 2023/08/11 15:11:27 by acouture         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SRC		:=  main.c \
 			parsing/checking.c \
 			parsing/checking_1.c \
 			parsing/checking_2.c \
+			parsing/checking3.c \
 			parsing/com_list.c \
 			parsing/com_utils.c \
 			parsing/free.c \
