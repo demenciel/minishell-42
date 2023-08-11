@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 14:02:34 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/09 17:46:59 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/11 12:26:07 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,13 @@ void	change_pwd_env(char *oldpath, char *path)
 	free(chpwd);
 }
 
+/**
+ * @brief Retrieves the right var in the env depeding of the input
+ * @param env_var The var to find
+ * @param oldpwd If false, returns to the HOME
+ * @return If the var is not find, returns NULL, if found,
+	returns the path to the var
+ */
 char	*result_path(char *env_var, bool oldpwd)
 {
 	char	*result;

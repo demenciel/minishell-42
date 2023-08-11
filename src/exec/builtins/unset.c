@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 09:38:33 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/09 10:01:52 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/11 12:31:49 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,9 @@ void	ft_unset_env(char *var)
 }
 
 /**
- * @brief
+ * @brief Deletes the desired var and reallocs the new size of the env
+ * @param trimmed The var to delete
+ * @param i The index of the var
  */
 void	ft_unset_realloc(char *trimmed, int i, int j)
 {

@@ -6,12 +6,15 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 07:42:16 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/09 15:24:58 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/11 12:33:21 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/minishell.h"
 
+/**
+ * @brief Function to print an error if the command is not found
+*/
 void	print_error(char *cmd)
 {
 	if (!cmd)
@@ -23,6 +26,9 @@ void	print_error(char *cmd)
 	mt()->error_flag = 1;
 }
 
+/**
+ * @brief Function to print an error if the input of export is not valid
+*/
 void	export_error(char *id)
 {
 	write(2, "minishell: ", 16);
@@ -32,6 +38,9 @@ void	export_error(char *id)
 	mt()->error_flag = 1;
 }
 
+/**
+ * @brief Function to print an error if file or directory is inexistent
+*/
 void	cd_error(char *input)
 {
 	write(2, "minishell: cd: ", 16);
@@ -41,6 +50,9 @@ void	cd_error(char *input)
 	mt()->error_flag = 1;
 }
 
+/**
+ * @brief Function to print an error if the command is not found
+*/
 void	fd_error(char *fd)
 {
 	write(2, "minishell: ", 12);
@@ -50,6 +62,9 @@ void	fd_error(char *fd)
 	mt()->error_flag = 1;
 }
 
+/**
+ * @brief Function to print an error if the command is not found
+*/
 void	pipex_fail(char *s)
 {
 	write(2, "minishell: ", 12);
