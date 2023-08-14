@@ -6,7 +6,7 @@
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 18:17:50 by rofontai          #+#    #+#             */
-/*   Updated: 2023/08/14 09:46:16 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/14 11:40:32 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ char	*f_pars_simple_quote(t_meta *ms, char *txt)
 	(void)ms;
 	if (f_som_quote_simple(txt) != 2)
 	{
-		ms->exit_status = 2;
+		ms->exit_status = 1;
+		ms->error_flag = 1;
 		f_freenull(txt);
 		return (NULL);
 	}

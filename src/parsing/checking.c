@@ -6,7 +6,7 @@
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 18:16:36 by rofontai          #+#    #+#             */
-/*   Updated: 2023/08/14 09:42:56 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/14 11:40:57 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	f_check_quote_double_ok(t_meta *ms, char *txt)
 {
 	if (f_som_quote_double(txt) != 2)
 	{
-		ms->exit_status = 2;
+		ms->exit_status = 1;
 		ms->error_flag = 1;
 		txt = f_freenull(txt);
 		return (-1);

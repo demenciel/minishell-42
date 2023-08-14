@@ -6,7 +6,7 @@
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 14:35:21 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/14 09:57:08 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/14 11:34:44 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,6 +266,7 @@ void					f_sighandler(int sig);
 void					f_sighandler_com(int sig);
 void					f_signals(void);
 void					f_signal_in(int status, t_meta *ms);
+void					f_exit_syntax_error(t_meta *ms, int flag);
 
 // UTILS_1---------------------------------------------------------------------
 
