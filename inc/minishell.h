@@ -6,7 +6,7 @@
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 14:35:21 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/14 11:34:44 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/14 13:37:48 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_exec
 {
 	pid_t				*pid;
 	bool				redir_flag;
+	bool				pid_flag;
 	int					pid_index;
 	int					in_fd;
 	int					old_fd;
@@ -283,5 +284,6 @@ t_pars					*f_last_node(t_pars *list);
 void					f_addback_node(t_pars **cmd, t_pars *new);
 int						f_check_metachar(char c);
 char					*f_trimstr(char *s1, char c);
+
 
 #endif
