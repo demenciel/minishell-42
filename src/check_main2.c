@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_main2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:29:08 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/14 15:02:56 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/14 15:06:14 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	is_dir_error(t_meta *ms, char *dir)
 	write(2, "minishell: ", 12);
 	write(2, dir, ft_strlen(dir));
 	ft_putendl_fd(": is a directory", 2);
-	ms->exit_status = errno;
+	ms->exit_status = 126;
 	ms->error_flag = 1;
 }
 

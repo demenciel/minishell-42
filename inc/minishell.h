@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 14:35:21 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/14 15:04:16 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/14 15:13:25 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include "history.h"
 # include "readline.h"
 # include "libft/libft.h"
-#include <sys/stat.h>
+# include <sys/stat.h>
 # include <limits.h>
 # include <signal.h>
 # include <stdio.h>
@@ -287,6 +287,5 @@ t_pars					*f_last_node(t_pars *list);
 void					f_addback_node(t_pars **cmd, t_pars *new);
 int						f_check_metachar(char c);
 char					*f_trimstr(char *s1, char c);
-
 
 #endif

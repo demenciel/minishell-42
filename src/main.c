@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/14 15:08:54 by rofontai          #+#    #+#             */
+/*   Updated: 2023/08/14 15:12:33 by rofontai         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
@@ -19,42 +30,40 @@ t_meta	*mt(void)
  * @brief Inits the environment, assigns it to env_list
  * @param env The computer environment
 */
-void    init_env(char **env)
+void	init_env(char **env)
 {
-    int size;
+	int	size;
 
-    size = 0;
-    while (env[size])
-        size++;
-    g()->env_list = malloc(sizeof(char *) * (size + 1));
-    if (!g()->env_list)
-        return ;
-    size = 0;
-    while (env[size])
-    {
-        g()->env_list[size] = ft_strdup(env[size]);
-        size++;
-    }
-    g()->env_list[size] = NULL;
+	size = 0;
+	while (env[size])
+		size++;
+	g()->env_list = malloc(sizeof(char *) * (size + 1));
+	if (!g()->env_list)
+		return ;
+	size = 0;
+	while (env[size])
+	{
+		g()->env_list[size] = ft_strdup(env[size]);
+		size++;
+	}
+	g()->env_list[size] = NULL;
 }
 
-void f_main_pars(t_meta *ms)
+void	f_main_pars(t_meta *ms)
 {
 	f_check_line(ms);
 	f_check_node(ms);
 	f_split_pipes(ms);
-	if (!ms->comand)
-		ms->exit_status = 1;
 }
 
 int	main(int ac, char **av, char **env)
 {
-	t_meta *ms;
+	t_meta	*ms;
 
 	f_check_arg(ac, av);
 	ms = f_init_meta();
-    init_exec_struct();
-    init_env(env);
+	init_exec_struct();
+	init_env(env);
 	f_signals();
 	while (1)
 	{
@@ -69,9 +78,7 @@ int	main(int ac, char **av, char **env)
 			if (ms->comand && (ft_check_builtins(ms) || check_comand(ms) == 0))
 				exec_multi_node(ms);
 		}
-
 		f_free_null_meta(ms);
 	}
 	return (0);
 }
-

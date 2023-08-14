@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checking_3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:10:33 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/14 14:13:12 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/14 15:08:40 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char	*f_copy_doll(int *i, char *temp, char *txt, t_meta *ms)
 
 char	*get_env_pars(char *input)
 {
-	char 	*joined;
+	char	*joined;
 	char	*path;
 	char	*new_path;
 	int		i;
