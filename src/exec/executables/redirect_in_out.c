@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 15:41:33 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/10 19:09:37 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/14 12:43:37 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,18 @@ int	heredoc_exec(char **fd, int *pipe, int i)
 	}
 	return (0);
 }
+
 /**
- * @brief Checks if the token is a len of 2, if so, executes the heredoc function
- * 			and assigns its output to the return. If token is not len of 2, 
+ * @brief Checks if the token is a len of 2, if so,
+	executes the heredoc function
+ * 			and assigns its output to the return. If token is not len of 2,
  * 			open and reads the fd, then returns this new fd.
  * @param i The index of the list of fd
  * @param fd The list of fd
  * @param pipe The write end of the pipe
  * @return The fd for the redirection
-*/
-int	return_in_fd(int i, char **fd, int *pipe)
+ */
+int	return_in_fd(t_meta *ms, int i, char **fd, int *pipe)
 {
 	int	in_fd;
 
@@ -59,7 +61,7 @@ int	return_in_fd(int i, char **fd, int *pipe)
 	else
 	{
 		i++;
-		in_fd = open_rd_fd(ft_strtrim(fd[i], "<"));
+		in_fd = open_rd_fd(ms, ft_strtrim(fd[i], "<"));
 		if (in_fd < 0)
 		{
 			ft_2darr_free(fd);
@@ -68,13 +70,15 @@ int	return_in_fd(int i, char **fd, int *pipe)
 	}
 	return (in_fd);
 }
+
 /**
- * @brief Splits the input fds accompanying the command node, redirects the input
+ * @brief Splits the input fds accompanying the command node,
+	redirects the input
  * 		of the node to the right fd
  * @param ms The main structure with the nodes
  * @param pipe The write end of the pipe
  * @return The input fd of the command
-*/
+ */
 int	redirect_in(t_meta *ms, int *pipe)
 {
 	int		in_fd;
@@ -85,20 +89,20 @@ int	redirect_in(t_meta *ms, int *pipe)
 	fd = ft_split(ms->comand->stin, 29);
 	while (i < ft_2darr_len(fd))
 	{
-		in_fd = return_in_fd(i, fd, pipe);
+		in_fd = return_in_fd(ms, i, fd, pipe);
 		i++;
 	}
 	ft_2darr_free(fd);
 	return (in_fd);
 }
 
-int	return_out_fd(char **fd, int i, int out_fd)
+int	return_out_fd(t_meta *ms, char **fd, int i, int out_fd)
 {
 	if (ft_strlen(fd[i]) == 2)
 	{
 		i++;
 		if (i % 2 != 0)
-			out_fd = append_rd_fd(fd[i]);
+			out_fd = append_rd_fd(ms, fd[i]);
 		if (out_fd < 0)
 		{
 			ft_2darr_free(fd);
@@ -109,7 +113,7 @@ int	return_out_fd(char **fd, int i, int out_fd)
 	{
 		i++;
 		if (i % 2 != 0)
-			out_fd = create_rd_fd(fd[i]);
+			out_fd = create_rd_fd(ms, fd[i]);
 		if (out_fd < 0)
 		{
 			ft_2darr_free(fd);
@@ -130,7 +134,7 @@ int	redirect_out(t_meta *ms)
 	fd = ft_split(ms->comand->stout, 29);
 	while (i < ft_2darr_len(fd))
 	{
-		out_fd = return_out_fd(fd, i, out_fd);
+		out_fd = return_out_fd(ms, fd, i, out_fd);
 		i++;
 	}
 	ft_2darr_free(fd);

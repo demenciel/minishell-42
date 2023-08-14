@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 14:02:34 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/09 17:46:59 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/14 12:42:10 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,16 +105,26 @@ void	change_pwd_env(char *oldpath, char *path)
 	free(chpwd);
 }
 
-char	*result_path(char *env_var, bool oldpwd)
+/**
+ * @brief Retrieves the right var in the env depeding of the input
+ * @param env_var The var to find
+ * @param oldpwd If false, returns to the HOME
+ * @return If the var is not find, returns NULL, if found,
+	returns the path to the var
+ */
+char	*result_path(t_meta *ms, char *env_var, bool oldpwd)
 {
 	char	*result;
 	char	*path_env;
+	char	*error_var;
 
 	result = NULL;
 	path_env = get_env(env_var);
 	if (!path_env)
 	{
-		cd_error(env_var);
+		error_var = ft_strtrim(env_var, "=");
+		cd_error(ms, error_var);
+		free(error_var);
 		return (NULL);
 	}
 	if (oldpwd)
@@ -128,15 +138,15 @@ char	*result_path(char *env_var, bool oldpwd)
  * @param path Input of cd
  * @return Returns NULL if path is not find, otherwise, returns the path found
  */
-char	*path_to_cd(char *path)
+char	*path_to_cd(t_meta *ms, char *path)
 {
 	char	*result;
 
 	result = NULL;
 	if (!path || *path == '\0')
-		result = result_path("HOME=", false);
+		result = result_path(ms, "HOME=", false);
 	else if (ft_strcmp(path, "-") == 0)
-		result = result_path("OLDPWD=", true);
+		result = result_path(ms, "OLDPWD=", true);
 	else
 		result = ft_strdup(path);
 	return (result);

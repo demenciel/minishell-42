@@ -6,55 +6,65 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 07:42:16 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/09 15:24:58 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/14 12:42:48 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/minishell.h"
 
-void	print_error(char *cmd)
+/**
+ * @brief Function to print an error if the command is not found
+*/
+void	print_error(t_meta *ms, char *cmd)
 {
 	if (!cmd)
 		return ;
 	write(2, "minishell: ", 12);
-	write(2, cmd, ft_strlen(cmd));
-	write(2, ": command not found\n", 29);
-	mt()->exit_status = 1;
-	mt()->error_flag = 1;
+	perror(cmd);
+	ms->exit_status = errno;
+	ms->error_flag = 1;
 }
 
-void	export_error(char *id)
+/**
+ * @brief Function to print an error if the input of export is not valid
+*/
+void	export_error(t_meta *ms, char *id)
 {
-	write(2, "minishell: ", 16);
-	write(2, id, ft_strlen(id));
-	write(2, ": not a valid identifier\n", 29);
-	mt()->exit_status = 1;
-	mt()->error_flag = 1;
+	write(2, "minishell: ", 12);
+	perror(id);
+	ms->exit_status = errno;
+	ms->error_flag = 1;
 }
 
-void	cd_error(char *input)
+/**
+ * @brief Function to print an error if file or directory is inexistent
+*/
+void	cd_error(t_meta *ms, char *input)
 {
 	write(2, "minishell: cd: ", 16);
-	write(2, input, ft_strlen(input));
-	write(2, ": no such file or directory\n", 29);
-	mt()->exit_status = 1;
-	mt()->error_flag = 1;
+	perror(input);
+	ms->exit_status = errno;
+	ms->error_flag = 1;
 }
 
-void	fd_error(char *fd)
+/**
+ * @brief Function to print an error if the command is not found
+*/
+void	fd_error(t_meta *ms, char *fd)
 {
 	write(2, "minishell: ", 12);
-	write(2, fd, ft_strlen(fd));
-	write(2, ": no such file or directory\n", 29);
-	mt()->exit_status = 1;
-	mt()->error_flag = 1;
+	perror(fd);
+	ms->exit_status = errno;
+	ms->error_flag = 1;
 }
 
-void	pipex_fail(char *s)
+/**
+ * @brief Function to print an error if the command is not found
+*/
+void	pipex_fail(t_meta *ms, char *s)
 {
 	write(2, "minishell: ", 12);
-	write(2, s, ft_strlen(s));
-	write(2, ": pipe failed\n", 29);
-	mt()->exit_status = 1;
-	mt()->error_flag = 1;
+	perror(s);
+	ms->exit_status = errno;
+	ms->error_flag = 1;
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   com_list.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/10 18:51:32 by rofontai          #+#    #+#             */
+/*   Updated: 2023/08/14 12:44:08 by acouture         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 t_comand	*f_new_com(char *com, char *in, char *out)
@@ -75,30 +87,12 @@ void	f_split_pipes(t_meta *ms)
 		while (temp && temp->txt && temp->txt[0] != 124)
 		{
 			if (temp && temp->txt[0] == 62)
-			{
-				f_add_out(ms, temp->txt);
-				if (temp)
-				{
-					temp = temp->next;
-					if (temp && temp->txt != NULL)
-						f_add_out(ms, temp->txt);
-				}
-			}
+				f_cut_add_out(ms, &temp);
 			else if (temp && temp->txt[0] == 60)
-			{
-				f_add_in(ms, temp->txt);
-				if (temp)
-				{
-					temp = temp->next;
-					if (temp && temp->txt != NULL)
-						f_add_in(ms, temp->txt);
-				}
-			}
+				f_cut_add_in(ms, &temp);
 			else
-			{
 				if (temp && temp->txt != NULL)
 					f_add_com(ms, temp->txt);
-			}
 			if (temp)
 				temp = temp->next;
 		}
@@ -110,4 +104,26 @@ void	f_split_pipes(t_meta *ms)
 	}
 	f_free_list(&ms->list);
 	ms->list = NULL;
+}
+
+void f_cut_add_out(t_meta *ms, t_pars **temp)
+{
+	f_add_out(ms, (*temp)->txt);
+	if (*temp)
+	{
+		*temp = (*temp)->next;
+		if (*temp && (*temp)->txt != NULL)
+			f_add_out(ms, (*temp)->txt);
+	}
+}
+
+void f_cut_add_in(t_meta *ms, t_pars **temp)
+{
+	f_add_in(ms, (*temp)->txt);
+	if (*temp)
+	{
+		*temp = (*temp)->next;
+		if (*temp && (*temp)->txt != NULL)
+			f_add_in(ms, (*temp)->txt);
+	}
 }

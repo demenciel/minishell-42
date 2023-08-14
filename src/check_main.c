@@ -6,17 +6,29 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 16:50:34 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/10 17:31:56 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/14 12:41:21 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	check_cmd_error(int flag, char *error_node)
+/**
+ * @brief Function to print an error if the input of export is not valid
+*/
+void	cmd_error(t_meta *ms, char *id)
+{
+	write(2, "minishell: ", 12);
+	write(2, id, ft_strlen(id));
+	write(2, ": command not found\n", 21);
+	ms->exit_status = 127;
+	ms->error_flag = 1;
+}
+
+int	check_cmd_error(t_meta *ms, int flag, char *error_node)
 {
 	if (flag > 0)
 	{
-		printf("minishell: %s: command not found\n", error_node);
+		cmd_error(ms, error_node);
 		free(error_node);
 		return (-1);
 	}
@@ -41,15 +53,16 @@ int	search_cmd_path(t_comand *node, char *path, int flag)
 	return (flag);
 }
 
-int	check_comand_norm(t_comand *node, char **paths)
+int	check_comand_norm(t_meta *ms, t_comand *node, char **paths)
 {
 	int		flag;
 	int		i;
 	char	*error_node;
 
-	i = -1;
 	while (node)
 	{
+		i = -1;
+
 		if (check_absolute_path(node->com) == 0)
 			return (0);
 		while (paths[++i])
@@ -62,20 +75,30 @@ int	check_comand_norm(t_comand *node, char **paths)
 			error_node = ft_strdup(node->com[0]);
 		node = node->next;
 	}
-	ft_2darr_free(paths);
-	return (check_cmd_error(flag, error_node));
+	
+	return (check_cmd_error(ms, flag, error_node));
 }
 
 int	check_comand(t_meta *ms)
 {
 	char		**paths;
 	t_comand	*node;
+	int 		return_norm;
 
 	node = ms->comand;
 	if (node->com)
 	{
+		if (ft_strncmp(".\0)", node->com[0], 2) == 0)
+		{
+			print_error(ms, node->com[0]);
+			return (-1);
+		}
 		paths = command_path();
-		return (check_comand_norm(node, paths));
+		if (!paths)
+			return (-1);
+		return_norm = check_comand_norm(ms, node, paths);
+		ft_2darr_free(paths);
+		return (return_norm);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 07:43:03 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/10 18:28:10 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/14 12:42:40 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,34 @@
  * @brief Checks the content of the node,
 	and executes the builtin depending of the content of the node
 */
-void	find_export_unset_env(t_meta *ms, int input_fd)
+void	find_unset(t_meta *ms)
+{
+	int		i;
+	char	*joined;
+
+	if (ft_strcmp(ms->comand->com[0], "unset") == 0)
+	{
+		i = 1;
+		if (!ms->comand->com[i])
+			return ;
+		while (ms->comand->com[i])
+		{
+			if (check_var(ms, ms->comand->com[i]) != 0)
+				return ;
+			joined = ft_strjoin(ms->comand->com[i], "=");
+			ft_unset_export(joined);
+			ft_unset_env(joined);
+			free(joined);
+			i++;
+		}
+	}
+}
+
+/**
+ * @brief Checks the content of the node,
+	and executes the builtin depending of the content of the node
+*/
+void	find_export_env(t_meta *ms, int input_fd)
 {
 	int	i;
 
@@ -24,21 +51,9 @@ void	find_export_unset_env(t_meta *ms, int input_fd)
 	{
 		i = 1;
 		if (!ms->comand->com[i])
-			ft_export("", input_fd);
+			ft_export(ms, "", input_fd);
 		while (ms->comand->com[i])
-			ft_export(ms->comand->com[i++], input_fd);
-	}
-	else if (ft_strcmp(ms->comand->com[0], "unset") == 0)
-	{
-		i = 1;
-		if (!ms->comand->com[i])
-			return ;
-		while (ms->comand->com[i])
-		{
-			ft_unset_export(ms->comand->com[i]);
-			ft_unset_env(ms->comand->com[i]);
-			i++;
-		}
+			ft_export(ms, ms->comand->com[i++], input_fd);
 	}
 	else if (ft_strcmp(ms->comand->com[0], "env") == 0)
 		ft_env(input_fd);
@@ -75,7 +90,8 @@ void	find_cd_pwd(t_meta *ms, int input_fd)
  */
 void	find_builtins(t_meta *ms, int input_fd)
 {
-	find_export_unset_env(ms, input_fd);
+	find_export_env(ms, input_fd);
+	find_unset(ms);
 	find_cd_pwd(ms, input_fd);
 	find_echo(ms, input_fd);
 	find_exit(ms, input_fd);
@@ -88,23 +104,19 @@ bool	ft_check_builtins(t_meta *ms)
 {
 	if (ms->comand->com)
 	{
-		if (ft_strncmp(ms->comand->com[0], "unset",
-				ft_strlen("unset\n")) == 0)
+		if (ft_strncmp(ms->comand->com[0], "unset", ft_strlen("unset\n")) == 0)
 			return (true);
 		else if (ft_strncmp(ms->comand->com[0], "export",
 				ft_strlen("export\n")) == 0)
 			return (true);
-		else if (ft_strncmp(ms->comand->com[0], "env",
-				ft_strlen("env\n")) == 0)
+		else if (ft_strncmp(ms->comand->com[0], "env", ft_strlen("env\n")) == 0)
 			return (true);
 		else if (ft_strncmp(ms->comand->com[0], "echo",
 				ft_strlen("echo\n")) == 0)
 			return (true);
-		else if (ft_strncmp(ms->comand->com[0], "cd",
-				ft_strlen("cd\n")) == 0)
+		else if (ft_strncmp(ms->comand->com[0], "cd", ft_strlen("cd\n")) == 0)
 			return (true);
-		else if (ft_strncmp(ms->comand->com[0], "pwd",
-				ft_strlen("pwd\n")) == 0)
+		else if (ft_strncmp(ms->comand->com[0], "pwd", ft_strlen("pwd\n")) == 0)
 			return (true);
 		else if (ft_strncmp(ms->comand->com[0], "exit",
 				ft_strlen("exit\n")) == 0)

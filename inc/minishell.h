@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/11 14:35:21 by acouture          #+#    #+#             */
+/*   Updated: 2023/08/14 12:40:47 by acouture         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -85,9 +97,10 @@ char					*ft_strjoin_path(char *s1, char *s2);
 int						check_absolute_path(char **cmd);
 int						check_comand(t_meta *ms);
 char					**command_path(void);
-int						check_comand_norm(t_comand *node, char **paths);
+int						check_comand_norm(t_meta *ms, t_comand *node,
+							char **paths);
 int						search_cmd_path(t_comand *node, char *path, int flag);
-int						check_cmd_error(int flag, char *error_node);
+int						check_cmd_error(t_meta *ms, int flag, char *error_node);
 
 // REDIRECT
 int						redirect_nodes(int *pipe, t_meta *ms);
@@ -97,15 +110,15 @@ int						heredocs(char *limiter, int input_fd);
 
 // PIPEX
 void					pipex(t_meta *ms, bool multi, int input_fd, int out_fd);
-int						open_rd_fd(char *fd1);
-int						create_rd_fd(char *fd1);
-int						append_rd_fd(char *fd1);
+int						open_rd_fd(t_meta *ms, char *fd1);
+int						create_rd_fd(t_meta *ms, char *fd1);
+int						append_rd_fd(t_meta *ms, char *fd1);
 
 // MAIN EXEC UTILS
 void					wait_free_pid(t_meta *ms, int nb_node);
 int						lst_size(t_comand *lst);
 void					init_exec_struct(void);
-void					clean_fd();
+void					clean_fd(void);
 int						check_for_path(void);
 
 // MAIN EXEC
@@ -115,13 +128,13 @@ char					**get_env_path(void);
 // EXEC BUILTINS
 bool					ft_check_builtins(t_meta *ms);
 void					find_builtins(t_meta *ms, int input_fd);
-void					find_export_unset_env(t_meta *ms, int input_fd);
+void					find_export_env(t_meta *ms, int input_fd);
 
 // BUILTINS
 void					ft_echo(char *string, int input_fd);
 char					*ft_pwd(void);
 void					ft_env(int fd);
-void					ft_export(char *new_env, int fd);
+void					ft_export(t_meta *ms, char *new_env, int fd);
 void					ft_unset_env(char *var);
 void					ft_unset_export(char *var);
 
@@ -135,8 +148,8 @@ void					ft_cd(t_meta *ms, char *path);
 char					*get_env(char *input);
 void					replace_oldpwd(char *oldpath);
 void					change_pwd_env(char *oldpath, char *path);
-char					*result_path(char *env_var, bool oldpwd);
-char 					*path_to_cd(char *path);
+char					*result_path(t_meta *ms, char *env_var, bool oldpwd);
+char					*path_to_cd(t_meta *ms, char *path);
 
 // ENV
 char					**ft_cpy_env(char **list);
@@ -151,7 +164,7 @@ void					change_var_content_export(char *var, int index);
 char					*detect_var_export(char *var);
 char					**ft_cpy_export(char **list);
 void					add_var_to_env(char *new_var, int i);
-int						check_var(char *var);
+int						check_var(t_meta *ms, char *var);
 void					ft_swap_char(char **a, char **b);
 void					order_export(int *size);
 
@@ -162,12 +175,11 @@ t_meta					*mt(void);
 void					exec_cmd(t_meta *ms, char **cmd);
 
 // ERROR UTILS
-void					print_error(char *cmd);
-void					fd_error(char *fd);
-void					pipex_fail(char *s);
-void					cd_error(char *input);
-void					export_error(char *id);
-
+void					print_error(t_meta *ms, char *cmd);
+void					fd_error(t_meta *ms, char *fd);
+void					pipex_fail(t_meta *ms, char *s);
+void					cd_error(t_meta *ms, char *input);
+void					export_error(t_meta *ms, char *id);
 
 //PARSING-MINISHELL
 
@@ -189,6 +201,10 @@ char					*f_pars_double_quote(t_meta *ms, char *txt);
 void					f_check_redir_left(t_meta *ms);
 void					f_check_redir_right(t_meta *ms);
 void					f_check_pipes(t_meta *ms);
+char					*f_cut(int *i, char *temp, t_meta *ms, char *txt);
+char					*f_cut_plus(int *start, int *i, char *temp, char *txt);
+char					*f_copy(char *temp, t_meta *ms);
+char					*f_copy_doll(int *i, char *temp, char *txt, t_meta *ms);
 
 
 // UTILS-----------------------------------------------------------------------
@@ -198,6 +214,7 @@ t_pars					*f_last_node(t_pars *list);
 void					f_addback_node(t_pars **cmd, t_pars *new);
 int						f_check_metachar(char c);
 char					*f_trimstr(char *s1, char c);
+void					f_print_error(t_meta *ms);
 
 // UTILS_1---------------------------------------------------------------------
 //ok
@@ -214,7 +231,8 @@ void					f_zero_new_com(t_meta *ms);
 t_comand				*f_last_com(t_comand *list);
 void					f_addback_com(t_comand **cmd, t_comand *new);
 void					f_split_pipes(t_meta *ms);
-
+void					f_cut_add_out(t_meta *ms, t_pars **temp);
+void					f_cut_add_in(t_meta *ms, t_pars **temp);
 // COM_UTILS-------------------------------------------------------------------
 //ok
 void					f_add_com(t_meta *ms, char *add);
@@ -224,11 +242,12 @@ void					f_check_node(t_meta *ms);
 int						f_search_dollar(char *str);
 
 // INIT------------------------------------------------------------------------
-
+//ok
 t_meta					*f_init_meta(void);
 void					f_all_clean(t_meta *ms, char *msg);
 void					f_all_clean_exit(t_meta *ms, int nb);
 void					f_free_exit_child(t_meta *ms, int nb);
+void					f_free_meta(t_meta *ms);
 
 // FREE------------------------------------------------------------------------
 //ok
@@ -238,23 +257,23 @@ void					f_free_list(t_pars **list);
 void					*f_freenull(void *str);
 
 // A_SUPP----------------------------------------------------------------------
-
 void					f_print_lst(t_pars *lst);
 void					f_print_lst_final(t_comand *lst);
 void					f_print(char **cou);
 
-
 // EXIT------------------------------------------------------------------------
-
+//ok
 int						find_exit(t_meta *ms, int fd);
 int						f_size_table(char **table);
 int						f_arg_is_num(char *txt);
+void					f_message(t_meta *ms, char *txt, int fd);
+void					f_message_short(int fd);
 
 // SIGNAL----------------------------------------------------------------------
 //ok
 void					f_sighandler(int sig);
 void					f_sighandler_com(int sig);
 void					f_signals(void);
-void  					f_signal_in(int status, t_meta *ms);
+void					f_signal_in(int status, t_meta *ms);
 
 #endif

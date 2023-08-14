@@ -6,7 +6,7 @@
 #    By: acouture <acouture@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/09 07:40:10 by acouture          #+#    #+#              #
-#    Updated: 2023/08/10 17:43:42 by acouture         ###   ########.fr        #
+#    Updated: 2023/08/14 12:44:58 by acouture         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SRC		:=  main.c \
 			exec/export/export2.c \
 			exec/export/export3.c \
 			parsing/checking.c \
+			parsing/checking_1.c \
 			parsing/com_list.c \
 			parsing/com_utils.c \
 			parsing/free.c \
@@ -54,7 +55,10 @@ SRC		:=  main.c \
 			parsing/a_supp.c \
 			parsing/exit.c \
 			parsing/signal.c \
-
+			check_main.c \
+			check_main2.c \
+			parsing/checking3.c \
+			parsing/checking_2.c \
 
 SRCS	= $(addprefix $(SRC_PATH), $(SRC))
 OBJ		= $(SRC:%.c=%.o)

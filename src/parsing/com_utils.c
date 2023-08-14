@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   com_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: romain <romain@student.42.fr>              +#+  +:+       +#+        */
+/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:42:40 by romain            #+#    #+#             */
-/*   Updated: 2023/08/09 20:51:04 by romain           ###   ########.fr       */
+/*   Updated: 2023/08/14 12:44:15 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ void	f_check_node(t_meta *ms)
 			temp = temp->next;
 	}
 }
+
 int	f_search_dollar(char *str)
 {
 	int	i;

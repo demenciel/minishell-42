@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   checking3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/10 12:27:55 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/11 14:35:03 by acouture         ###   ########.fr       */
+/*   Created: 2023/08/11 15:10:33 by acouture          #+#    #+#             */
+/*   Updated: 2023/08/11 15:25:16 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../inc/minishell.h"
 
-/**
- * @brief Concatenate two strings to form a new one
- * @param s1 String 1
- * @param s2 String 2
- * @return A pointer to the concatenated string
- */
-char	*ft_strjoin(const char *s1, const char *s2)
+char	*ft_strjoin_f(char *s1, const char *s2)
 {
 	char			*join_str;
 	unsigned int	i;
@@ -43,5 +37,34 @@ char	*ft_strjoin(const char *s1, const char *s2)
 		j++;
 	}
 	join_str[i] = '\0';
+	free(s1);
 	return (join_str);
+}
+
+char	*f_copy(char *temp, t_meta *ms)
+{
+	int		start;
+	char	*prov;
+	char	*txt;
+	int		i;
+
+	i = 0;
+	txt = NULL;
+	while (temp[i])
+	{
+		start = i;
+		while (temp[i] && temp[i] != 36)
+			i++;
+		if (txt != NULL)
+		{
+			prov = ft_substr(temp, start, (i - start));
+			txt = ft_strjoin_f(txt, prov);
+			prov = f_freenull(prov);
+		}
+		else
+			txt = ft_substr(temp, start, (i - start));
+		if (temp[i] && temp[i] == 36)
+			txt = f_copy_doll(&i, temp, txt, ms);
+	}
+	return (txt);
 }

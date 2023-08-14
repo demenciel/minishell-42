@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 07:42:47 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/10 14:30:21 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/14 12:42:22 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@ char	*ft_strtrim_echo(char const *s1, char const *set)
 	return (new_str);
 }
 
+/**
+ * @brief Each time encounters a -n flag,
+	iterates over it and returns the index of the node
+ * @param ms The main struct
+ * @param i The index of the node
+ */
 int	iterate_over_echo_flag(t_meta *ms, int i)
 {
 	t_comand	*temp;
@@ -59,6 +65,14 @@ int	iterate_over_echo_flag(t_meta *ms, int i)
 	return (i);
 }
 
+/**
+ * @brief Iterates over the 2d array containing the input of echo,
+	joins each input, and returns that new string
+	@param i The index of the 2d array
+	@param ms The principal struct
+	@param flag Flag for if there is a -n option to echo
+	@param input_fd The fd to write to
+ */
 void	print_echo_string(int i, t_meta *ms, int flag, int input_fd)
 {
 	char	*echo_string;
@@ -85,6 +99,9 @@ void	print_echo_string(int i, t_meta *ms, int flag, int input_fd)
 		ft_putchar_fd('\n', input_fd);
 }
 
+/**
+ * @brief Checks if echo has any argument, if not, prints a new line
+*/
 int	check_echo_args(t_meta *ms, int input_fd)
 {
 	if (!ms->comand->com[1])
