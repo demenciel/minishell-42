@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   com_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: romain <romain@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:42:40 by romain            #+#    #+#             */
-/*   Updated: 2023/08/09 20:51:04 by romain           ###   ########.fr       */
+/*   Updated: 2023/08/14 12:50:10 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,16 +92,14 @@ void	f_check_node(t_meta *ms)
 				|| temp->next->txt == NULL || temp->next->txt[0] == 124
 				|| temp->next->txt[0] == 62 || temp->next->txt[0] == 60))
 		{
-			ms->exit_status = 2;
-			ms->error_flag = ms->exit_status;
+			f_exit_syntax_error(ms, 2);
 			f_free_list(&ms->list);
 			return ;
 		}
 		else if ((temp->txt[0] == 124) && (temp->next == NULL
 				|| temp->next->txt == NULL || temp->next->txt[0] == 124))
 		{
-			ms->exit_status = 2;
-			ms->error_flag = ms->exit_status;
+			f_exit_syntax_error(ms, 2);
 			f_free_list(&ms->list);
 			return ;
 		}
@@ -109,6 +107,7 @@ void	f_check_node(t_meta *ms)
 			temp = temp->next;
 	}
 }
+
 int	f_search_dollar(char *str)
 {
 	int	i;

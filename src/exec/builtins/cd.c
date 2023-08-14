@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 14:02:34 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/10 17:11:05 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/11 14:23:32 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,16 +105,26 @@ void	change_pwd_env(char *oldpath, char *path)
 	free(chpwd);
 }
 
+/**
+ * @brief Retrieves the right var in the env depeding of the input
+ * @param env_var The var to find
+ * @param oldpwd If false, returns to the HOME
+ * @return If the var is not find, returns NULL, if found,
+	returns the path to the var
+ */
 char	*result_path(t_meta *ms, char *env_var, bool oldpwd)
 {
 	char	*result;
 	char	*path_env;
+	char	*error_var;
 
 	result = NULL;
 	path_env = get_env(env_var);
 	if (!path_env)
 	{
-		cd_error(ms, env_var);
+		error_var = ft_strtrim(env_var, "=");
+		cd_error(ms, error_var);
+		free(error_var);
 		return (NULL);
 	}
 	if (oldpwd)

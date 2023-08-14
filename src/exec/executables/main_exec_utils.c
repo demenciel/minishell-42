@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_exec_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 13:34:58 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/10 15:39:15 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/14 11:01:57 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ void	wait_free_pid(t_meta *ms, int nb_node)
 	}
 	clean_fd();
 	g()->pid_index = 0;
-	free(g()->pid);
+	if (g()->pid != NULL)
+		free(g()->pid);
 }
 
 int	check_for_path(void)

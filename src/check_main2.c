@@ -1,47 +1,59 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   check_main2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/10 12:27:55 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/11 14:35:03 by acouture         ###   ########.fr       */
+/*   Created: 2023/08/10 17:29:08 by acouture          #+#    #+#             */
+/*   Updated: 2023/08/11 15:51:20 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../inc/minishell.h"
 
-/**
- * @brief Concatenate two strings to form a new one
- * @param s1 String 1
- * @param s2 String 2
- * @return A pointer to the concatenated string
- */
-char	*ft_strjoin(const char *s1, const char *s2)
+char	*ft_strjoin_path(char *s1, char *s2)
 {
 	char			*join_str;
 	unsigned int	i;
 	unsigned int	j;
 
-	i = 0;
+	i = -1;
 	j = 0;
 	if ((!s1 && s2) || s1 == NULL)
 		return ((char *)s2);
 	join_str = malloc(((ft_strlen(s1) + 1) + ft_strlen(s2)) * sizeof(char));
 	if (!join_str)
 		return (NULL);
-	while (s1[i])
-	{
+	while (s1[++i])
 		join_str[i] = s1[i];
-		i++;
-	}
+	free(s1);
 	while (s2[j])
-	{
-		join_str[i] = s2[j];
-		i++;
-		j++;
-	}
+		join_str[i++] = s2[j++];
 	join_str[i] = '\0';
 	return (join_str);
+}
+
+int	check_absolute_path(char **cmd)
+{
+	if (access(cmd[0], 0) == 0)
+		return (0);
+	else
+		return (-1);
+	return (0);
+}
+
+char	**command_path(void)
+{
+	char	**paths;
+	int		i;
+
+	i = -1;
+	paths = NULL;
+	paths = get_env_path();
+	if (!paths)
+		return (paths);
+	while (paths[++i])
+		paths[i] = ft_strjoin_path(paths[i], "/");
+	return (paths);
 }

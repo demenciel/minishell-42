@@ -6,12 +6,19 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:32:03 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/10 15:54:44 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/10 18:57:59 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/minishell.h"
 
+/**
+ * @brief Checks if there are fd's with the command, if so redirects
+ * 		the output or input to the correct fd
+ * @param pipe The write end of the pipe
+ * @param ms The principal structure with the nodes
+ * @return The write end of the command
+*/
 int	redirect_nodes(int *pipe, t_meta *ms)
 {
 	int	out_fd;
@@ -25,10 +32,8 @@ int	redirect_nodes(int *pipe, t_meta *ms)
 	if (ms->comand->stin != NULL)
 	{
 		in_fd = redirect_in(ms, pipe);
-		if (g()->in_fd == FD_ERROR)
+		if (g()->in_fd < 0)
 			return (FD_ERROR);
-		else if (g()->in_fd == HEREDOC_ERROR)
-			return (HEREDOC_ERROR);
 	}
 	if (ms->comand->stout != NULL)
 	{

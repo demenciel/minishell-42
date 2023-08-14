@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:31:17 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/10 16:01:17 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/11 17:05:18 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	execute_absolute(t_meta *ms, char **cmd)
 {
 	if (access(ms->comand->com[0], 0) == 0)
 	{
+		clean_fd();
 		if (execve(ms->comand->com[0], cmd, g()->env_list) != 0)
 			exit(ms->exit_status);
 	}
@@ -66,8 +67,6 @@ void	exec_cmd(t_meta *ms, char **cmd)
 
 	i = -1;
 	paths = get_env_path();
-	if (!paths)
-		return ;
 	while (paths[++i])
 		paths[i] = ft_strjoin(paths[i], "/");
 	i = -1;

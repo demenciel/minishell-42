@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   export2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 08:41:13 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/10 17:11:23 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/11 14:33:02 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/minishell.h"
 
 /**
- * @brief Checks for the first value of the variable. If is not a letter
+ * @brief Checks for the first value of the variable. If is not a letter 
 	 or underscore exits program
  * @param var Var to check
 */
@@ -24,16 +24,22 @@ int	check_var(t_meta *ms, char *var)
 	i = 0;
 	if (*var == '\0')
 		return (-2);
+	if (!(ft_isalpha(var[i]) || var[i] == '_'))
+	{
+		export_error(ms, var);
+		return (-1);
+	}
 	while (var[i])
 	{
-		if (ft_isdigit(var[0]) || ((var[i] != '/') && !(var[i] == 95)
-				&& !(ft_isalpha(var[i])) && var[i] != '=') || (ft_strncmp("=",
-					var, ft_strlen(var)) == 0) || (var[0] == '=' && var[1]))
+		if (var[i] == '=')
+			break ;
+		if (ft_isalnum(var[i]) || var[i] == '_')
+			i++;
+		else
 		{
 			export_error(ms, var);
 			return (-1);
 		}
-		i++;
 	}
 	return (0);
 }

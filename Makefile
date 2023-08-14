@@ -6,7 +6,7 @@
 #    By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/09 07:40:10 by acouture          #+#    #+#              #
-#    Updated: 2023/08/10 17:25:39 by rofontai         ###   ########.fr        #
+#    Updated: 2023/08/14 10:22:54 by rofontai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,9 @@ SRC		:=  main.c \
 			exec/export/export2.c \
 			exec/export/export3.c \
 			parsing/checking.c \
+			parsing/checking_1.c \
+			parsing/checking_3.c \
+			parsing/checking_2.c \
 			parsing/com_list.c \
 			parsing/com_utils.c \
 			parsing/free.c \
@@ -49,10 +52,10 @@ SRC		:=  main.c \
 			parsing/parsing.c \
 			parsing/utils.c \
 			parsing/utils_1.c \
-			parsing/a_supp.c \
 			parsing/exit.c \
 			parsing/signal.c \
-
+			check_main.c \
+			check_main2.c \
 
 SRCS	= $(addprefix $(SRC_PATH), $(SRC))
 OBJ		= $(SRC:%.c=%.o)

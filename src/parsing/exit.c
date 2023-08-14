@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/10 19:02:33 by rofontai          #+#    #+#             */
+/*   Updated: 2023/08/11 07:20:09 by rofontai         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 int	find_exit(t_meta *ms, int fd)
@@ -11,18 +23,12 @@ int	find_exit(t_meta *ms, int fd)
 		i = f_size_table(ms->comand->com);
 		if (i > 2)
 		{
-			ft_putendl_fd("exit", fd);
-			ft_putendl_fd("exit: too many arguments", fd);
+			f_message_short(fd);
 			ms->exit_status = 1;
 			return (0);
 		}
 		else if (i == 2 && f_arg_is_num(ms->comand->com[1]) == -1)
-		{
-			ft_putendl_fd("exit", fd);
-			ft_putstr_fd("exit: ", fd);
-			ft_putstr_fd(ms->comand->com[1], fd);
-			f_all_clean(ms, ": numeric argument required");
-		}
+			f_message(ms, ms->comand->com[1], fd);
 		else if (i == 2)
 		{
 			nb = ft_atoi(ms->comand->com[1]);
@@ -59,4 +65,18 @@ int	f_arg_is_num(char *txt)
 		i++;
 	}
 	return (0);
+}
+
+void	f_message(t_meta *ms, char *txt, int fd)
+{
+	ft_putendl_fd("exit", fd);
+	ft_putstr_fd("exit: ", fd);
+	ft_putstr_fd(txt, fd);
+	f_all_clean(ms, ": numeric argument required");
+}
+
+void	f_message_short(int fd)
+{
+	ft_putendl_fd("exit", fd);
+	ft_putendl_fd("exit: too many arguments", fd);
 }

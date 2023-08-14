@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: romain <romain@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:18:09 by romain            #+#    #+#             */
-/*   Updated: 2023/08/09 20:18:11 by romain           ###   ########.fr       */
+/*   Updated: 2023/08/14 11:36:33 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,12 @@ void	f_signal_in(int status, t_meta *ms)
 		else
 			ms->exit_status = WTERMSIG(status);
 	}
+}
+
+void	f_exit_syntax_error(t_meta *ms, int flag)
+{
+	if (ms->error_flag == 0)
+		printf ("minishell: syntax error near unexpected token\n");
+	ms->exit_status = flag;
+	ms->error_flag = ms->exit_status;
 }
