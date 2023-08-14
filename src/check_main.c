@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 16:50:34 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/14 09:59:30 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/14 14:17:46 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	check_comand(t_meta *ms)
 			print_error(ms, node->com[0]);
 			return (-1);
 		}
-		paths = command_path();
+		paths = command_path(ms, node->com);
 		if (!paths)
 			return (-1);
 		return_norm = check_comand_norm(ms, node, paths);

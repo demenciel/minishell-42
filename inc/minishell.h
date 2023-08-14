@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 14:35:21 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/14 13:37:48 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/14 14:17:56 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ char					*ft_strjoin_path(char *s1, char *s2);
 char					*ft_strjoin_path(char *s1, char *s2);
 int						check_absolute_path(char **cmd);
 int						check_comand(t_meta *ms);
-char					**command_path(void);
+char					**command_path(t_meta *ms, char **cmd);
 int						check_comand_norm(t_meta *ms, t_comand *node,
 							char **paths);
 int						search_cmd_path(t_comand *node, char *path, int flag);

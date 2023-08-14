@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:29:08 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/11 15:51:20 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/14 14:17:42 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	check_absolute_path(char **cmd)
 	return (0);
 }
 
-char	**command_path(void)
+char	**command_path(t_meta *ms, char **cmd)
 {
 	char	**paths;
 	int		i;
@@ -52,7 +52,10 @@ char	**command_path(void)
 	paths = NULL;
 	paths = get_env_path();
 	if (!paths)
+	{
+		print_error(ms, cmd[0]);
 		return (paths);
+	}
 	while (paths[++i])
 		paths[i] = ft_strjoin_path(paths[i], "/");
 	return (paths);
