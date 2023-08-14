@@ -6,7 +6,7 @@
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 07:42:16 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/11 16:58:23 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/14 14:49:43 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ void	print_error(t_meta *ms, char *cmd)
 	if (!cmd)
 		return ;
 	write(2, "minishell: ", 12);
-	perror(cmd);
-	ms->exit_status = errno;
+	write(2, cmd, ft_strlen(cmd));
+	ft_putendl_fd(": command not foud", 2);
+	ms->exit_status = 127;
 	ms->error_flag = 1;
 }
 
@@ -31,8 +32,9 @@ void	print_error(t_meta *ms, char *cmd)
 void	export_error(t_meta *ms, char *id)
 {
 	write(2, "minishell: ", 12);
-	perror(id);
-	ms->exit_status = errno;
+	write(2, id, ft_strlen(id));
+	ft_putendl_fd(": not a valid identifier", 2);
+	ms->exit_status = 1;
 	ms->error_flag = 1;
 }
 
@@ -43,7 +45,7 @@ void	cd_error(t_meta *ms, char *input)
 {
 	write(2, "minishell: cd: ", 16);
 	perror(input);
-	ms->exit_status = errno;
+	ms->exit_status = 1;
 	ms->error_flag = 1;
 }
 

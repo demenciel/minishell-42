@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_main2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:29:08 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/11 15:51:20 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/14 15:06:14 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	check_absolute_path(char **cmd)
 	return (0);
 }
 
-char	**command_path(void)
+char	**command_path(t_meta *ms, char **cmd)
 {
 	char	**paths;
 	int		i;
@@ -52,8 +52,37 @@ char	**command_path(void)
 	paths = NULL;
 	paths = get_env_path();
 	if (!paths)
+	{
+		print_error(ms, cmd[0]);
 		return (paths);
+	}
 	while (paths[++i])
 		paths[i] = ft_strjoin_path(paths[i], "/");
 	return (paths);
+}
+
+void	is_dir_error(t_meta *ms, char *dir)
+{
+	write(2, "minishell: ", 12);
+	write(2, dir, ft_strlen(dir));
+	ft_putendl_fd(": is a directory", 2);
+	ms->exit_status = 126;
+	ms->error_flag = 1;
+}
+
+int	check_node_cmd(t_meta *ms, char *cmd)
+{
+	struct stat	st;
+
+	if (ft_strncmp(".\0)", cmd, 2) == 0)
+	{
+		print_error(ms, cmd);
+		return (-1);
+	}
+	if (stat(cmd, &st) == 0 && S_ISDIR(st.st_mode))
+	{
+		is_dir_error(ms, cmd);
+		return (-1);
+	}
+	return (0);
 }

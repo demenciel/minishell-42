@@ -6,7 +6,7 @@
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 14:35:21 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/14 11:34:44 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/14 15:13:25 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "history.h"
 # include "readline.h"
 # include "libft/libft.h"
+# include <sys/stat.h>
 # include <limits.h>
 # include <signal.h>
 # include <stdio.h>
@@ -80,6 +81,7 @@ typedef struct s_exec
 {
 	pid_t				*pid;
 	bool				redir_flag;
+	bool				pid_flag;
 	int					pid_index;
 	int					in_fd;
 	int					old_fd;
@@ -96,11 +98,12 @@ char					*ft_strjoin_path(char *s1, char *s2);
 char					*ft_strjoin_path(char *s1, char *s2);
 int						check_absolute_path(char **cmd);
 int						check_comand(t_meta *ms);
-char					**command_path(void);
+char					**command_path(t_meta *ms, char **cmd);
 int						check_comand_norm(t_meta *ms, t_comand *node,
 							char **paths);
 int						search_cmd_path(t_comand *node, char *path, int flag);
 int						check_cmd_error(t_meta *ms, int flag, char *error_node);
+int						check_node_cmd(t_meta *ms, char *cmd);
 
 // REDIRECT
 int						redirect_nodes(int *pipe, t_meta *ms);
@@ -180,6 +183,7 @@ void					fd_error(t_meta *ms, char *fd);
 void					pipex_fail(t_meta *ms, char *s);
 void					cd_error(t_meta *ms, char *input);
 void					export_error(t_meta *ms, char *id);
+void					is_dir_error(t_meta *ms, char *dir);
 
 //PARSING-MINISHELL
 

@@ -6,7 +6,7 @@
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:10:33 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/14 11:13:09 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/14 15:08:40 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,35 @@ char	*f_copy_doll(int *i, char *temp, char *txt, t_meta *ms)
 	return (prov);
 }
 
+char	*get_env_pars(char *input)
+{
+	char	*joined;
+	char	*path;
+	char	*new_path;
+	int		i;
+
+	i = 0;
+	new_path = NULL;
+	while (g()->env_list[i])
+	{
+		joined = ft_strjoin(input, "=");
+		if (ft_strncmp(joined, g()->env_list[i], ft_strlen(joined)) == 0)
+		{
+			free(joined);
+			break ;
+		}
+		free(joined);
+		i++;
+	}
+	if (g()->env_list[i] != NULL)
+	{
+		path = ft_strtrim(g()->env_list[i], input);
+		new_path = ft_strtrim(path, "=");
+		free(path);
+	}
+	return (new_path);
+}
+
 char	*f_pars_dollar(t_meta *ms, char *txt)
 {
 	char	*temp;
@@ -107,7 +136,7 @@ char	*f_pars_dollar(t_meta *ms, char *txt)
 	}
 	temp = f_trimstr(txt, 36);
 	txt = f_freenull(txt);
-	env = get_env(temp);
+	env = get_env_pars(temp);
 	temp = f_freenull(temp);
 	if (env == NULL)
 		return (NULL);

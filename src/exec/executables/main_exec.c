@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 09:34:54 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/10 18:36:49 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/14 13:00:02 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	init_pid_and_nb_node(t_meta *ms)
 	g()->pid = malloc(sizeof(pid_t) * (nb_node + 1));
 	if (!g()->pid)
 		f_all_clean_exit(mt(), MALLOC_ERROR);
+	g()->pid_flag = true;
 	while (i < nb_node)
 	{
 		g()->pid[i] = j;

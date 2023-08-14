@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/14 09:59:44 by rofontai          #+#    #+#             */
-/*   Updated: 2023/08/14 10:02:00 by rofontai         ###   ########.fr       */
+/*   Created: 2023/08/14 15:08:54 by rofontai          #+#    #+#             */
+/*   Updated: 2023/08/14 15:12:33 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ void	f_main_pars(t_meta *ms)
 	f_check_line(ms);
 	f_check_node(ms);
 	f_split_pipes(ms);
-	if (!ms->comand)
-		ms->exit_status = 1;
 }
 
 int	main(int ac, char **av, char **env)
@@ -69,6 +67,7 @@ int	main(int ac, char **av, char **env)
 	f_signals();
 	while (1)
 	{
+		g()->pid_flag = false;
 		ms->line = readline("minishell > ");
 		if (ms->line == NULL)
 			f_all_clean(ms, NULL);

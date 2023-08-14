@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 08:45:59 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/11 17:01:31 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/14 15:12:59 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	add_var_to_export(char *new_var, int i, int *list_size)
 {
 	t_exec	*p;
 	int		og_size;
-	char	*var;
 
 	p = g();
 	og_size = *list_size;
@@ -71,10 +70,7 @@ void	add_var_to_export(char *new_var, int i, int *list_size)
 	(*list_size)++;
 	p->export_list = ft_realloc(p->export_list, og_size * sizeof(char *),
 			*list_size * sizeof(char *));
-	if (ft_strchr(new_var, '='))
-		p->export_list[i] = ft_strjoin("declare -x ", var);
-	else
-		p->export_list[i] = ft_strjoin("declare -x ", new_var);
+	p->export_list[i] = ft_strjoin("declare -x ", new_var);
 	i++;
 	og_size = *list_size;
 	(*list_size)++;
