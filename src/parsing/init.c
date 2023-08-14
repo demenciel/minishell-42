@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 19:03:46 by rofontai          #+#    #+#             */
-/*   Updated: 2023/08/14 12:44:37 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/14 12:59:42 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	f_all_clean(t_meta *ms, char *msg)
 		ft_2darr_free(g()->env_list);
 	if (g()->in_fd > 2)
 		close(g()->in_fd);
-	if (g()->pid != NULL)
+	if (g()->pid_flag)
 		free(g()->pid);
 	clean_fd();
 	if (msg)
@@ -76,7 +76,7 @@ void	f_all_clean_exit(t_meta *ms, int nb)
 		ft_2darr_free(g()->env_list);
 	if (g()->in_fd > 2)
 		close(g()->in_fd);
-	if (g()->pid)
+	if (g()->pid_flag)
 		free(g()->pid);
 	clean_fd();
 	exit(nb);
@@ -103,7 +103,8 @@ void	f_free_exit_child(t_meta *ms, int nb)
 		f_free_comand(&ms->comand);
 		ms->comand = NULL;
 	}
-	free(g()->pid);
+	if (g()->pid_flag)
+		free(g()->pid);
 	exit(nb);
 }
 

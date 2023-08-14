@@ -58,6 +58,7 @@ int	main(int ac, char **av, char **env)
 	f_signals();
 	while (1)
 	{
+		g()->pid_flag = false;
 		ms->line = readline("minishell > ");
 		if (ms->line == NULL)
 			f_all_clean(ms, NULL);

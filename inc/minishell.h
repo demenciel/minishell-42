@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 14:35:21 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/14 12:40:47 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/14 12:58:33 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_exec
 {
 	pid_t				*pid;
 	bool				redir_flag;
+	bool				pid_flag;
 	int					pid_index;
 	int					in_fd;
 	int					old_fd;

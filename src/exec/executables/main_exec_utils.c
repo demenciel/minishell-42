@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 13:34:58 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/14 12:43:08 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/14 12:59:10 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	init_exec_struct(void)
 	p->pid = 0;
 	p->pid_index = 0;
 	p->redir_flag = false;
+	p->pid_flag = false;
 }
 
 /**
@@ -87,7 +88,7 @@ void	wait_free_pid(t_meta *ms, int nb_node)
 	}
 	clean_fd();
 	g()->pid_index = 0;
-	if (g()->pid != NULL)
+	if (g()->pid_flag)
 		free(g()->pid);
 }
 

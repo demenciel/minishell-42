@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: acouture <acouture@student.42.fr>          +#+  +:+       +#+         #
+#    By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/09 07:40:10 by acouture          #+#    #+#              #
-#    Updated: 2023/08/14 12:44:58 by acouture         ###   ########.fr        #
+#    Updated: 2023/08/11 16:09:34 by rofontai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,8 +25,6 @@ RLINE		= $(READ_PATH)/libreadline.a
 LIBRLINE	= readline-8.2
 
 SRC		:=  main.c \
-			check_main.c \
-			check_main2.c \
 			exec/executables/main_exec.c \
 			exec/executables/main_exec_utils.c \
 			exec/executables/pipex.c \
@@ -52,7 +50,6 @@ SRC		:=  main.c \
 			parsing/parsing.c \
 			parsing/utils.c \
 			parsing/utils_1.c \
-			parsing/a_supp.c \
 			parsing/exit.c \
 			parsing/signal.c \
 			check_main.c \
