@@ -6,7 +6,7 @@
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 18:17:50 by rofontai          #+#    #+#             */
-/*   Updated: 2023/08/11 15:25:34 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/14 09:46:16 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,32 +113,4 @@ void	f_new_check_dollar(t_meta *ms)
 	}
 	else
 		f_addback_node(&ms->list, f_new_node(temp));
-}
-
-char	*f_pars_dollar(t_meta *ms, char *txt)
-{
-	char	*temp;
-	char	*env;
-	int		nb;
-
-	nb = ms->exit_status;
-	if (ft_strlen(txt) == 1)
-		return (txt);
-	else if (txt[1] == '?')
-	{
-		txt = f_freenull(txt);
-		return (ft_itoa(nb));
-	}
-	temp = f_trimstr(txt, 36);
-	txt = f_freenull(txt);
-	env = get_env(temp);
-	temp = f_freenull(temp);
-	if (env == NULL)
-		return (NULL);
-	else
-	{
-		txt = ft_strdup(env);
-		env = f_freenull(env);
-		return (txt);
-	}
 }

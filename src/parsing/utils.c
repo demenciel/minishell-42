@@ -6,7 +6,7 @@
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:49:49 by romain            #+#    #+#             */
-/*   Updated: 2023/08/11 17:15:58 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/14 09:50:08 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,4 @@ char	*f_trimstr(char *s1, char c)
 		return (NULL);
 	ft_strlcpy(dest, &s1[i], (len_s1 - i) + 1);
 	return (dest);
-}
-
-void	f_print_error(t_meta *ms)
-{
-	write(2, "minishell: ", 12);
-	write (2, "syntax error near unexpected\n", 29);
-	ms->exit_status = 2;
-	ms->error_flag = 1;
 }

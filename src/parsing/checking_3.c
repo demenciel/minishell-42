@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checking3.c                                        :+:      :+:    :+:   */
+/*   checking_3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:10:33 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/11 15:25:16 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/14 09:46:10 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,54 @@ char	*f_copy(char *temp, t_meta *ms)
 			txt = f_copy_doll(&i, temp, txt, ms);
 	}
 	return (txt);
+}
+
+char	*f_copy_doll(int *i, char *temp, char *txt, t_meta *ms)
+{
+	char	*env;
+	int		start;
+	char	*prov;
+
+	prov = NULL;
+	start = *i;
+	*i += 1;
+	while (temp[*i] && f_check_env(temp[*i]) == 1)
+		*i += 1;
+	env = ft_substr(temp, start, (*i - start));
+	env = f_pars_dollar(ms, env);
+	if (env)
+	{
+		prov = ft_strjoin(txt, env);
+		env = f_freenull(env);
+		txt = f_freenull(txt);
+	}
+	return (prov);
+}
+
+char	*f_pars_dollar(t_meta *ms, char *txt)
+{
+	char	*temp;
+	char	*env;
+	int		nb;
+
+	nb = ms->exit_status;
+	if (ft_strlen(txt) == 1)
+		return (txt);
+	else if (txt[1] == '?')
+	{
+		txt = f_freenull(txt);
+		return (ft_itoa(nb));
+	}
+	temp = f_trimstr(txt, 36);
+	txt = f_freenull(txt);
+	env = get_env(temp);
+	temp = f_freenull(temp);
+	if (env == NULL)
+		return (NULL);
+	else
+	{
+		txt = ft_strdup(env);
+		env = f_freenull(env);
+		return (txt);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 18:16:36 by rofontai          #+#    #+#             */
-/*   Updated: 2023/08/11 15:24:00 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/14 09:42:56 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,27 +100,5 @@ char	*f_pars_double_quote(t_meta *ms, char *txt)
 	txt = f_freenull(txt);
 	prov = f_copy(temp, ms);
 	temp = f_freenull(temp);
-	return (prov);
-}
-
-char	*f_copy_doll(int *i, char *temp, char *txt, t_meta *ms)
-{
-	char	*env;
-	int		start;
-	char	*prov;
-
-	prov = NULL;
-	start = *i;
-	*i += 1;
-	while (temp[*i] && f_check_env(temp[*i]) == 1)
-		*i += 1;
-	env = ft_substr(temp, start, (*i - start));
-	env = f_pars_dollar(ms, env);
-	if (env)
-	{
-		prov = ft_strjoin(txt, env);
-		env = f_freenull(env);
-		txt = f_freenull(txt);
-	}
 	return (prov);
 }

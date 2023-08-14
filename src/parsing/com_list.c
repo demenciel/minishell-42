@@ -6,7 +6,7 @@
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 18:51:32 by rofontai          #+#    #+#             */
-/*   Updated: 2023/08/11 15:40:39 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/14 09:49:34 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,26 +104,4 @@ void	f_split_pipes(t_meta *ms)
 	}
 	f_free_list(&ms->list);
 	ms->list = NULL;
-}
-
-void f_cut_add_out(t_meta *ms, t_pars **temp)
-{
-	f_add_out(ms, (*temp)->txt);
-	if (*temp)
-	{
-		*temp = (*temp)->next;
-		if (*temp && (*temp)->txt != NULL)
-			f_add_out(ms, (*temp)->txt);
-	}
-}
-
-void f_cut_add_in(t_meta *ms, t_pars **temp)
-{
-	f_add_in(ms, (*temp)->txt);
-	if (*temp)
-	{
-		*temp = (*temp)->next;
-		if (*temp && (*temp)->txt != NULL)
-			f_add_in(ms, (*temp)->txt);
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: rofontai <rofontai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:53:08 by romain            #+#    #+#             */
-/*   Updated: 2023/08/11 09:34:39 by rofontai         ###   ########.fr       */
+/*   Updated: 2023/08/14 09:50:02 by rofontai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,34 @@ void	f_check_line(t_meta *ms)
 			f_check_word(ms);
 	}
 	ms->i = 0;
+}
+
+void	f_cut_add_out(t_meta *ms, t_pars **temp)
+{
+	f_add_out(ms, (*temp)->txt);
+	if (*temp)
+	{
+		*temp = (*temp)->next;
+		if (*temp && (*temp)->txt != NULL)
+			f_add_out(ms, (*temp)->txt);
+	}
+}
+
+void	f_cut_add_in(t_meta *ms, t_pars **temp)
+{
+	f_add_in(ms, (*temp)->txt);
+	if (*temp)
+	{
+		*temp = (*temp)->next;
+		if (*temp && (*temp)->txt != NULL)
+			f_add_in(ms, (*temp)->txt);
+	}
+}
+
+void	f_print_error(t_meta *ms)
+{
+	write(2, "minishell: ", 12);
+	write (2, "syntax error near unexpected\n", 29);
+	ms->exit_status = 2;
+	ms->error_flag = 1;
 }
