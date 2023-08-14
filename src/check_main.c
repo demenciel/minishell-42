@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 16:50:34 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/14 14:17:46 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/14 15:02:43 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /**
  * @brief Function to print an error if the input of export is not valid
-*/
+ */
 void	cmd_error(t_meta *ms, char *id)
 {
 	write(2, "minishell: ", 12);
@@ -42,7 +42,7 @@ int	search_cmd_path(t_comand *node, char *path, int flag)
 
 	flag = 0;
 	search_cmd = ft_strjoin(path, node->com[0]);
-	if (access(search_cmd, 0) != 0)
+	if (access(search_cmd, X_OK) != 0)
 		flag++;
 	else
 	{
@@ -86,11 +86,8 @@ int	check_comand(t_meta *ms)
 	node = ms->comand;
 	if (node->com)
 	{
-		if (ft_strncmp(".\0)", node->com[0], 2) == 0)
-		{
-			print_error(ms, node->com[0]);
+		if (check_node_cmd(ms, node->com[0]) == -1)
 			return (-1);
-		}
 		paths = command_path(ms, node->com);
 		if (!paths)
 			return (-1);

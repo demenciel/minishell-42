@@ -6,7 +6,7 @@
 /*   By: acouture <acouture@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 14:35:21 by acouture          #+#    #+#             */
-/*   Updated: 2023/08/14 14:17:56 by acouture         ###   ########.fr       */
+/*   Updated: 2023/08/14 15:04:16 by acouture         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "history.h"
 # include "readline.h"
 # include "libft/libft.h"
+#include <sys/stat.h>
 # include <limits.h>
 # include <signal.h>
 # include <stdio.h>
@@ -102,6 +103,7 @@ int						check_comand_norm(t_meta *ms, t_comand *node,
 							char **paths);
 int						search_cmd_path(t_comand *node, char *path, int flag);
 int						check_cmd_error(t_meta *ms, int flag, char *error_node);
+int						check_node_cmd(t_meta *ms, char *cmd);
 
 // REDIRECT
 int						redirect_nodes(int *pipe, t_meta *ms);
@@ -181,6 +183,7 @@ void					fd_error(t_meta *ms, char *fd);
 void					pipex_fail(t_meta *ms, char *s);
 void					cd_error(t_meta *ms, char *input);
 void					export_error(t_meta *ms, char *id);
+void					is_dir_error(t_meta *ms, char *dir);
 
 //PARSING-MINISHELL
 
